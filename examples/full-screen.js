@@ -9,6 +9,7 @@ goog.require('ol.Geolocation');
 goog.require('ol.Map');
 goog.require('ol.RendererHints');
 goog.require('ol.View2D');
+goog.require('ol.animation');
 goog.require('ol.layer.TileLayer');
 goog.require('ol.source.MapQuestOpenAerial');
 
@@ -42,3 +43,18 @@ var marker = new ol.AnchoredElement({
 });
 marker.bindTo('position', geolocation);
 goog.style.showElement(element, true);
+
+var element = document.getElementById('compass');
+goog.events.listen(map, 'postrender', function(event) {
+  var rotation = event.frameState.view2DState.rotation;
+  element.style.webkitTransform = 'rotate(' + rotation + 'rad)';
+}, false);
+
+goog.events.listen(element, 'click', function(event) {
+  var view = map.getView();
+  map.addPreRenderFunction(ol.animation.rotate({
+    rotation: view.getRotation(),
+    duration: 250
+  }));
+  view.setRotation(0);
+}, false);
