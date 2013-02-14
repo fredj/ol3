@@ -54,6 +54,8 @@ goog.require('ol.interaction.Interaction');
 goog.require('ol.interaction.KeyboardPan');
 goog.require('ol.interaction.KeyboardZoom');
 goog.require('ol.interaction.MouseWheelZoom');
+goog.require('ol.interaction.TouchPan');
+goog.require('ol.interaction.TouchRotateAndZoom');
 goog.require('ol.interaction.condition');
 goog.require('ol.layer.Layer');
 goog.require('ol.renderer.Map');
@@ -942,6 +944,9 @@ ol.Map.createControls_ = function(mapOptions) {
 ol.Map.createInteractions_ = function(mapOptions) {
 
   var interactions = new ol.Collection();
+
+  interactions.push(new ol.interaction.TouchPan());
+  interactions.push(new ol.interaction.TouchRotateAndZoom());
 
   var rotate = goog.isDef(mapOptions.rotate) ?
       mapOptions.rotate : true;
