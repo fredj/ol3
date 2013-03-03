@@ -326,6 +326,24 @@ ol.Map.prototype.addPreRenderFunctions = function(preRenderFunctions) {
 
 
 /**
+ * Cancel all the running animations and reset the view.
+ */
+ol.Map.prototype.cancelPreRenderFunctions = function() {
+  if (this.preRenderFunctions_.length > 0) {
+    this.preRenderFunctions_.length = 0;
+    var frameState = this.frameState_;
+    if (!goog.isNull(frameState)) {
+      var view = this.getView();
+      this.requestRenderFrame();
+      view.setCenter(frameState.view2DState.center);
+      view.setResolution(frameState.view2DState.resolution);
+      view.setRotation(frameState.view2DState.rotation);
+    }
+  }
+};
+
+
+/**
  * @param {ol.PreRenderFunction} preRenderFunction Pre-render function.
  * @return {boolean} Whether the preRenderFunction has been found and removed.
  */
