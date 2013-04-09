@@ -10,7 +10,7 @@ goog.require('ol.source.BingMaps');
 var view = new ol.View2D({
   center: [-9101767, 2822912],
   zoom: 14
-})
+});
 
 var map = new ol.Map({
   controls: ol.control.defaults({}, [
