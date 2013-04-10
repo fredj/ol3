@@ -32,6 +32,9 @@
   right: 8px;
   top: 8px;
 }
+.ol-unsupported {
+  display: none;
+}
 @media print {
   .ol-full-screen {
     display: none;
