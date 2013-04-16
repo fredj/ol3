@@ -29,10 +29,11 @@ var vector = new ol.layer.Vector({
   })
 });
 
+var mapDiv = document.getElementById('map');
 var map = new ol.Map({
   layers: new ol.Collection([raster, vector]),
   renderer: ol.RendererHint.CANVAS,
-  target: 'map',
+  target: mapDiv,
   view: new ol.View2D({
     projection: epsg4326,
     center: [-112.169, 36.099],
@@ -59,3 +60,25 @@ xhr.onload = function() {
   }
 };
 xhr.send();
+
+var reader = new FileReader();
+reader.onloadend = function() {
+  vector.parseFeatures(this.result, kml, epsg4326);
+};
+
+mapDiv.addEventListener('dragover', function(event) {
+  event.stopPropagation();
+  event.preventDefault();
+}, false);
+
+mapDiv.addEventListener('drop', function(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  var files = event.dataTransfer.files;
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i]
+    if (file.type === 'application/vnd.google-earth.kml+xml') {
+      reader.readAsText(file);
+    }
+  }
+}, false);
