@@ -840,7 +840,8 @@ ol.Map.prototype.renderFrame_ = function(time) {
   if (!goog.isNull(frameState)) {
     // FIXME works for View2D only
     frameState.extent = ol.extent.getForView2DAndSize(view2DState.center,
-        view2DState.resolution, view2DState.rotation, frameState.size);
+        view2DState.resolution, view2DState.rotation, view2DState.tilt,
+        frameState.size);
   }
 
   this.frameState_ = frameState;

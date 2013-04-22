@@ -13,6 +13,8 @@ goog.require('ol.ResolutionConstraint');
 goog.require('ol.RotationConstraint');
 goog.require('ol.RotationConstraintType');
 goog.require('ol.Size');
+goog.require('ol.TiltConstraint');
+goog.require('ol.TiltConstraintType');
 goog.require('ol.View');
 goog.require('ol.coordinate');
 goog.require('ol.extent');
@@ -26,7 +28,8 @@ ol.View2DProperty = {
   CENTER: 'center',
   PROJECTION: 'projection',
   RESOLUTION: 'resolution',
-  ROTATION: 'rotation'
+  ROTATION: 'rotation',
+  TILT: 'tilt'
 };
 
 
@@ -61,6 +64,7 @@ ol.View2D = function(opt_options) {
         size / (ol.DEFAULT_TILE_SIZE * Math.pow(2, options.zoom));
   }
   values[ol.View2DProperty.ROTATION] = options.rotation;
+  values[ol.View2DProperty.TILT] = options.tilt;
   this.setValues(values);
 
   var parts = ol.View2D.createResolutionConstraint_(options);
@@ -79,13 +83,14 @@ ol.View2D = function(opt_options) {
 
   var resolutionConstraint = parts[0];
   var rotationConstraint = ol.View2D.createRotationConstraint_(options);
+  var tiltConstraint = ol.View2D.createTiltConstraint_(options);
 
   /**
    * @private
    * @type {ol.Constraints}
    */
   this.constraints_ = new ol.Constraints(resolutionConstraint,
-      rotationConstraint);
+      rotationConstraint, tiltConstraint);
 
 };
 goog.inherits(ol.View2D, ol.View);
@@ -254,6 +259,19 @@ goog.exportProperty(
 
 
 /**
+ * @return {number} Map tilt.
+ */
+ol.View2D.prototype.getTilt = function() {
+  return /** @type {number|undefined} */ (
+      this.get(ol.View2DProperty.TILT)) || 0;
+};
+goog.exportProperty(
+    ol.View2D.prototype,
+    'getTilt',
+    ol.View2D.prototype.getTilt);
+
+
+/**
  * Return a function that returns a resolution for a value between
  * 0 and 1. Exponential scaling is assumed.
  * @param {number=} opt_power Power.
@@ -289,11 +307,13 @@ ol.View2D.prototype.getView2DState = function() {
   var projection = /** @type {ol.Projection} */ (this.getProjection());
   var resolution = /** @type {number} */ (this.getResolution());
   var rotation = /** @type {number} */ (this.getRotation());
+  var tilt = /** @type {number} */ (this.getTilt());
   return {
     center: center.slice(),
     projection: projection,
     resolution: resolution,
-    rotation: rotation
+    rotation: rotation,
+    tilt: tilt
   };
 };
 
@@ -423,4 +443,15 @@ ol.View2D.createResolutionConstraint_ = function(options) {
 ol.View2D.createRotationConstraint_ = function(options) {
   // FIXME rotation constraint is not configurable at the moment
   return ol.RotationConstraint.createSnapToZero();
+};
+
+
+/**
+ * @private
+ * @param {ol.View2DOptions} options View2D options.
+ * @return {ol.TiltConstraintType} Tilt constraint.
+ */
+ol.View2D.createTiltConstraint_ = function(options) {
+  // FIXME tilt constraint is not configurable at the moment
+  return ol.TiltConstraint.createRange(0, Math.PI / 4);
 };

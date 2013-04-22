@@ -195,12 +195,14 @@ ol.extent.getCenter = function(extent) {
  * @param {ol.Coordinate} center Center.
  * @param {number} resolution Resolution.
  * @param {number} rotation Rotation.
+ * @param {number} tilt Tilt.
  * @param {ol.Size} size Size.
  * @param {ol.Extent=} opt_extent Destination extent.
  * @return {ol.Extent} Extent.
  */
 ol.extent.getForView2DAndSize =
-    function(center, resolution, rotation, size, opt_extent) {
+    function(center, resolution, rotation, tilt, size, opt_extent) {
+  // FIXME: use tilt
   var dx = resolution * size.width / 2;
   var dy = resolution * size.height / 2;
   var cosRotation = Math.cos(rotation);

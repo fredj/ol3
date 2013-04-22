@@ -65,6 +65,7 @@
  *     view. If configured, this is equivalent to specifying `maxResolution` and
  *     `maxZoom`.
  * @property {number|undefined} rotation Initial rotation of the view.
+ * @property {number|undefined} tilt Initial tilt of the view.
  * @property {number|undefined} zoom Initial zoom level of the view.
  * @property {number|undefined} zoomFactor Factor to calculate resolutions for
  *     zoom levels. Default is 2.

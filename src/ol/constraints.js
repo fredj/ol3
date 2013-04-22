@@ -11,8 +11,11 @@ goog.require('ol.RotationConstraintType');
  *     Resolution constraint.
  * @param {ol.RotationConstraintType} rotationConstraint
  *     Rotation constraint.
+ * @param {ol.TiltConstraintType} tiltConstraint
+ *     Tilt constraint.
  */
-ol.Constraints = function(resolutionConstraint, rotationConstraint) {
+ol.Constraints = function(resolutionConstraint, rotationConstraint,
+    tiltConstraint) {
 
   /**
    * @type {ol.ResolutionConstraintType}
@@ -24,4 +27,8 @@ ol.Constraints = function(resolutionConstraint, rotationConstraint) {
    */
   this.rotation = rotationConstraint;
 
+  /**
+   * @type {ol.TiltConstraintType}
+   */
+  this.tilt = tiltConstraint;
 };

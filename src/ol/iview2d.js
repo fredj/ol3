@@ -9,6 +9,7 @@ goog.require('ol.Projection');
  * @typedef {{center: ol.Coordinate,
  *            projection: ol.Projection,
  *            resolution: number,
+ *            tilt: number,
  *            rotation: number}}
  */
 ol.View2DState;
@@ -48,6 +49,13 @@ ol.IView2D.prototype.getResolution = function() {
  * @return {number|undefined} Map rotation.
  */
 ol.IView2D.prototype.getRotation = function() {
+};
+
+
+/**
+ * @return {number|undefined} Map tilt.
+ */
+ol.IView2D.prototype.getTilt = function() {
 };
 
 
