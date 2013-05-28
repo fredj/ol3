@@ -32,6 +32,7 @@
           <div id="map" class="map"></div>
           <a id="export-jpeg" class="btn" download="map.jpeg"><i class="icon-download"></i> Export JPEG</a>
           <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a>
+          <a id="export-pdf" class="btn" download="map.pdf"><i class="icon-print"></i> Export PDF</a>
         </div>
       </div>
 
@@ -39,17 +40,18 @@
 
         <div class="span4">
           <h4 id="title">Export map example</h4>
-          <p id="shortdesc">Example of exporting a map as a JPEG or PNG image.</p>
+          <p id="shortdesc">Example of exporting a map as a JPEG or PNG image or PDF document.</p>
           <div id="docs">
             <p>See the <a href="export-map.js" target="_blank">export-map.js source</a> to see how this is done.</p>
           </div>
-          <div id="tags">export, jpeg, png, openstreetmap</div>
+          <div id="tags">export, jpeg, png, pdf, openstreetmap</div>
         </div>
 
       </div>
 
     </div>
 
+    <script src="../resources/jspdf.min.js" type="text/javascript"></script>
     <script src="loader.js?id=export-map" type="text/javascript"></script>
     <script src="../resources/social-links.js" type="text/javascript"></script>
 
