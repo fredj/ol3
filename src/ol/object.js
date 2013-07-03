@@ -324,6 +324,17 @@ ol.Object.prototype.unbind = function(key) {
 
 
 /**
+ * Dispatches an event and calls all listeners listening for events of this
+ * type. The type of the event is decided by the type property on the event
+ * object or by the event itself if it is a string.
+ * @param {string|Object} event The event type or object.
+ */
+ol.Object.prototype.trigger = function(event) {
+  this.dispatchEvent(event);
+};
+
+
+/**
  * Unlisten for a certain type of event.
  * @param {string|Array.<string>} type The event type or array of event types.
  * @param {Function} listener The listener function.
