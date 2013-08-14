@@ -32,6 +32,9 @@
         line-height: 30px;
       }
 
+      .ol-full-screen a {
+        width: 22px;
+      }
       div.ol-zoom-extent a:after {
         content: "\f047";
       }
@@ -41,6 +44,15 @@
       div.ol-full-screen a.ol-full-screen-true:after {
         content: "\f066";
       }
+      .map:-moz-full-screen {
+        height: 100%;
+      }
+      .map:-webkit-full-screen {
+        height: 100%;
+      }
+      .map:full-screen {
+        height: 100%;
+      }
 
       .ol-touch .ol-zoom-extent {
         top: 80px;
@@ -49,9 +61,6 @@
         top: 120px;
       }
 
-      .map {
-        position: relative;
-      }
       .links {
         top: 40px;
         right: 8px;
