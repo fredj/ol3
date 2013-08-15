@@ -9,23 +9,17 @@
     display: none;
   }
 }
-.ol-touch .ol-button-group a {
-  font-size: 20px;
-  height: 30px;
-  line-height: 26px;
-}
 div.ol-button-group > * {
-  background-color: rgba(0, 60, 136, 0.5);
-  color: white;
-  font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 19px;
-  vertical-align: middle;
-  height: 22px;
+  box-sizing: border-box;
+  padding: 4px 10px;
   margin: 1px;
-  padding: 0;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgba(0, 60, 136, 0.5);
 }
 .ol-button-group > a {
   text-decoration: none;
@@ -95,9 +89,6 @@ div.ol-button-group > * {
   right: 8px;
   top: 8px;
 }
-.ol-touch .ol-full-screen a {
-  width: 30px;
-}
 a.ol-full-screen-false:after {
   content: "\2194";
 }
@@ -160,10 +151,7 @@ a.ol-full-screen-true:after {
   left: 8px;
 }
 .ol-zoom a {
-  width: 22px;
-}
-.ol-touch .ol-zoom a {
-  width: 30px;
+  font-weight: bold;
 }
 .ol-zoom-in:before {
   content: "+";
@@ -199,16 +187,9 @@ a.ol-full-screen-true:after {
 }
 
 .ol-zoom-extent {
-  top: 65px;
+  top: 84px;
   left: 8px;
 }
-.ol-zoom-extent a {
-  line-height: 20px;
-  width: 22px;
-}
-.ol-touch .ol-zoom-extent a {
-  width: 30px;
-}
 .ol-zoom-extent a:after {
-  content: "E";
+  content: "e";
 }
