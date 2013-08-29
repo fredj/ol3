@@ -57,10 +57,10 @@ var panToLondon = document.getElementById('pan-to-london');
 panToLondon.addEventListener('click', function() {
   var pan = ol.animation.pan({
     duration: 2000,
-    source: view.getCenter()
+    source: view.center
   });
   map.addPreRenderFunction(pan);
-  view.setCenter(london);
+  view.center = london;
 }, false);
 
 var elasticToMoscow = document.getElementById('elastic-to-moscow');
@@ -68,10 +68,10 @@ elasticToMoscow.addEventListener('click', function() {
   var pan = ol.animation.pan({
     duration: 2000,
     easing: ol.easing.elastic,
-    source: view.getCenter()
+    source: view.center
   });
   map.addPreRenderFunction(pan);
-  view.setCenter(moscow);
+  view.center = moscow;
 }, false);
 
 var bounceToIstanbul = document.getElementById('bounce-to-istanbul');
@@ -79,10 +79,10 @@ bounceToIstanbul.addEventListener('click', function() {
   var pan = ol.animation.pan({
     duration: 2000,
     easing: ol.easing.bounce,
-    source: view.getCenter()
+    source: view.center
   });
   map.addPreRenderFunction(pan);
-  view.setCenter(istanbul);
+  view.center = istanbul;
 }, false);
 
 var spinToRome = document.getElementById('spin-to-rome');
@@ -91,7 +91,7 @@ spinToRome.addEventListener('click', function() {
   var start = +new Date();
   var pan = ol.animation.pan({
     duration: duration,
-    source: view.getCenter(),
+    source: view.center,
     start: start
   });
   var rotate = ol.animation.rotate({
@@ -100,7 +100,7 @@ spinToRome.addEventListener('click', function() {
     start: start
   });
   map.addPreRenderFunctions([pan, rotate]);
-  view.setCenter(rome);
+  view.center = rome;
 }, false);
 
 var flyToBern = document.getElementById('fly-to-bern');
@@ -109,16 +109,16 @@ flyToBern.addEventListener('click', function() {
   var start = +new Date();
   var pan = ol.animation.pan({
     duration: duration,
-    source: view.getCenter(),
+    source: view.center,
     start: start
   });
   var bounce = ol.animation.bounce({
     duration: duration,
-    resolution: 4 * view.getResolution(),
+    resolution: 4 * view.resolution,
     start: start
   });
   map.addPreRenderFunctions([pan, bounce]);
-  view.setCenter(bern);
+  view.center = bern;
 }, false);
 
 var spiralToMadrid = document.getElementById('spiral-to-madrid');
@@ -127,12 +127,12 @@ spiralToMadrid.addEventListener('click', function() {
   var start = +new Date();
   var pan = ol.animation.pan({
     duration: duration,
-    source: view.getCenter(),
+    source: view.center,
     start: start
   });
   var bounce = ol.animation.bounce({
     duration: duration,
-    resolution: 2 * view.getResolution(),
+    resolution: 2 * view.resolution,
     start: start
   });
   var rotate = ol.animation.rotate({
@@ -141,5 +141,5 @@ spiralToMadrid.addEventListener('click', function() {
     start: start
   });
   map.addPreRenderFunctions([pan, bounce, rotate]);
-  view.setCenter(madrid);
+  view.center = madrid;
 }, false);
