@@ -4,6 +4,7 @@ goog.provide('ol.View2D');
 goog.provide('ol.View2DProperty');
 
 goog.require('goog.asserts');
+goog.require('goog.object');
 goog.require('ol.Constraints');
 goog.require('ol.IView2D');
 goog.require('ol.IView3D');
@@ -131,6 +132,9 @@ ol.View2D = function(opt_options) {
   values[ol.View2DProperty.ROTATION] =
       goog.isDef(options.rotation) ? options.rotation : 0;
   this.setValues(values);
+
+  goog.object.map(ol.View2DProperty, this.defineProperty, this);
+
 };
 goog.inherits(ol.View2D, ol.View);
 

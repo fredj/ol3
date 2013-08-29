@@ -163,6 +163,21 @@ ol.Object.prototype.bindTo =
 
 
 /**
+ * @param {string} key Key.
+ */
+ol.Object.prototype.defineProperty = function(key) {
+  Object.defineProperty(this, key, {
+    get: function() {
+      return this.get(key);
+    },
+    set: function(value) {
+      this.set(key, value);
+    }
+  });
+};
+
+
+/**
  * Gets a value.
  * @param {string} key Key.
  * @return {*} Value.
