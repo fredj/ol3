@@ -60,6 +60,7 @@ ol.layer.LayerBase = function(options) {
   values.visible = goog.isDef(values.visible) ? values.visible : true;
 
   this.setValues(values);
+  goog.object.map(ol.layer.LayerProperty, this.defineProperty, this);
 
   goog.events.listen(this, [
     ol.Object.getChangeEventType(ol.layer.LayerProperty.BRIGHTNESS),

@@ -28,20 +28,20 @@ var resetHue = document.getElementById('reset-hue');
 var decreaseHue = document.getElementById('decrease-hue');
 
 function setResetHueButtonHTML() {
-  resetHue.innerHTML = 'Hue (' + layer.getHue().toFixed(2) + ')';
+  resetHue.innerHTML = 'Hue (' + layer.hue.toFixed(2) + ')';
 }
 setResetHueButtonHTML();
 
 increaseHue.addEventListener('click', function() {
-  layer.setHue(layer.getHue() + 0.25);
+  layer.hue = layer.hue + 0.25;
   setResetHueButtonHTML();
 }, false);
 resetHue.addEventListener('click', function() {
-  layer.setHue(0);
+  layer.hue = 0;
   setResetHueButtonHTML();
 }, false);
 decreaseHue.addEventListener('click', function() {
-  layer.setHue(layer.getHue() - 0.25);
+  layer.hue = layer.hue - 0.25;
   setResetHueButtonHTML();
 }, false);
 
@@ -51,19 +51,19 @@ var decreaseSaturation = document.getElementById('decrease-saturation');
 
 function setResetSaturationButtonHTML() {
   resetSaturation.innerHTML = 'Saturation (' +
-      layer.getSaturation().toFixed(2) + ')';
+      layer.saturation.toFixed(2) + ')';
 }
 setResetSaturationButtonHTML();
 
 increaseSaturation.addEventListener('click', function() {
-  layer.setSaturation(layer.getSaturation() + 0.25);
+  layer.saturation = layer.saturation + 0.25;
   setResetSaturationButtonHTML();
 }, false);
 resetSaturation.addEventListener('click', function() {
-  layer.setSaturation(1);
+  layer.saturation = 1;
   setResetSaturationButtonHTML();
 }, false);
 decreaseSaturation.addEventListener('click', function() {
-  layer.setSaturation(Math.max(layer.getSaturation() - 0.25, 0));
+  layer.saturation = Math.max(layer.saturation - 0.25, 0);
   setResetSaturationButtonHTML();
 }, false);

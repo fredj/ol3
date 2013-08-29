@@ -25,20 +25,20 @@ var decreaseBrightness = document.getElementById('decrease-brightness');
 
 function setResetBrightnessButtonHTML() {
   resetBrightness.innerHTML = 'Brightness (' +
-      layer.getBrightness().toFixed(3) + ')';
+      layer.brightness.toFixed(3) + ')';
 }
 setResetBrightnessButtonHTML();
 
 increaseBrightness.addEventListener('click', function() {
-  layer.setBrightness(Math.min(layer.getBrightness() + 0.125, 1));
+  layer.brightness = Math.min(layer.brightness + 0.125, 1);
   setResetBrightnessButtonHTML();
 }, false);
 resetBrightness.addEventListener('click', function() {
-  layer.setBrightness(0);
+  layer.brightness = 0;
   setResetBrightnessButtonHTML();
 }, false);
 decreaseBrightness.addEventListener('click', function() {
-  layer.setBrightness(Math.max(layer.getBrightness() - 0.125, -1));
+  layer.brightness = Math.max(layer.brightness - 0.125, -1);
   setResetBrightnessButtonHTML();
 }, false);
 
@@ -47,19 +47,19 @@ var resetContrast = document.getElementById('reset-contrast');
 var decreaseContrast = document.getElementById('decrease-contrast');
 
 function setResetContrastButtonHTML() {
-  resetContrast.innerHTML = 'Contrast (' + layer.getContrast().toFixed(3) + ')';
+  resetContrast.innerHTML = 'Contrast (' + layer.contrast.toFixed(3) + ')';
 }
 setResetContrastButtonHTML();
 
 increaseContrast.addEventListener('click', function() {
-  layer.setContrast(layer.getContrast() + 0.125);
+  layer.contrast = layer.contrast + 0.125;
   setResetContrastButtonHTML();
 }, false);
 resetContrast.addEventListener('click', function() {
-  layer.setContrast(1);
+  layer.contrast = 1;
   setResetContrastButtonHTML();
 }, false);
 decreaseContrast.addEventListener('click', function() {
-  layer.setContrast(Math.max(layer.getContrast() - 0.125, 0));
+  layer.contrast = Math.max(layer.contrast - 0.125, 0);
   setResetContrastButtonHTML();
 }, false);
