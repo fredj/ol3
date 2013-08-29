@@ -79,6 +79,9 @@ ol.Collection = function(opt_array) {
 
   this.updateLength_();
 
+  this.defineProperty(ol.CollectionProperty.LENGTH, {
+    set: undefined // length is read only
+  });
 };
 goog.inherits(ol.Collection, ol.Object);
 
