@@ -473,6 +473,47 @@ describe('ol.Object', function() {
       expect(o.getKeys()).to.eql(['K']);
     });
   });
+
+  describe('defineProperty', function() {
+    it('sets the getter and setter', function() {
+      o.defineProperty('k');
+      o.k = 42;
+      expect(o.get('k')).to.eql(42)
+      expect(o.get('k')).to.eql(o.k);
+
+      o.set('k', 89);
+      expect(o.get('k')).to.eql(89)
+      expect(o.get('k')).to.eql(o.k);
+    });
+
+    it('works with bind', function() {
+      o.defineProperty('k');
+      var o2 = new ol.Object();
+      o2.bindTo('k', o);
+      o.k = 28;
+      expect(o2.get('k')).to.eql(28);
+      expect(o2.get('k')).to.eql(o.get('k'));
+
+      o2.set('k', 91);
+      expect(o2.get('k')).to.eql(o.get('k'));
+      expect(o.k).to.eql(91);
+    });
+
+    it('supports an optional property descriptor', function() {
+      o.set('k', 42);
+      o.defineProperty('k', {
+        set: undefined
+      });
+      try {
+        o.k = 12;
+      } catch (error) {
+        // ignore
+      }
+      expect(o.get('k')).to.eql(42);
+    });
+
+  });
+
 });
 
 
