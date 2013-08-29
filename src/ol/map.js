@@ -348,7 +348,7 @@ ol.Map = function(options) {
         overlay.setMap(this);
       }, this);
 
-  this.defineProperty(ol.MapProperty.VIEW);
+  goog.object.map(ol.MapProperty, this.defineProperty, this);
 };
 goog.inherits(ol.Map, ol.Object);
 
