@@ -33,7 +33,7 @@ function setResetHueButtonHTML() {
 setResetHueButtonHTML();
 
 increaseHue.addEventListener('click', function() {
-  layer.hue = layer.hue + 0.25;
+  layer.hue += 0.25;
   setResetHueButtonHTML();
 }, false);
 resetHue.addEventListener('click', function() {
@@ -41,7 +41,7 @@ resetHue.addEventListener('click', function() {
   setResetHueButtonHTML();
 }, false);
 decreaseHue.addEventListener('click', function() {
-  layer.hue = layer.hue - 0.25;
+  layer.hue -= 0.25;
   setResetHueButtonHTML();
 }, false);
 
@@ -56,7 +56,7 @@ function setResetSaturationButtonHTML() {
 setResetSaturationButtonHTML();
 
 increaseSaturation.addEventListener('click', function() {
-  layer.saturation = layer.saturation + 0.25;
+  layer.saturation += 0.25;
   setResetSaturationButtonHTML();
 }, false);
 resetSaturation.addEventListener('click', function() {

@@ -52,7 +52,7 @@ function setResetContrastButtonHTML() {
 setResetContrastButtonHTML();
 
 increaseContrast.addEventListener('click', function() {
-  layer.contrast = layer.contrast + 0.125;
+  layer.contrast += 0.125;
   setResetContrastButtonHTML();
 }, false);
 resetContrast.addEventListener('click', function() {
