@@ -135,6 +135,10 @@ ol.View2D = function(opt_options) {
 
   goog.object.map(ol.View2DProperty, this.defineProperty, this);
 
+  this.defineProperty('zoom', {
+    get: this.getZoom,
+    set: this.setZoom
+  });
 };
 goog.inherits(ol.View2D, ol.View);
 
