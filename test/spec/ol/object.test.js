@@ -478,11 +478,11 @@ describe('ol.Object', function() {
     it('sets the getter and setter', function() {
       o.defineProperty('k');
       o.k = 42;
-      expect(o.get('k')).to.eql(42)
+      expect(o.get('k')).to.eql(42);
       expect(o.get('k')).to.eql(o.k);
 
       o.set('k', 89);
-      expect(o.get('k')).to.eql(89)
+      expect(o.get('k')).to.eql(89);
       expect(o.get('k')).to.eql(o.k);
     });
 
