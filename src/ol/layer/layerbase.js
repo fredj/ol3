@@ -2,6 +2,7 @@ goog.provide('ol.layer.LayerBase');
 goog.provide('ol.layer.LayerProperty');
 goog.provide('ol.layer.LayerState');
 
+goog.require('goog.array');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.math');
@@ -60,7 +61,9 @@ ol.layer.LayerBase = function(options) {
   values.visible = goog.isDef(values.visible) ? values.visible : true;
 
   this.setValues(values);
-  goog.object.map(ol.layer.LayerProperty, this.defineProperty, this);
+  goog.array.map(goog.object.getKeys(values), function(key) {
+    this.defineProperty(key);
+  }, this);
 
   goog.events.listen(this, [
     ol.Object.getChangeEventType(ol.layer.LayerProperty.BRIGHTNESS),
