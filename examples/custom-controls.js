@@ -38,7 +38,7 @@ app.RotateNorthControl = function(opt_options) {
   var handleRotateNorth = function(e) {
     // prevent #rotate-north anchor from getting appended to the url
     e.preventDefault();
-    this_.getMap().getView().getView2D().setRotation(0);
+    this_.getMap().getView().getView2D().rotation = 0;
   };
 
   anchor.addEventListener('click', handleRotateNorth, false);

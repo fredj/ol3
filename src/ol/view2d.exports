@@ -6,3 +6,4 @@
 @exportProperty ol.View2D.prototype.getView2D
 @exportProperty ol.View2D.prototype.getZoom
 @exportProperty ol.View2D.prototype.setZoom
+@exportProperty ol.View2D.prototype.rotation

@@ -74,7 +74,7 @@ ol.interaction.Interaction.rotate =
 ol.interaction.Interaction.rotateWithoutConstraints =
     function(map, view, rotation, opt_anchor, opt_duration) {
   if (goog.isDefAndNotNull(rotation)) {
-    var currentRotation = view.getRotation();
+    var currentRotation = view.rotation;
     var currentCenter = view.getCenter();
     if (goog.isDef(currentRotation) && goog.isDef(currentCenter) &&
         goog.isDef(opt_duration)) {
@@ -95,10 +95,10 @@ ol.interaction.Interaction.rotateWithoutConstraints =
       var center = view.calculateCenterRotate(rotation, opt_anchor);
       map.withFrozenRendering(function() {
         view.setCenter(center);
-        view.setRotation(rotation);
+        view.rotation = rotation;
       });
     } else {
-      view.setRotation(rotation);
+      view.rotation = rotation;
     }
   }
 };

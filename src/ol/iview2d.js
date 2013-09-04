@@ -45,13 +45,6 @@ ol.IView2D.prototype.getResolution = function() {
 
 
 /**
- * @return {number|undefined} Map rotation.
- */
-ol.IView2D.prototype.getRotation = function() {
-};
-
-
-/**
  * @return {ol.View2DState} View2D state.
  */
 ol.IView2D.prototype.getView2DState = function() {

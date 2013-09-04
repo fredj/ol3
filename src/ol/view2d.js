@@ -128,8 +128,13 @@ ol.View2D = function(opt_options) {
     values[ol.View2DProperty.RESOLUTION] = this.constrainResolution(
         this.maxResolution_, options.zoom);
   }
-  values[ol.View2DProperty.ROTATION] =
-      goog.isDef(options.rotation) ? options.rotation : 0;
+
+  this.defineProperty(ol.View2DProperty.ROTATION);
+  /**
+   * @type {number|undefined}
+   */
+  this.rotation = goog.isDef(options.rotation) ? options.rotation : 0;
+
   this.setValues(values);
 };
 goog.inherits(ol.View2D, ol.View);
@@ -145,7 +150,7 @@ ol.View2D.prototype.calculateCenterRotate = function(rotation, anchor) {
   var currentCenter = this.getCenter();
   if (goog.isDef(currentCenter)) {
     center = [currentCenter[0] - anchor[0], currentCenter[1] - anchor[1]];
-    ol.coordinate.rotate(center, rotation - this.getRotation());
+    ol.coordinate.rotate(center, rotation - this.rotation);
     ol.coordinate.add(center, anchor);
   }
   return center;
@@ -294,18 +299,6 @@ ol.View2D.prototype.getResolutionForValueFunction = function(opt_power) {
 
 
 /**
- * @inheritDoc
- */
-ol.View2D.prototype.getRotation = function() {
-  return /** @type {number|undefined} */ (this.get(ol.View2DProperty.ROTATION));
-};
-goog.exportProperty(
-    ol.View2D.prototype,
-    'getRotation',
-    ol.View2D.prototype.getRotation);
-
-
-/**
  * Return a function that returns a resolution for a value between
  * 0 and 1. Exponential scaling is assumed.
  * @param {number=} opt_power Power.
@@ -346,7 +339,7 @@ ol.View2D.prototype.getView2DState = function() {
   var center = /** @type {ol.Coordinate} */ (this.getCenter());
   var projection = this.getProjection();
   var resolution = /** @type {number} */ (this.getResolution());
-  var rotation = this.getRotation();
+  var rotation = this.rotation;
   return {
     center: center.slice(),
     projection: goog.isDef(projection) ? projection : null,
@@ -447,19 +440,6 @@ goog.exportProperty(
     ol.View2D.prototype,
     'setResolution',
     ol.View2D.prototype.setResolution);
-
-
-/**
- * Set the rotation for this view.
- * @param {number|undefined} rotation Rotation.
- */
-ol.View2D.prototype.setRotation = function(rotation) {
-  this.set(ol.View2DProperty.ROTATION, rotation);
-};
-goog.exportProperty(
-    ol.View2D.prototype,
-    'setRotation',
-    ol.View2D.prototype.setRotation);
 
 
 /**

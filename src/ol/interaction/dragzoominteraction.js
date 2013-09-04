@@ -76,7 +76,7 @@ ol.interaction.DragZoom.prototype.handleDragEnd =
       var mapSize = /** @type {ol.Size} */ (map.getSize());
       view.fitExtent(extent, mapSize);
       // FIXME we should preserve rotation
-      view.setRotation(0);
+      view.rotation = 0;
     });
   }
 };
