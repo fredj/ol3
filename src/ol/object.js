@@ -163,6 +163,24 @@ ol.Object.prototype.bindTo =
 
 
 /**
+ * @param {string} key Key.
+ * @param {Object=} opt_descriptor Optional property descriptor.
+ */
+ol.Object.prototype.defineProperty = function(key, opt_descriptor) {
+  var descriptor = {
+    get: function() {
+      return this.get(key);
+    },
+    set: function(value) {
+      this.set(key, value);
+    }
+  };
+  goog.object.extend(descriptor, opt_descriptor || {});
+  Object.defineProperty(this, key, descriptor);
+};
+
+
+/**
  * Gets a value.
  * @param {string} key Key.
  * @return {*} Value.
