@@ -82,6 +82,20 @@ describe('ol.Object', function() {
 
   });
 
+  describe('getValues', function() {
+
+    it('returns the key-value pairs', function() {
+      o.setValues({
+        k1: 1,
+        k2: 2
+      });
+      var values = o.getValues();
+      expect(goog.object.getCount(values).to.eql(2));
+      expect(values['k1']).to.eql(1);
+      expect(values['k2']).to.eql(2);
+    });
+  });
+
   describe('setValues', function() {
 
     it('sets multiple values at once', function() {
@@ -477,4 +491,5 @@ describe('ol.Object', function() {
 
 
 goog.require('goog.events');
+goog.require('goog.object');
 goog.require('ol.Object');

@@ -196,6 +196,15 @@ ol.Object.prototype.getKeys = function() {
 
 
 /**
+ * Gets all the key-value pair as an Object.
+ * @return {Object.<string, *>} Values object.
+ */
+ol.Object.prototype.getValues = function() {
+  return goog.array.map(this.getKeys(), this.get, this);
+};
+
+
+/**
  * Notify all observers of a change on this property. This notifies both
  * objects that are bound to the object's property as well as the object
  * that it is bound to.
