@@ -106,6 +106,19 @@ ol.MapBrowserEvent.prototype.stopPropagation = function() {
 };
 
 
+/**
+ * w3c Pointer Events
+ * @see https://code.google.com/p/closure-library/issues/detail?id=592
+ * FIXME: use goog.events.EventType once the patch is merged upstream.
+ * @enum {string}
+ */
+ol.MapBrowserEvent.PointerEventType = {
+  POINTERDOWN: 'pointerdown',
+  POINTERUP: 'pointerup',
+  POINTERMOVE: 'pointermove'
+};
+
+
 
 /**
  * @param {ol.Map} map The map with the viewport to listen to events on.
@@ -183,15 +196,18 @@ ol.MapBrowserEventHandler = function(map) {
   this.touchListenerKeys_ = [
     goog.events.listen(element, [
       goog.events.EventType.TOUCHSTART,
-      goog.events.EventType.MSPOINTERDOWN
+      goog.events.EventType.MSPOINTERDOWN,
+      ol.MapBrowserEvent.PointerEventType.POINTERDOWN
     ], this.handleTouchStart_, false, this),
     goog.events.listen(goog.global.document, [
       goog.events.EventType.TOUCHMOVE,
-      goog.events.EventType.MSPOINTERMOVE
+      goog.events.EventType.MSPOINTERMOVE,
+      ol.MapBrowserEvent.PointerEventType.POINTERMOVE
     ], this.handleTouchMove_, false, this),
     goog.events.listen(goog.global.document, [
       goog.events.EventType.TOUCHEND,
-      goog.events.EventType.MSPOINTERUP
+      goog.events.EventType.MSPOINTERUP,
+      ol.MapBrowserEvent.PointerEventType.POINTERUP
     ], this.handleTouchEnd_, false, this)
   ];
 
