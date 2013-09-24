@@ -22,9 +22,9 @@ goog.require('ol.parser.ogc.GML_v2');
 ol.parser.ogc.Filter_v1_0_0 = function() {
   goog.base(this);
   this.version = '1.0.0';
-  this.schemaLocation = 'http://www.opengis.net/ogc ' +
+  this.schemaLocation = this.defaultNamespaceURI + ' ' +
       'http://schemas.opengis.net/filter/1.0.0/filter.xsd';
-  goog.object.extend(this.readers['http://www.opengis.net/ogc'], {
+  goog.object.extend(this.readers[this.defaultNamespaceURI], {
     'PropertyIsEqualTo': function(node, obj) {
       var container = {};
       this.readChildNodes(node, container);
@@ -53,7 +53,7 @@ ol.parser.ogc.Filter_v1_0_0 = function() {
           new ol.expr.Identifier(ol.expr.functions.LIKE), args));
     }
   });
-  goog.object.extend(this.writers['http://www.opengis.net/ogc'], {
+  goog.object.extend(this.writers[this.defaultNamespaceURI], {
     'PropertyIsEqualTo': function(filter) {
       var node = this.createElementNS('ogc:PropertyIsEqualTo');
       var property = filter.getLeft();

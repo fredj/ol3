@@ -25,372 +25,371 @@ goog.require('ol.parser.XML');
 ol.parser.ogc.Filter_v1 = function() {
   this.defaultNamespaceURI = 'http://www.opengis.net/ogc';
   this.errorProperty = 'filter';
-  this.readers = {
-    'http://www.opengis.net/ogc': {
-      _expression: function(node) {
-        var expressions = [];
-        var obj, value, numValue, expr;
-        for (var child = node.firstChild; child; child = child.nextSibling) {
-          switch (child.nodeType) {
-            case 1:
-              obj = this.readNode(child);
-              if (obj.property) {
-                expressions.push(obj.property);
-              } else if (goog.isDef(obj.value)) {
-                expressions.push(obj.value);
+  this.readers = {};
+
+  this.readers[this.defaultNamespaceURI] = {
+    _expression: function(node) {
+      var expressions = [];
+      var obj, value, numValue, expr;
+      for (var child = node.firstChild; child; child = child.nextSibling) {
+        switch (child.nodeType) {
+          case 1:
+            obj = this.readNode(child);
+            if (obj.property) {
+              expressions.push(obj.property);
+            } else if (goog.isDef(obj.value)) {
+              expressions.push(obj.value);
+            }
+            break;
+          case 3: // text node
+          case 4: // cdata section
+            value = goog.string.trim(child.nodeValue);
+            // no need to concatenate empty strings
+            if (value) {
+              // check for numeric values
+              numValue = goog.string.toNumber(value);
+              if (!isNaN(numValue)) {
+                value = numValue;
               }
-              break;
-            case 3: // text node
-            case 4: // cdata section
-              value = goog.string.trim(child.nodeValue);
-              // no need to concatenate empty strings
-              if (value) {
-                // check for numeric values
-                numValue = goog.string.toNumber(value);
-                if (!isNaN(numValue)) {
-                  value = numValue;
-                }
-                expressions.push(new ol.expr.Literal(value));
-              }
-              break;
-            default:
-              break;
-          }
+              expressions.push(new ol.expr.Literal(value));
+            }
+            break;
+          default:
+            break;
         }
-        // if we have more than one property or literal, we concatenate them
-        var num = expressions.length;
-        if (num === 1) {
-          expr = expressions[0];
-        } else {
-          expr = new ol.expr.Call(
-              new ol.expr.Identifier(ol.expr.functions.CONCAT),
-              expressions);
+      }
+      // if we have more than one property or literal, we concatenate them
+      var num = expressions.length;
+      if (num === 1) {
+        expr = expressions[0];
+      } else {
+        expr = new ol.expr.Call(
+            new ol.expr.Identifier(ol.expr.functions.CONCAT),
+            expressions);
+      }
+      return expr;
+    },
+    'Filter': function(node, obj) {
+      var container = {
+        filters: []
+      };
+      this.readChildNodes(node, container);
+      if (goog.isDef(container.fids)) {
+        obj.filter = new ol.expr.Call(
+            new ol.expr.Identifier(ol.expr.functions.FID),
+            goog.object.getValues(container.fids));
+      } else if (container.filters.length > 0) {
+        obj.filter = container.filters[0];
+      }
+    },
+    'FeatureId': function(node, obj) {
+      var fid = node.getAttribute('fid');
+      if (fid) {
+        if (!goog.isDef(obj.fids)) {
+          obj.fids = {};
         }
-        return expr;
-      },
-      'Filter': function(node, obj) {
-        var container = {
-          filters: []
-        };
-        this.readChildNodes(node, container);
-        if (goog.isDef(container.fids)) {
-          obj.filter = new ol.expr.Call(
-              new ol.expr.Identifier(ol.expr.functions.FID),
-              goog.object.getValues(container.fids));
-        } else if (container.filters.length > 0) {
-          obj.filter = container.filters[0];
+        if (!obj.fids.hasOwnProperty(fid)) {
+          obj.fids[fid] = new ol.expr.Literal(fid);
         }
-      },
-      'FeatureId': function(node, obj) {
-        var fid = node.getAttribute('fid');
-        if (fid) {
-          if (!goog.isDef(obj.fids)) {
-            obj.fids = {};
-          }
-          if (!obj.fids.hasOwnProperty(fid)) {
-            obj.fids[fid] = new ol.expr.Literal(fid);
-          }
-        }
-      },
-      'And': function(node, obj) {
-        var container = {filters: []};
-        this.readChildNodes(node, container);
-        var filter = this.aggregateLogical_(container.filters,
-            ol.expr.LogicalOp.AND);
-        obj.filters.push(filter);
-      },
-      'Or': function(node, obj) {
-        var container = {filters: []};
-        this.readChildNodes(node, container);
-        var filter = this.aggregateLogical_(container.filters,
-            ol.expr.LogicalOp.OR);
-        obj.filters.push(filter);
-      },
-      'Not': function(node, obj) {
-        var container = {filters: []};
-        this.readChildNodes(node, container);
-        // Not is unary so can only contain 1 child filter
-        obj.filters.push(new ol.expr.Not(
-            container.filters[0]));
-      },
-      'PropertyIsNull': function(node, obj) {
-        var container = {};
-        this.readChildNodes(node, container);
-        obj.filters.push(new ol.expr.Comparison(
-            ol.expr.ComparisonOp.EQ,
-            container.property,
-            new ol.expr.Literal(null)));
-      },
-      'PropertyIsLessThan': function(node, obj) {
-        var container = {};
-        this.readChildNodes(node, container);
-        obj.filters.push(new ol.expr.Comparison(
-            ol.expr.ComparisonOp.LT,
-            container.property,
-            container.value));
-      },
-      'PropertyIsGreaterThan': function(node, obj) {
-        var container = {};
-        this.readChildNodes(node, container);
-        obj.filters.push(new ol.expr.Comparison(
-            ol.expr.ComparisonOp.GT,
-            container.property,
-            container.value));
-      },
-      'PropertyIsLessThanOrEqualTo': function(node, obj) {
-        var container = {};
-        this.readChildNodes(node, container);
-        obj.filters.push(new ol.expr.Comparison(
-            ol.expr.ComparisonOp.LTE,
-            container.property,
-            container.value));
-      },
-      'PropertyIsGreaterThanOrEqualTo': function(node, obj) {
-        var container = {};
-        this.readChildNodes(node, container);
-        obj.filters.push(new ol.expr.Comparison(
-            ol.expr.ComparisonOp.GTE,
-            container.property,
-            container.value));
-      },
-      'PropertyIsBetween': function(node, obj) {
-        var container = {};
-        this.readChildNodes(node, container);
-        obj.filters.push(new ol.expr.Logical(ol.expr.LogicalOp.AND,
-            new ol.expr.Comparison(ol.expr.ComparisonOp.GTE,
-            container.property, container.lowerBoundary),
-            new ol.expr.Comparison(ol.expr.ComparisonOp.LTE,
-            container.property, container.upperBoundary)));
-      },
-      'Literal': function(node, obj) {
-        var nodeValue = this.getChildValue(node);
-        var value = goog.string.toNumber(nodeValue);
-        obj.value = new ol.expr.Literal(isNaN(value) ? nodeValue : value);
-      },
-      'PropertyName': function(node, obj) {
-        obj.property = new ol.expr.Identifier(this.getChildValue(node));
-      },
-      'LowerBoundary': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        obj.lowerBoundary = readers._expression.call(this, node);
-      },
-      'UpperBoundary': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        obj.upperBoundary = readers._expression.call(this, node);
-      },
-      _spatial: function(node, obj, identifier) {
-        var args = [], container = {};
-        this.readChildNodes(node, container);
-        if (goog.isDef(container.geometry)) {
-          args.push(new ol.expr.Literal(this.gml_.createGeometry(container)));
-        } else {
-          args = [new ol.expr.Literal(container.bounds[0]),
+      }
+    },
+    'And': function(node, obj) {
+      var container = {filters: []};
+      this.readChildNodes(node, container);
+      var filter = this.aggregateLogical_(container.filters,
+          ol.expr.LogicalOp.AND);
+      obj.filters.push(filter);
+    },
+    'Or': function(node, obj) {
+      var container = {filters: []};
+      this.readChildNodes(node, container);
+      var filter = this.aggregateLogical_(container.filters,
+          ol.expr.LogicalOp.OR);
+      obj.filters.push(filter);
+    },
+    'Not': function(node, obj) {
+      var container = {filters: []};
+      this.readChildNodes(node, container);
+      // Not is unary so can only contain 1 child filter
+      obj.filters.push(new ol.expr.Not(
+          container.filters[0]));
+    },
+    'PropertyIsNull': function(node, obj) {
+      var container = {};
+      this.readChildNodes(node, container);
+      obj.filters.push(new ol.expr.Comparison(
+          ol.expr.ComparisonOp.EQ,
+          container.property,
+          new ol.expr.Literal(null)));
+    },
+    'PropertyIsLessThan': function(node, obj) {
+      var container = {};
+      this.readChildNodes(node, container);
+      obj.filters.push(new ol.expr.Comparison(
+          ol.expr.ComparisonOp.LT,
+          container.property,
+          container.value));
+    },
+    'PropertyIsGreaterThan': function(node, obj) {
+      var container = {};
+      this.readChildNodes(node, container);
+      obj.filters.push(new ol.expr.Comparison(
+          ol.expr.ComparisonOp.GT,
+          container.property,
+          container.value));
+    },
+    'PropertyIsLessThanOrEqualTo': function(node, obj) {
+      var container = {};
+      this.readChildNodes(node, container);
+      obj.filters.push(new ol.expr.Comparison(
+          ol.expr.ComparisonOp.LTE,
+          container.property,
+          container.value));
+    },
+    'PropertyIsGreaterThanOrEqualTo': function(node, obj) {
+      var container = {};
+      this.readChildNodes(node, container);
+      obj.filters.push(new ol.expr.Comparison(
+          ol.expr.ComparisonOp.GTE,
+          container.property,
+          container.value));
+    },
+    'PropertyIsBetween': function(node, obj) {
+      var container = {};
+      this.readChildNodes(node, container);
+      obj.filters.push(new ol.expr.Logical(ol.expr.LogicalOp.AND,
+          new ol.expr.Comparison(ol.expr.ComparisonOp.GTE,
+          container.property, container.lowerBoundary),
+          new ol.expr.Comparison(ol.expr.ComparisonOp.LTE,
+          container.property, container.upperBoundary)));
+    },
+    'Literal': function(node, obj) {
+      var nodeValue = this.getChildValue(node);
+      var value = goog.string.toNumber(nodeValue);
+      obj.value = new ol.expr.Literal(isNaN(value) ? nodeValue : value);
+    },
+    'PropertyName': function(node, obj) {
+      obj.property = new ol.expr.Identifier(this.getChildValue(node));
+    },
+    'LowerBoundary': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      obj.lowerBoundary = readers._expression.call(this, node);
+    },
+    'UpperBoundary': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      obj.upperBoundary = readers._expression.call(this, node);
+    },
+    _spatial: function(node, obj, identifier) {
+      var args = [], container = {};
+      this.readChildNodes(node, container);
+      if (goog.isDef(container.geometry)) {
+        args.push(new ol.expr.Literal(this.gml_.createGeometry(container)));
+      } else {
+        args = [new ol.expr.Literal(container.bounds[0]),
                 new ol.expr.Literal(container.bounds[1]),
                 new ol.expr.Literal(container.bounds[2]),
                 new ol.expr.Literal(container.bounds[3])];
-        }
-        if (goog.isDef(container.distance)) {
-          args.push(container.distance);
-        }
-        if (goog.isDef(container.distanceUnits)) {
-          args.push(container.distanceUnits);
-        }
-        args.push(new ol.expr.Literal(container.projection));
-        if (goog.isDef(container.property)) {
-          args.push(container.property);
-        }
-        obj.filters.push(new ol.expr.Call(new ol.expr.Identifier(
-            identifier), args));
-      },
-      'BBOX': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        readers._spatial.call(this, node, obj,
-            ol.expr.functions.EXTENT);
-      },
-      'Intersects': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        readers._spatial.call(this, node, obj,
-            ol.expr.functions.INTERSECTS);
-      },
-      'Within': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        readers._spatial.call(this, node, obj,
-            ol.expr.functions.WITHIN);
-      },
-      'Contains': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        readers._spatial.call(this, node, obj,
-            ol.expr.functions.CONTAINS);
-      },
-      'DWithin': function(node, obj) {
-        var readers = this.readers[this.defaultNamespaceURI];
-        readers._spatial.call(this, node, obj,
-            ol.expr.functions.DWITHIN);
-      },
-      'Distance': function(node, obj) {
-        var value = goog.string.toNumber(this.getChildValue(node));
-        obj.distance = new ol.expr.Literal(value);
-        obj.distanceUnits = new ol.expr.Literal(node.getAttribute('units'));
       }
+      if (goog.isDef(container.distance)) {
+        args.push(container.distance);
+      }
+      if (goog.isDef(container.distanceUnits)) {
+        args.push(container.distanceUnits);
+      }
+      args.push(new ol.expr.Literal(container.projection));
+      if (goog.isDef(container.property)) {
+        args.push(container.property);
+      }
+      obj.filters.push(new ol.expr.Call(new ol.expr.Identifier(
+          identifier), args));
+    },
+    'BBOX': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      readers._spatial.call(this, node, obj,
+          ol.expr.functions.EXTENT);
+    },
+    'Intersects': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      readers._spatial.call(this, node, obj,
+          ol.expr.functions.INTERSECTS);
+    },
+    'Within': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      readers._spatial.call(this, node, obj,
+          ol.expr.functions.WITHIN);
+    },
+    'Contains': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      readers._spatial.call(this, node, obj,
+          ol.expr.functions.CONTAINS);
+    },
+    'DWithin': function(node, obj) {
+      var readers = this.readers[this.defaultNamespaceURI];
+      readers._spatial.call(this, node, obj,
+          ol.expr.functions.DWITHIN);
+    },
+    'Distance': function(node, obj) {
+      var value = goog.string.toNumber(this.getChildValue(node));
+      obj.distance = new ol.expr.Literal(value);
+      obj.distanceUnits = new ol.expr.Literal(node.getAttribute('units'));
     }
   };
-  this.writers = {
-    'http://www.opengis.net/ogc': {
-      'Filter': function(filter) {
-        var node = this.createElementNS('ogc:Filter');
-        this.writeNode(this.getFilterType_(filter), filter, null, node);
-        return node;
-      },
-      '_featureIds': function(filter) {
-        var node = this.createDocumentFragment();
-        var args = filter.getArgs();
-        for (var i = 0, ii = args.length; i < ii; i++) {
-          goog.asserts.assert(args[i] instanceof ol.expr.Literal);
-          this.writeNode('FeatureId', args[i].getValue(), null, node);
-        }
-        return node;
-      },
-      'FeatureId': function(fid) {
-        var node = this.createElementNS('ogc:FeatureId');
-        node.setAttribute('fid', fid);
-        return node;
-      },
-      'And': function(filter) {
-        var node = this.createElementNS('ogc:And');
-        var subFilters = [];
-        this.getSubfiltersForLogical_(filter, subFilters);
-        for (var i = 0, ii = subFilters.length; i < ii; ++i) {
-          var subFilter = subFilters[i];
-          if (goog.isDefAndNotNull(subFilter)) {
-            this.writeNode(this.getFilterType_(subFilter), subFilter,
-                null, node);
-          }
-        }
-        return node;
-      },
-      'Or': function(filter) {
-        var node = this.createElementNS('ogc:Or');
-        var subFilters = [];
-        this.getSubfiltersForLogical_(filter, subFilters);
-        for (var i = 0, ii = subFilters.length; i < ii; ++i) {
-          var subFilter = subFilters[i];
-          if (goog.isDefAndNotNull(subFilter)) {
-            this.writeNode(this.getFilterType_(subFilter), subFilter,
-                null, node);
-          }
-        }
-        return node;
-      },
-      'Not': function(filter) {
-        var node = this.createElementNS('ogc:Not');
-        var childFilter = filter.getArgument();
-        this.writeNode(this.getFilterType_(childFilter), childFilter, null,
-            node);
-        return node;
-      },
-      'PropertyIsLessThan': function(filter) {
-        var node = this.createElementNS('ogc:PropertyIsLessThan');
-        this.writeNode('PropertyName', filter.getLeft(), null, node);
-        this.writeOgcExpression(filter.getRight(), node);
-        return node;
-      },
-      'PropertyIsGreaterThan': function(filter) {
-        var node = this.createElementNS('ogc:PropertyIsGreaterThan');
-        this.writeNode('PropertyName', filter.getLeft(), null, node);
-        this.writeOgcExpression(filter.getRight(), node);
-        return node;
-      },
-      'PropertyIsLessThanOrEqualTo': function(filter) {
-        var node = this.createElementNS('ogc:PropertyIsLessThanOrEqualTo');
-        this.writeNode('PropertyName', filter.getLeft(), null, node);
-        this.writeOgcExpression(filter.getRight(), node);
-        return node;
-      },
-      'PropertyIsGreaterThanOrEqualTo': function(filter) {
-        var node = this.createElementNS('ogc:PropertyIsGreaterThanOrEqualTo');
-        this.writeNode('PropertyName', filter.getLeft(), null, node);
-        this.writeOgcExpression(filter.getRight(), node);
-        return node;
-      },
-      'PropertyIsBetween': function(filter) {
-        var node = this.createElementNS('ogc:PropertyIsBetween');
-        var property = filter.getLeft().getLeft();
-        this.writeNode('PropertyName', property, null, node);
-        var lower, upper;
-        var filters = new Array(2);
-        filters[0] = filter.getLeft();
-        filters[1] = filter.getRight();
-        for (var i = 0; i < 2; ++i) {
-          var expr = filters[i].getRight();
-          if (filters[i].getOperator() === ol.expr.ComparisonOp.GTE) {
-            lower = expr;
-          } else if (filters[i].getOperator() === ol.expr.ComparisonOp.LTE) {
-            upper = expr;
-          }
-        }
-        this.writeNode('LowerBoundary', lower, null, node);
-        this.writeNode('UpperBoundary', upper, null, node);
-        return node;
-      },
-      'PropertyName': function(expr) {
-        goog.asserts.assert(expr instanceof ol.expr.Identifier);
-        var node = this.createElementNS('ogc:PropertyName');
-        node.appendChild(this.createTextNode(expr.getName()));
-        return node;
-      },
-      'Literal': function(expr) {
-        goog.asserts.assert(expr instanceof ol.expr.Literal);
-        var node = this.createElementNS('ogc:Literal');
-        node.appendChild(this.createTextNode(expr.getValue()));
-        return node;
-      },
-      'LowerBoundary': function(expr) {
-        var node = this.createElementNS('ogc:LowerBoundary');
-        this.writeOgcExpression(expr, node);
-        return node;
-      },
-      'UpperBoundary': function(expr) {
-        var node = this.createElementNS('ogc:UpperBoundary');
-        this.writeOgcExpression(expr, node);
-        return node;
-      },
-      'INTERSECTS': function(filter) {
-        return this.writeSpatial_(filter, 'Intersects');
-      },
-      'WITHIN': function(filter) {
-        return this.writeSpatial_(filter, 'Within');
-      },
-      'CONTAINS': function(filter) {
-        return this.writeSpatial_(filter, 'Contains');
-      },
-      'DWITHIN': function(filter) {
-        var node = this.writeSpatial_(filter, 'DWithin');
-        this.writeNode('Distance', filter, null, node);
-        return node;
-      },
-      'Distance': function(filter) {
-        var node = this.createElementNS('ogc:Distance');
-        var args = filter.getArgs();
-        goog.asserts.assert(args[2] instanceof ol.expr.Literal);
-        node.setAttribute('units', args[2].getValue());
-        goog.asserts.assert(args[1] instanceof ol.expr.Literal);
-        node.appendChild(this.createTextNode(args[1].getValue()));
-        return node;
-      },
-      'Function': function(filter) {
-        var node = this.createElementNS('ogc:Function');
-        node.setAttribute('name', filter.getCallee().getName());
-        var params = filter.getArgs();
-        for (var i = 0, len = params.length; i < len; i++) {
-          this.writeOgcExpression(params[i], node);
-        }
-        return node;
-      },
-      'PropertyIsNull': function(filter) {
-        var node = this.createElementNS('ogc:PropertyIsNull');
-        this.writeNode('PropertyName', filter.getLeft(), null, node);
-        return node;
+  this.writers = {};
+  this.writers[this.defaultNamespaceURI] = {
+    'Filter': function(filter) {
+      var node = this.createElementNS('ogc:Filter');
+      this.writeNode(this.getFilterType_(filter), filter, null, node);
+      return node;
+    },
+    '_featureIds': function(filter) {
+      var node = this.createDocumentFragment();
+      var args = filter.getArgs();
+      for (var i = 0, ii = args.length; i < ii; i++) {
+        goog.asserts.assert(args[i] instanceof ol.expr.Literal);
+        this.writeNode('FeatureId', args[i].getValue(), null, node);
       }
+      return node;
+    },
+    'FeatureId': function(fid) {
+      var node = this.createElementNS('ogc:FeatureId');
+      node.setAttribute('fid', fid);
+      return node;
+    },
+    'And': function(filter) {
+      var node = this.createElementNS('ogc:And');
+      var subFilters = [];
+      this.getSubfiltersForLogical_(filter, subFilters);
+      for (var i = 0, ii = subFilters.length; i < ii; ++i) {
+        var subFilter = subFilters[i];
+        if (goog.isDefAndNotNull(subFilter)) {
+          this.writeNode(this.getFilterType_(subFilter), subFilter,
+              null, node);
+        }
+      }
+      return node;
+    },
+    'Or': function(filter) {
+      var node = this.createElementNS('ogc:Or');
+      var subFilters = [];
+      this.getSubfiltersForLogical_(filter, subFilters);
+      for (var i = 0, ii = subFilters.length; i < ii; ++i) {
+        var subFilter = subFilters[i];
+        if (goog.isDefAndNotNull(subFilter)) {
+          this.writeNode(this.getFilterType_(subFilter), subFilter,
+              null, node);
+        }
+      }
+      return node;
+    },
+    'Not': function(filter) {
+      var node = this.createElementNS('ogc:Not');
+      var childFilter = filter.getArgument();
+      this.writeNode(this.getFilterType_(childFilter), childFilter, null,
+          node);
+      return node;
+    },
+    'PropertyIsLessThan': function(filter) {
+      var node = this.createElementNS('ogc:PropertyIsLessThan');
+      this.writeNode('PropertyName', filter.getLeft(), null, node);
+      this.writeOgcExpression(filter.getRight(), node);
+      return node;
+    },
+    'PropertyIsGreaterThan': function(filter) {
+      var node = this.createElementNS('ogc:PropertyIsGreaterThan');
+      this.writeNode('PropertyName', filter.getLeft(), null, node);
+      this.writeOgcExpression(filter.getRight(), node);
+      return node;
+    },
+    'PropertyIsLessThanOrEqualTo': function(filter) {
+      var node = this.createElementNS('ogc:PropertyIsLessThanOrEqualTo');
+      this.writeNode('PropertyName', filter.getLeft(), null, node);
+      this.writeOgcExpression(filter.getRight(), node);
+      return node;
+    },
+    'PropertyIsGreaterThanOrEqualTo': function(filter) {
+      var node = this.createElementNS('ogc:PropertyIsGreaterThanOrEqualTo');
+      this.writeNode('PropertyName', filter.getLeft(), null, node);
+      this.writeOgcExpression(filter.getRight(), node);
+      return node;
+    },
+    'PropertyIsBetween': function(filter) {
+      var node = this.createElementNS('ogc:PropertyIsBetween');
+      var property = filter.getLeft().getLeft();
+      this.writeNode('PropertyName', property, null, node);
+      var lower, upper;
+      var filters = new Array(2);
+      filters[0] = filter.getLeft();
+      filters[1] = filter.getRight();
+      for (var i = 0; i < 2; ++i) {
+        var expr = filters[i].getRight();
+        if (filters[i].getOperator() === ol.expr.ComparisonOp.GTE) {
+          lower = expr;
+        } else if (filters[i].getOperator() === ol.expr.ComparisonOp.LTE) {
+          upper = expr;
+        }
+      }
+      this.writeNode('LowerBoundary', lower, null, node);
+      this.writeNode('UpperBoundary', upper, null, node);
+      return node;
+    },
+    'PropertyName': function(expr) {
+      goog.asserts.assert(expr instanceof ol.expr.Identifier);
+      var node = this.createElementNS('ogc:PropertyName');
+      node.appendChild(this.createTextNode(expr.getName()));
+      return node;
+    },
+    'Literal': function(expr) {
+      goog.asserts.assert(expr instanceof ol.expr.Literal);
+      var node = this.createElementNS('ogc:Literal');
+      node.appendChild(this.createTextNode(expr.getValue()));
+      return node;
+    },
+    'LowerBoundary': function(expr) {
+      var node = this.createElementNS('ogc:LowerBoundary');
+      this.writeOgcExpression(expr, node);
+      return node;
+    },
+    'UpperBoundary': function(expr) {
+      var node = this.createElementNS('ogc:UpperBoundary');
+      this.writeOgcExpression(expr, node);
+      return node;
+    },
+    'INTERSECTS': function(filter) {
+      return this.writeSpatial_(filter, 'Intersects');
+    },
+    'WITHIN': function(filter) {
+      return this.writeSpatial_(filter, 'Within');
+    },
+    'CONTAINS': function(filter) {
+      return this.writeSpatial_(filter, 'Contains');
+    },
+    'DWITHIN': function(filter) {
+      var node = this.writeSpatial_(filter, 'DWithin');
+      this.writeNode('Distance', filter, null, node);
+      return node;
+    },
+    'Distance': function(filter) {
+      var node = this.createElementNS('ogc:Distance');
+      var args = filter.getArgs();
+      goog.asserts.assert(args[2] instanceof ol.expr.Literal);
+      node.setAttribute('units', args[2].getValue());
+      goog.asserts.assert(args[1] instanceof ol.expr.Literal);
+      node.appendChild(this.createTextNode(args[1].getValue()));
+      return node;
+    },
+    'Function': function(filter) {
+      var node = this.createElementNS('ogc:Function');
+      node.setAttribute('name', filter.getCallee().getName());
+      var params = filter.getArgs();
+      for (var i = 0, len = params.length; i < len; i++) {
+        this.writeOgcExpression(params[i], node);
+      }
+      return node;
+    },
+    'PropertyIsNull': function(filter) {
+      var node = this.createElementNS('ogc:PropertyIsNull');
+      this.writeNode('PropertyName', filter.getLeft(), null, node);
+      return node;
     }
   };
   goog.base(this);
