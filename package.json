@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "closure-util": "*",
-    "mocha": "~1.13"
+    "mocha": "~1.13",
+    "sinon": "~1.7"
   }
 }
