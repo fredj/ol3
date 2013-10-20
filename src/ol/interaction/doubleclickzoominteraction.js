@@ -44,11 +44,10 @@ goog.inherits(ol.interaction.DoubleClickZoom, ol.interaction.Interaction);
 ol.interaction.DoubleClickZoom.prototype.handleMapBrowserEvent =
     function(mapBrowserEvent) {
   var stopEvent = false;
-  var browserEvent = mapBrowserEvent.browserEvent;
-  if (mapBrowserEvent.type == ol.MapBrowserEvent.EventType.DBLCLICK &&
-      mapBrowserEvent.isMouseActionButton()) {
+  if (mapBrowserEvent.type == ol.MapBrowserEvent.EventType.DBLCLICK) {
     var map = mapBrowserEvent.map;
     var anchor = mapBrowserEvent.getCoordinate();
+    var browserEvent = mapBrowserEvent.browserEvent;
     var delta = browserEvent.shiftKey ? -this.delta_ : this.delta_;
     // FIXME works for View2D only
     var view = map.getView().getView2D();

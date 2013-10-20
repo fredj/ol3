@@ -6,6 +6,7 @@ goog.require('goog.asserts');
 goog.require('ol.Kinetic');
 goog.require('ol.PreRenderFunction');
 goog.require('ol.View2D');
+goog.require('ol.ViewHint');
 goog.require('ol.coordinate');
 goog.require('ol.interaction.ConditionType');
 goog.require('ol.interaction.Drag');
@@ -44,6 +45,18 @@ ol.interaction.DragPan = function(opt_options) {
    */
   this.kineticPreRenderFn_ = null;
 
+  /**
+   * @private
+   * @type {number|undefined}
+   */
+  this.pointerId_ = undefined;
+
+  /**
+   * @private
+   * @type {ol.Pixel}
+   */
+  this.lastPixel_ = null;
+
 };
 goog.inherits(ol.interaction.DragPan, ol.interaction.Drag);
 
@@ -52,25 +65,27 @@ goog.inherits(ol.interaction.DragPan, ol.interaction.Drag);
  * @inheritDoc
  */
 ol.interaction.DragPan.prototype.handleDrag = function(mapBrowserEvent) {
-  if (this.kinetic_) {
-    this.kinetic_.update(
-        mapBrowserEvent.browserEvent.clientX,
-        mapBrowserEvent.browserEvent.clientY);
+  if (this.pointerId_ == mapBrowserEvent.pointerId) {
+    var offset = mapBrowserEvent.getPixel();
+    if (this.kinetic_) {
+      this.kinetic_.update(offset[0], offset[1]);
+    }
+    var deltaX = this.lastPixel_[0] - offset[0];
+    var deltaY = offset[1] - this.lastPixel_[1];
+    var map = mapBrowserEvent.map;
+    // FIXME works for View2D only
+    var view = map.getView();
+    goog.asserts.assertInstanceof(view, ol.View2D);
+    var view2DState = view.getView2DState();
+    var center = [deltaX, deltaY];
+    ol.coordinate.scale(center, view2DState.resolution);
+    ol.coordinate.rotate(center, view2DState.rotation);
+    ol.coordinate.add(center, view2DState.center);
+    center = view.constrainCenter(center);
+    map.requestRenderFrame();
+    view.setCenter(center);
+    this.lastPixel_ = offset;
   }
-  var map = mapBrowserEvent.map;
-  // FIXME works for View2D only
-  var view = map.getView();
-  goog.asserts.assertInstanceof(view, ol.View2D);
-  var view2DState = view.getView2DState();
-  var newCenter = [
-    -view2DState.resolution * this.deltaX,
-    view2DState.resolution * this.deltaY
-  ];
-  ol.coordinate.rotate(newCenter, view2DState.rotation);
-  ol.coordinate.add(newCenter, this.startCenter);
-  newCenter = view.constrainCenter(newCenter);
-  map.requestRenderFrame();
-  view.setCenter(newCenter);
 };
 
 
@@ -78,28 +93,31 @@ ol.interaction.DragPan.prototype.handleDrag = function(mapBrowserEvent) {
  * @inheritDoc
  */
 ol.interaction.DragPan.prototype.handleDragEnd = function(mapBrowserEvent) {
+  if (this.pointerId_ == mapBrowserEvent.pointerId) {
+    // FIXME works for View2D only
+    var map = mapBrowserEvent.map;
+    var view = map.getView().getView2D();
 
-  // FIXME works for View2D only
+    if (this.kinetic_ && this.kinetic_.end()) {
+      var view2DState = view.getView2DState();
+      var distance = this.kinetic_.getDistance();
+      var angle = this.kinetic_.getAngle();
+      this.kineticPreRenderFn_ = this.kinetic_.pan(view2DState.center);
+      map.beforeRender(this.kineticPreRenderFn_);
 
-  var map = mapBrowserEvent.map;
-  var view = map.getView().getView2D();
+      var centerpx = map.getPixelFromCoordinate(view2DState.center);
+      var dest = map.getCoordinateFromPixel([
+        centerpx[0] - distance * Math.cos(angle),
+        centerpx[1] - distance * Math.sin(angle)
+      ]);
+      dest = view.constrainCenter(dest);
+      view.setCenter(dest);
+    }
+    map.requestRenderFrame();
+    view.setHint(ol.ViewHint.INTERACTING, -1);
 
-  if (this.kinetic_ && this.kinetic_.end()) {
-    var view2DState = view.getView2DState();
-    var distance = this.kinetic_.getDistance();
-    var angle = this.kinetic_.getAngle();
-    this.kineticPreRenderFn_ = this.kinetic_.pan(view2DState.center);
-    map.beforeRender(this.kineticPreRenderFn_);
-
-    var centerpx = map.getPixelFromCoordinate(view2DState.center);
-    var dest = map.getCoordinateFromPixel([
-      centerpx[0] - distance * Math.cos(angle),
-      centerpx[1] - distance * Math.sin(angle)
-    ]);
-    dest = view.constrainCenter(dest);
-    view.setCenter(dest);
+    this.pointerId_ = undefined;
   }
-  map.requestRenderFrame();
 };
 
 
@@ -107,17 +125,17 @@ ol.interaction.DragPan.prototype.handleDragEnd = function(mapBrowserEvent) {
  * @inheritDoc
  */
 ol.interaction.DragPan.prototype.handleDragStart = function(mapBrowserEvent) {
-  var browserEvent = mapBrowserEvent.browserEvent;
-  if (browserEvent.isMouseActionButton() && this.condition_(mapBrowserEvent)) {
+  if (!goog.isDef(this.pointerId_) && this.condition_(mapBrowserEvent)) {
+    var map = mapBrowserEvent.map;
+    var view = map.getView().getView2D();
+    this.pointerId_ = mapBrowserEvent.pointerId;
+    this.lastPixel_ = mapBrowserEvent.getPixel();  // FIXME: null
     if (this.kinetic_) {
       this.kinetic_.begin();
-      this.kinetic_.update(browserEvent.clientX, browserEvent.clientY);
+      this.kinetic_.update(this.lastPixel_[0], this.lastPixel_[1]);
     }
-    var map = mapBrowserEvent.map;
     map.requestRenderFrame();
-    return true;
-  } else {
-    return false;
+    view.setHint(ol.ViewHint.INTERACTING, +1);
   }
 };
 
@@ -126,6 +144,7 @@ ol.interaction.DragPan.prototype.handleDragStart = function(mapBrowserEvent) {
  * @inheritDoc
  */
 ol.interaction.DragPan.prototype.handleDown = function(mapBrowserEvent) {
+  // FIXME: reset lastPixel_ ?
   var map = mapBrowserEvent.map;
   // FIXME works for View2D only
   var view = map.getView();

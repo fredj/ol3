@@ -290,8 +290,6 @@
  *     desired.
  * @property {boolean|undefined} shiftDragZoom Whether Shift-drag zoom is
  *     desired.
- * @property {boolean|undefined} touchPan Whether touch pan is
- *     desired.
  * @property {boolean|undefined} touchRotate Whether touch rotate is desired.
  * @property {boolean|undefined} touchZoom Whether touch zoom is desired.
  * @property {number|undefined} zoomDelta Zoom delta.
@@ -333,12 +331,6 @@
  *     toggles the selection.
  * @property {undefined|function(ol.layer.Layer):boolean} layerFilter Filter
  *     function to restrict selection to a subset of layers.
- */
-
-/**
- * @typedef {Object} ol.interaction.TouchPanOptions
- * @property {ol.Kinetic|undefined} kinetic Kinetic inertia to apply to the
- *     pan.
  */
 
 /**

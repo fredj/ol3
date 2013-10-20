@@ -55,6 +55,13 @@ ol.interaction.DragZoom = function(opt_options) {
    */
   this.dragBox_ = null;
 
+  /**
+   * @private
+   * @type {number|undefined}
+   */
+  this.pointerId_ = undefined;
+
+  this.startCoordinate_ = null;
 
 };
 goog.inherits(ol.interaction.DragZoom, ol.interaction.Drag);
@@ -63,24 +70,31 @@ goog.inherits(ol.interaction.DragZoom, ol.interaction.Drag);
 /**
  * @inheritDoc
  */
-ol.interaction.DragZoom.prototype.handleDragEnd =
-    function(mapBrowserEvent) {
-  this.dragBox_.setMap(null);
-  this.dragBox_ = null;
-  if (this.deltaX * this.deltaX + this.deltaY * this.deltaY >=
-      ol.SHIFT_DRAG_ZOOM_HYSTERESIS_PIXELS_SQUARED) {
-    var map = mapBrowserEvent.map;
-    var extent = ol.extent.boundingExtent(
-        [this.startCoordinate, mapBrowserEvent.getCoordinate()]);
-    map.withFrozenRendering(function() {
-      // FIXME works for View2D only
-      var view = map.getView();
-      goog.asserts.assertInstanceof(view, ol.View2D);
-      var mapSize = /** @type {ol.Size} */ (map.getSize());
-      view.fitExtent(extent, mapSize);
-      // FIXME we should preserve rotation
-      view.setRotation(0);
-    });
+ol.interaction.DragZoom.prototype.handleDragEnd = function(mapBrowserEvent) {
+  if (this.pointerId_ == mapBrowserEvent.pointerId) {
+    this.dragBox_.setMap(null);
+    this.dragBox_ = null;
+    var offset = mapBrowserEvent.getPixel(); // FIXME
+    var deltaX = offset[0] - this.startOffset_[0];
+    var deltaY = offset[1] - this.startOffset_[1];
+
+    if (deltaX * deltaX + deltaY * deltaY >=
+        ol.SHIFT_DRAG_ZOOM_HYSTERESIS_PIXELS_SQUARED) {
+      var map = mapBrowserEvent.map;
+      var extent = ol.extent.boundingExtent([
+        this.startCoordinate_, mapBrowserEvent.getCoordinate()
+      ]);
+      map.withFrozenRendering(function() {
+        // FIXME works for View2D only
+        var view = map.getView();
+        goog.asserts.assertInstanceof(view, ol.View2D);
+        var mapSize = /** @type {ol.Size} */ (map.getSize());
+        view.fitExtent(extent, mapSize);
+        // FIXME we should preserve rotation
+        view.setRotation(0);
+      });
+    }
+    this.pointerId_ = undefined;
   }
 };
 
@@ -88,16 +102,18 @@ ol.interaction.DragZoom.prototype.handleDragEnd =
 /**
  * @inheritDoc
  */
-ol.interaction.DragZoom.prototype.handleDragStart =
-    function(mapBrowserEvent) {
-  var browserEvent = mapBrowserEvent.browserEvent;
-  if (browserEvent.isMouseActionButton() && this.condition_(mapBrowserEvent)) {
+ol.interaction.DragZoom.prototype.handleDragStart = function(mapBrowserEvent) {
+  if (!goog.isDef(this.pointerId_) && this.condition_(mapBrowserEvent)) {
+    var pointerId = this.pointerId_ = mapBrowserEvent.pointerId;
+    this.startCoordinate_ = mapBrowserEvent.getCoordinate();
+    this.startOffset_ = mapBrowserEvent.getPixel();
     this.dragBox_ = new ol.control.DragBox({
-      startCoordinate: this.startCoordinate
+      startCoordinate: this.startCoordinate_,
+      condition: function(mapBrowserEvent) {
+        return pointerId == mapBrowserEvent.pointerId;
+      }
     });
     this.dragBox_.setMap(mapBrowserEvent.map);
     return true;
-  } else {
-    return false;
   }
 };

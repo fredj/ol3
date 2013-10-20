@@ -1,15 +1,18 @@
+// FIXME: simulate CLICK event
+// FIXME: simulate DBLCLICK event
+
 goog.provide('ol.MapBrowserEvent');
 goog.provide('ol.MapBrowserEvent.EventType');
 goog.provide('ol.MapBrowserEventHandler');
 
 goog.require('goog.array');
+goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
-goog.require('ol.BrowserFeature');
+goog.require('goog.object');
 goog.require('ol.Coordinate');
-goog.require('ol.FrameState');
 goog.require('ol.MapEvent');
 goog.require('ol.Pixel');
 
@@ -21,16 +24,21 @@ goog.require('ol.Pixel');
  * @param {string} type Event type.
  * @param {ol.Map} map Map.
  * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @param {?ol.FrameState=} opt_frameState Frame state.
+ * @param {number=} opt_pointerId Pointer identifier.
  */
-ol.MapBrowserEvent = function(type, map, browserEvent, opt_frameState) {
+ol.MapBrowserEvent = function(type, map, browserEvent, opt_pointerId) {
 
-  goog.base(this, type, map, opt_frameState);
+  goog.base(this, type, map);
 
   /**
    * @type {goog.events.BrowserEvent}
    */
   this.browserEvent = browserEvent;
+
+  /**
+   * @type {number}
+   */
+  this.pointerId = opt_pointerId || 0;
 
   /**
    * @private
@@ -69,16 +77,6 @@ ol.MapBrowserEvent.prototype.getPixel = function() {
     this.pixel_ = this.map.getEventPixel(this.browserEvent.getBrowserEvent());
   }
   return this.pixel_;
-};
-
-
-/**
- * @return {boolean} Do we have a left click?
- */
-ol.MapBrowserEvent.prototype.isMouseActionButton = function() {
-  // always assume a left-click on touch devices
-  return ol.BrowserFeature.HAS_TOUCH ||
-      this.browserEvent.isMouseActionButton();
 };
 
 
@@ -122,20 +120,6 @@ ol.MapBrowserEventHandler = function(map) {
   this.map_ = map;
 
   /**
-   * @type {boolean}
-   * @private
-   */
-  this.dragged_ = false;
-
-  /**
-   * Timestamp for the first click of a double click. Will be set back to 0
-   * as soon as a double click is detected.
-   * @type {?number}
-   * @private
-   */
-  this.timestamp_ = null;
-
-  /**
    * @type {Array.<number>}
    * @private
    */
@@ -148,202 +132,32 @@ ol.MapBrowserEventHandler = function(map) {
   this.dragListenerKeys_ = null;
 
   /**
+   * List of pointer id currently dragging.
    * @type {Array.<number>}
    * @private
    */
-  this.touchListenerKeys_ = null;
+  this.dragging_ = [];
 
   /**
-   * @type {goog.events.BrowserEvent}
+   * @type {Object}
    * @private
    */
-  this.down_ = null;
+  this.trackedPointers_ = {};
 
   var element = this.map_.getViewport();
   this.listenerKeys_ = [
     goog.events.listen(element,
-        [goog.events.EventType.CLICK, goog.events.EventType.DBLCLICK],
-        this.click_, false, this),
-    goog.events.listen(element,
         goog.events.EventType.MOUSEDOWN,
         this.handleMouseDown_, false, this),
     goog.events.listen(element,
-        goog.events.EventType.MOUSEMOVE,
-        this.relayEvent_, false, this),
+        goog.events.EventType.TOUCHSTART,
+        this.handleTouchStart_, false, this),
     goog.events.listen(element,
-        goog.events.EventType.MOUSEOUT,
-        this.relayEvent_, false, this),
-    goog.events.listen(element,
-        goog.events.EventType.CONTEXTMENU,
-        this.relayEvent_, false, this)
+        goog.events.EventType.MSPOINTERDOWN,
+        this.handlePointerDown_, false, this)
   ];
-  // touch events
-  this.touchListenerKeys_ = [
-    goog.events.listen(element, [
-      goog.events.EventType.TOUCHSTART,
-      goog.events.EventType.MSPOINTERDOWN
-    ], this.handleTouchStart_, false, this),
-    goog.events.listen(goog.global.document, [
-      goog.events.EventType.TOUCHMOVE,
-      goog.events.EventType.MSPOINTERMOVE
-    ], this.handleTouchMove_, false, this),
-    goog.events.listen(goog.global.document, [
-      goog.events.EventType.TOUCHEND,
-      goog.events.EventType.MSPOINTERUP
-    ], this.handleTouchEnd_, false, this)
-  ];
-
 };
 goog.inherits(ol.MapBrowserEventHandler, goog.events.EventTarget);
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.click_ = function(browserEvent) {
-  if (!this.dragged_) {
-    var newEvent;
-    var type = browserEvent.type;
-    if (this.timestamp_ === 0 || type == goog.events.EventType.DBLCLICK) {
-      newEvent = new ol.MapBrowserEvent(
-          ol.MapBrowserEvent.EventType.DBLCLICK, this.map_, browserEvent);
-      this.dispatchEvent(newEvent);
-    } else {
-      newEvent = new ol.MapBrowserEvent(
-          ol.MapBrowserEvent.EventType.CLICK, this.map_, browserEvent);
-      this.dispatchEvent(newEvent);
-    }
-  }
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.handleMouseUp_ = function(browserEvent) {
-  if (this.down_) {
-    this.down_ = null;
-    goog.array.forEach(this.dragListenerKeys_, goog.events.unlistenByKey);
-    this.dragListenerKeys_ = null;
-    if (this.dragged_) {
-      var newEvent = new ol.MapBrowserEvent(
-          ol.MapBrowserEvent.EventType.DRAGEND, this.map_, browserEvent);
-      this.dispatchEvent(newEvent);
-    }
-  }
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.handleMouseDown_ = function(browserEvent) {
-  var newEvent = new ol.MapBrowserEvent(
-      ol.MapBrowserEvent.EventType.DOWN, this.map_, browserEvent);
-  this.dispatchEvent(newEvent);
-  if (!this.down_) {
-    this.down_ = browserEvent;
-    this.dragged_ = false;
-    this.dragListenerKeys_ = [
-      goog.events.listen(goog.global.document, goog.events.EventType.MOUSEMOVE,
-          this.handleMouseMove_, false, this),
-      goog.events.listen(goog.global.document, goog.events.EventType.MOUSEUP,
-          this.handleMouseUp_, false, this)
-    ];
-    // prevent browser image dragging with the dom renderer
-    browserEvent.preventDefault();
-  }
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.handleMouseMove_ = function(browserEvent) {
-  var newEvent;
-  if (!this.dragged_) {
-    this.dragged_ = true;
-    newEvent = new ol.MapBrowserEvent(
-        ol.MapBrowserEvent.EventType.DRAGSTART, this.map_, this.down_);
-    this.dispatchEvent(newEvent);
-  }
-  newEvent = new ol.MapBrowserEvent(
-      ol.MapBrowserEvent.EventType.DRAG, this.map_, browserEvent);
-  this.dispatchEvent(newEvent);
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.relayEvent_ = function(browserEvent) {
-  this.dispatchEvent(new ol.MapBrowserEvent(
-      browserEvent.type, this.map_, browserEvent));
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.handleTouchStart_ = function(browserEvent) {
-  // prevent context menu
-  // When the IE pointer events are used, this prevents a
-  // 'mousedown' from being fired after this event for the primary
-  // contact (first finger on the screen or mouse)
-  browserEvent.preventDefault();
-  this.down_ = browserEvent;
-  this.dragged_ = false;
-  var newEvent = new ol.MapBrowserEvent(
-      ol.MapBrowserEvent.EventType.TOUCHSTART, this.map_, browserEvent);
-  this.dispatchEvent(newEvent);
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.handleTouchMove_ = function(browserEvent) {
-  if (this.down_) {
-    // 'touchmove' events are dispatched only when this.down_ is set
-    // (set after a touch start) to prevent unwanted events when the
-    // mouse hover the page. This only happens with the IE pointer
-    // event system.
-    this.dragged_ = true;
-    var newEvent = new ol.MapBrowserEvent(
-        ol.MapBrowserEvent.EventType.TOUCHMOVE, this.map_, browserEvent);
-    this.dispatchEvent(newEvent);
-  }
-};
-
-
-/**
- * @param {goog.events.BrowserEvent} browserEvent Browser event.
- * @private
- */
-ol.MapBrowserEventHandler.prototype.handleTouchEnd_ = function(browserEvent) {
-  var newEvent = new ol.MapBrowserEvent(
-      ol.MapBrowserEvent.EventType.TOUCHEND, this.map_, browserEvent);
-  this.dispatchEvent(newEvent);
-  if (!this.dragged_) {
-    var now = goog.now();
-    if (!this.timestamp_ || now - this.timestamp_ > 250) {
-      this.timestamp_ = now;
-    } else {
-      this.timestamp_ = 0;
-    }
-    if (!goog.isNull(this.down_)) {
-      this.click_(this.down_);
-    }
-  }
-  this.down_ = null;
-};
 
 
 /**
@@ -358,11 +172,209 @@ ol.MapBrowserEventHandler.prototype.disposeInternal = function() {
     goog.array.forEach(this.dragListenerKeys_, goog.events.unlistenByKey);
     this.dragListenerKeys_ = null;
   }
-  if (!goog.isNull(this.touchListenerKeys_)) {
-    goog.array.forEach(this.touchListenerKeys_, goog.events.unlistenByKey);
-    this.touchListenerKeys_ = null;
-  }
   goog.base(this, 'disposeInternal');
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @param {number} pointerId Pointer identifier.
+ * @param {string} type Event type.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.dispatchMapBrowserEvent_ =
+    function(event, pointerId, type) {
+  var newEvent = new ol.MapBrowserEvent(type, this.map_, event, pointerId);
+  this.dispatchEvent(newEvent);
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handleMouseDown_ = function(event) {
+  this.dispatchMapBrowserEvent_(event, 0, ol.MapBrowserEvent.EventType.DOWN);
+  if (event.isMouseActionButton() && goog.isNull(this.dragListenerKeys_)) {
+    goog.asserts.assert(this.dragging_.length == 0);
+    this.dragListenerKeys_ = [
+      goog.events.listen(goog.global.document, goog.events.EventType.MOUSEMOVE,
+          this.handleMouseMove_, false, this),
+      goog.events.listen(goog.global.document, goog.events.EventType.MOUSEUP,
+          this.handleMouseUp_, false, this)
+    ];
+  }
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handleMouseMove_ = function(event) {
+  if (!goog.array.contains(this.dragging_, 0)) {
+    this.dispatchMapBrowserEvent_(event, 0,
+        ol.MapBrowserEvent.EventType.DRAGSTART);
+    this.dragging_.push(0);
+  }
+  this.dispatchMapBrowserEvent_(event, 0, ol.MapBrowserEvent.EventType.DRAG);
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handleMouseUp_ = function(event) {
+  if (goog.array.contains(this.dragging_, 0)) {
+    this.dispatchMapBrowserEvent_(event, 0,
+        ol.MapBrowserEvent.EventType.DRAGEND);
+    goog.array.remove(this.dragging_, 0);
+  }
+  goog.asserts.assert(this.dragging_.length == 0);
+  goog.array.forEach(this.dragListenerKeys_, goog.events.unlistenByKey);
+  this.dragListenerKeys_ = null;
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handleTouchStart_ = function(event) {
+  var pointerId = event.getBrowserEvent().changedTouches.item(0).identifier;
+  this.dispatchMapBrowserEvent_(event, pointerId,
+      ol.MapBrowserEvent.EventType.DOWN);
+
+  if (goog.isNull(this.dragListenerKeys_)) {
+    goog.asserts.assert(this.dragging_.length == 0);
+    this.dragListenerKeys_ = [
+      goog.events.listen(goog.global.document, goog.events.EventType.TOUCHMOVE,
+          this.handleTouchMove_, false, this),
+      goog.events.listen(goog.global.document, goog.events.EventType.TOUCHEND,
+          this.handleTouchEnd_, false, this)
+    ];
+  }
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handleTouchMove_ = function(event) {
+  // prevent page move
+  event.preventDefault();
+
+  var changedTouches = event.getBrowserEvent().changedTouches;
+  for (var i = 0, len = changedTouches.length; i < len; i++) {
+    var pointerId = changedTouches.item(i);
+    if (!goog.array.contains(this.dragging_, pointerId)) {
+      this.dispatchMapBrowserEvent_(event, pointerId,
+          ol.MapBrowserEvent.EventType.DRAGSTART);
+      this.dragging_.push(pointerId);
+    }
+    this.dispatchMapBrowserEvent_(event, pointerId,
+        ol.MapBrowserEvent.EventType.DRAG);
+  }
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handleTouchEnd_ = function(event) {
+  var browserEvent = event.getBrowserEvent();
+  var pointerId = browserEvent.changedTouches.item(0).identifier;
+
+  if (goog.array.contains(this.dragging_, pointerId)) {
+    this.dispatchMapBrowserEvent_(event, pointerId,
+        ol.MapBrowserEvent.EventType.DRAGEND);
+    goog.array.remove(this.dragging_, pointerId);
+  }
+
+  if (browserEvent.targetTouches.length == 0) {
+    goog.asserts.assert(this.dragging_.length == 0);
+    goog.array.forEach(this.dragListenerKeys_, goog.events.unlistenByKey);
+    this.dragListenerKeys_ = null;
+  }
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handlePointerDown_ = function(event) {
+  var browserEvent = event.getBrowserEvent();
+  var pointerId = browserEvent.pointerId;
+
+  this.dispatchMapBrowserEvent_(event, pointerId,
+      ol.MapBrowserEvent.EventType.DOWN);
+  if (event.isMouseActionButton()) {
+    this.trackedPointers_[pointerId] = browserEvent;
+
+    if (goog.isNull(this.dragListenerKeys_)) {
+      goog.asserts.assert(this.dragging_.length == 0);
+      this.dragListenerKeys_ = [
+        goog.events.listen(goog.global.document,
+            goog.events.EventType.MSPOINTERMOVE,
+            this.handlePointerMove_, false, this),
+        goog.events.listen(goog.global.document,
+            goog.events.EventType.MSPOINTERUP,
+            this.handlePointerUp_, false, this)
+      ];
+    }
+  }
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handlePointerMove_ = function(event) {
+  // check if the pointer really moved
+  var browserEvent = event.getBrowserEvent();
+  var pointerId = browserEvent.pointerId;
+
+  var previousEvent = this.trackedPointers_[pointerId];
+  goog.asserts.assert(goog.isDef(previousEvent));
+  var movedX = browserEvent.clientX != previousEvent.clientX;
+  var movedY = browserEvent.clientY != previousEvent.clientY;
+  if (movedX || movedY) {
+    if (!goog.array.contains(this.dragging_, pointerId)) {
+      this.dispatchMapBrowserEvent_(event, pointerId,
+          ol.MapBrowserEvent.EventType.DRAGSTART);
+      this.dragging_.push(pointerId);
+    }
+    this.dispatchMapBrowserEvent_(event, pointerId,
+        ol.MapBrowserEvent.EventType.DRAG);
+  }
+  goog.asserts.assert(this.trackedPointers_[pointerId]);
+  this.trackedPointers_[pointerId] = browserEvent;
+};
+
+
+/**
+ * @param {goog.events.BrowserEvent} event Browser event.
+ * @private
+ */
+ol.MapBrowserEventHandler.prototype.handlePointerUp_ = function(event) {
+  var browserEvent = event.getBrowserEvent();
+  var pointerId = browserEvent.pointerId;
+
+  delete this.trackedPointers_[pointerId];
+  if (goog.array.contains(this.dragging_, pointerId)) {
+    this.dispatchMapBrowserEvent_(event, pointerId,
+        ol.MapBrowserEvent.EventType.DRAGEND);
+    goog.array.remove(this.dragging_, pointerId);
+  }
+  if (goog.object.isEmpty(this.trackedPointers_)) {
+    goog.array.forEach(this.dragListenerKeys_, goog.events.unlistenByKey);
+    this.dragListenerKeys_ = null;
+  }
 };
 
 
@@ -371,16 +383,15 @@ ol.MapBrowserEventHandler.prototype.disposeInternal = function() {
  * @enum {string}
  */
 ol.MapBrowserEvent.EventType = {
+
+  DOWN: 'down',
   CLICK: goog.events.EventType.CLICK,
   DBLCLICK: goog.events.EventType.DBLCLICK,
-  DOWN: 'down',
+
+  // start dragging with the mouse (action button), touch or pointer
   DRAGSTART: 'dragstart',
+  // repeatedly fired while dragging
   DRAG: 'drag',
-  DRAGEND: 'dragend',
-  TOUCHSTART: goog.events.EventType.TOUCHSTART,
-  TOUCHMOVE: goog.events.EventType.TOUCHMOVE,
-  TOUCHEND: goog.events.EventType.TOUCHEND,
-  MOUSEMOVE: goog.events.EventType.MOUSEMOVE,
-  MOUSEOUT: goog.events.EventType.MOUSEOUT,
-  CONTEXTMENU: goog.events.EventType.CONTEXTMENU
+  // stop dragging, no more pointer interacting
+  DRAGEND: 'dragend'
 };
