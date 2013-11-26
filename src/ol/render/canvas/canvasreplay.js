@@ -26,10 +26,13 @@ ol.render.canvas.Instruction = {
   CLOSE_PATH: 2,
   DRAW_IMAGE: 3,
   FILL: 4,
-  MOVE_TO_LINE_TO: 5,
-  SET_FILL_STYLE: 6,
-  SET_STROKE_STYLE: 7,
-  STROKE: 8
+  FILL_TEXT: 5,
+  MOVE_TO_LINE_TO: 6,
+  SET_FILL_STYLE: 7,
+  SET_STROKE_STYLE: 8,
+  SET_TEXT_STYLE: 9,
+  STROKE: 10,
+  STROKE_TEXT: 11
 };
 
 
@@ -70,6 +73,39 @@ ol.render.canvas.Replay = function() {
    * @type {ol.Extent}
    */
   this.extent_ = ol.extent.createEmpty();
+
+
+  /**
+   * @private
+   * @type {{text: (string|undefined),
+   *         currentFont: (string|undefined),
+   *         currentTextAlign: (string|undefined),
+   *         currentTextBaseline: (string|undefined),
+   *         currentFillStyle: (string|undefined),
+   *         currentStrokeStyle: (string|undefined),
+   *         currentLineWidth: (number|undefined),
+   *         font: (string|undefined),
+   *         textAlign: (string|undefined),
+   *         textBaseline: (string|undefined),
+   *         fillStyle: (string|undefined),
+   *         strokeStyle: (string|undefined),
+   *         lineWidth: (number|undefined)}
+   */
+  this.textStyle_ = {
+    text: undefined,
+    currentFont: undefined,
+    currentTextAlign: undefined,
+    currentTextBaseline: undefined,
+    currentFillStyle: undefined,
+    currentStrokeStyle: undefined,
+    currentLineWidth: undefined,
+    font: undefined,
+    textAlign: undefined,
+    textBaseline: undefined,
+    fillStyle: undefined,
+    strokeStyle: undefined,
+    lineWidth: undefined
+  };
 
 };
 
@@ -174,6 +210,15 @@ ol.render.canvas.Replay.prototype.replay =
     } else if (type == ol.render.canvas.Instruction.FILL) {
       context.fill();
       ++i;
+    } else if (type == ol.render.canvas.Instruction.FILL_TEXT) {
+      dd = /** @type {number} */ (instruction[1]);
+      var text = /** @type {string} */ (instruction[2]);
+      for (; d < dd; d += 2) {
+        var x = pixelCoordinates[d];
+        var y = pixelCoordinates[d + 1];
+        context.fillText(text, x, y);
+      }
+      ++i;
     } else if (type == ol.render.canvas.Instruction.MOVE_TO_LINE_TO) {
       context.moveTo(pixelCoordinates[d], pixelCoordinates[d + 1]);
       goog.asserts.assert(goog.isNumber(instruction[1]));
@@ -202,8 +247,25 @@ ol.render.canvas.Replay.prototype.replay =
         context.setLineDash(/** @type {Array.<number>} */ (instruction[6]));
       }
       ++i;
+    } else if (type == ol.render.canvas.Instruction.SET_TEXT_STYLE) {
+      goog.asserts.assert(goog.isString(instruction[1]));
+      goog.asserts.assert(goog.isString(instruction[2]));
+      goog.asserts.assert(goog.isString(instruction[3]));
+      context.font = /** @type {string} */ (instruction[1]);
+      context.textAlign = /** @type {string} */ (instruction[2]);
+      context.textBaseline = /** @type {string} */ (instruction[3]);
+      ++i;
     } else if (type == ol.render.canvas.Instruction.STROKE) {
       context.stroke();
+      ++i;
+    } else if (type == ol.render.canvas.Instruction.STROKE_TEXT) {
+      dd = /** @type {number} */ (instruction[1]);
+      var text = /** @type {string} */ (instruction[2]);
+      for (; d < dd; d += 2) {
+        var x = pixelCoordinates[d];
+        var y = pixelCoordinates[d + 1];
+        context.strokeText(text, x, y);
+      }
       ++i;
     } else {
       goog.asserts.fail();
@@ -300,7 +362,68 @@ ol.render.canvas.Replay.prototype.setImageStyle = goog.abstractMethod;
 /**
  * @inheritDoc
  */
-ol.render.canvas.Replay.prototype.setTextStyle = goog.abstractMethod;
+ol.render.canvas.Replay.prototype.setTextStyle = function(textStyle) {
+  if (!goog.isNull(textStyle)) {
+    this.textStyle_.text = textStyle.text;
+    this.textStyle_.font = goog.isDef(textStyle.font) ?
+      textStyle.font : ol.render.canvas.defaultFont;
+    this.textStyle_.textAlign = goog.isDef(textStyle.textAlign) ?
+      textStyle.textAlign : ol.render.canvas.defaultTextAlign;
+    this.textStyle_.textBaseline = goog.isDef(textStyle.textBaseline) ?
+      textStyle.textBaseline : ol.render.canvas.defaultTextBaseline;
+    if (!goog.isNull(textStyle.fill)) {
+      this.textStyle_.fillStyle = textStyle.fill.color;
+    }
+    if (!goog.isNull(textStyle.stroke)) {
+      this.textStyle_.strokeStyle = textStyle.stroke.color;
+      this.textStyle_.lineWidth = textStyle.stroke.width;
+    }
+  }
+};
+
+
+/**
+ * @private
+ */
+ol.render.canvas.Replay.prototype.setTextStyle_ = function() {
+  goog.asserts.assert(goog.isDef(this.textStyle_));
+  var state = this.textStyle_;
+  var font = state.font;
+  var textAlign = state.textAlign;
+  var textBaseline = state.textBaseline;
+  if (state.currentFont != font || state.currentTextAlign != textAlign ||
+      state.currentTextBaseline != textBaseline) {
+
+    this.instructions.push([
+      ol.render.canvas.Instruction.SET_TEXT_STYLE,
+      font, textAlign, textBaseline
+    ]);
+
+    state.currentFont = font;
+    state.currentTextAlign = textAlign;
+    state.currentTextBaseline = textBaseline;
+  }
+
+  var fillStyle = state.fillStyle;
+  var strokeStyle = state.strokeStyle;
+  var lineWidth = state.lineWidth;
+  if (goog.isDef(fillStyle) && state.currentFillStyle != fillStyle) {
+    this.instructions.push([
+      ol.render.canvas.Instruction.SET_FILL_STYLE, fillStyle
+    ]);    
+    state.currentFillStyle = state.fillStyle;
+  }
+  if (goog.isDef(strokeStyle)) {
+    if (state.currentStrokeStyle != strokeStyle || state.currentLineWidth != lineWidth) {
+      this.instructions.push([
+        ol.render.canvas.Instruction.SET_STROKE_STYLE,
+        strokeStyle, lineWidth
+      ]);
+      state.currentStrokeStyle = strokeStyle;
+      state.currentLineWidth = lineWidth;
+    }
+  }
+};
 
 
 
