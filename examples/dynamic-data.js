@@ -27,6 +27,19 @@ var imageStyle = ol.shape.renderCircle(5,
     new ol.style.Fill({color: 'yellow'}),
     new ol.style.Stroke({color: 'red', width: 1}));
 
+var textStyle = new ol.style.Text({
+  text: 'ol3',
+  textAlign: 'center',
+  textBaseline: 'middle',
+  fill: new ol.style.Fill({
+    color: '#000'
+  }),
+  stroke: new ol.style.Stroke({
+    color: '#fff',
+    width: 2
+  })
+});
+
 var n = 200;
 var omegaTheta = 30000; // Rotation period in ms
 var R = 7e6;
@@ -45,6 +58,7 @@ map.on('postcompose', function(event) {
     coordinates.push([x, y]);
   }
   render.setImageStyle(imageStyle);
+  render.setTextStyle(textStyle);
   render.drawMultiPointGeometry(new ol.geom.MultiPoint(coordinates));
   map.requestRenderFrame();
 });

@@ -311,6 +311,9 @@ ol.render.canvas.Immediate.prototype.drawPolygonGeometry =
     goog.asserts.assert(goog.isDef(state.lineWidth));
     context.stroke();
   }
+  // // FIXME
+  // var textPosition = ol.extent.getCenter(polygonGeometry.getExtent());
+  // this.drawText_(new ol.geom.Point(textPosition));
 };
 
 
@@ -345,6 +348,9 @@ ol.render.canvas.Immediate.prototype.drawMultiPolygonGeometry =
       context.stroke();
     }
   }
+  // // FIXME
+  // var textPosition = ol.extent.getCenter(multiPolygonGeometry.getExtent());
+  // this.drawText_(new ol.geom.Point(textPosition));
 };
 
 

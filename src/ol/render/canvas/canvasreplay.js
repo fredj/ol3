@@ -324,6 +324,21 @@ ol.render.canvas.Replay.prototype.drawMultiPolygonGeometry =
 
 
 /**
+ */
+ol.render.canvas.Replay.prototype.drawText = function() {
+  if (goog.isDef(this.textStyle_.text)) {
+    this.setTextStyle_();
+    // FIXME, set fill stroke styles
+    this.instructions.push([
+      ol.render.canvas.Instruction.FILL_TEXT,
+      end,
+      this.textStyle_.text
+    ]);
+  }
+};
+
+
+/**
  * @param {Array} beginGeometryInstruction Begin geometry instruction.
  */
 ol.render.canvas.Replay.prototype.endGeometry =
@@ -494,8 +509,7 @@ ol.render.canvas.ImageReplay.prototype.drawCoordinates_ =
 /**
  * @inheritDoc
  */
-ol.render.canvas.ImageReplay.prototype.drawPointGeometry =
-    function(pointGeometry) {
+ol.render.canvas.ImageReplay.prototype.drawPointGeometry = function(pointGeometry) {
   if (goog.isNull(this.image_)) {
     return;
   }
@@ -515,6 +529,39 @@ ol.render.canvas.ImageReplay.prototype.drawPointGeometry =
     this.image_, this.snapToPixel_
   ]);
   this.endGeometry(beginGeometryInstruction);
+
+  if (goog.isDef(this.textStyle_.text)) {
+    this.setTextStyle_();
+
+    if (goog.isDef(this.textStyle_.strokeStyle)) {
+      var end = this.drawCoordinates_(flatCoordinates, 0, flatCoordinates.length, stride);
+      this.instructions.push([
+        ol.render.canvas.Instruction.STROKE_TEXT, end,
+        this.textStyle_.text
+      ]);
+    }
+    if (goog.isDef(this.textStyle_.fillStyle)) {
+      var end = this.drawCoordinates_(flatCoordinates, 0, flatCoordinates.length, stride);
+      this.instructions.push([
+        ol.render.canvas.Instruction.FILL_TEXT, end,
+        this.textStyle_.text
+      ]);
+    }
+  }
+
+  // var end = this.drawCoordinates_(flatCoordinates, 0, flatCoordinates.length, stride);
+  // this.instructions.push([
+  //   ol.render.canvas.Instruction.STROKE_TEXT, end,
+  //   this.textStyle_.text
+  // ]);
+  // this.instructions.push([
+  //   ol.render.canvas.Instruction.SET_STROKE_STYLE,
+  //   'rgb(0,0,0)', 2
+  // ]);
+  // this.instructions.push([
+  //   ol.render.canvas.Instruction.STROKE_TEXT,
+  //   undefined
+  // ]);
 };
 
 

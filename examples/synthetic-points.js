@@ -10,9 +10,10 @@ goog.require('ol.source.Vector');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 
 
-var count = 20000;
+var count = 1000;
 var features = new Array(count);
 var e = 18000000;
 for (var i = 0; i < count; ++i) {
@@ -23,18 +24,43 @@ for (var i = 0; i < count; ++i) {
     'size': i % 2 ? 10 : 20
   });
 }
-
+var fill = new ol.style.Fill({color: '#666666'});
+var stroke = new ol.style.Stroke({color: '#bada55', width: 1});
 var styles = {
-  '10': [new ol.style.Style({
-    image: ol.shape.renderCircle(5,
-        new ol.style.Fill({color: '#666666'}),
-        new ol.style.Stroke({color: '#bada55', width: 1}))
-  })],
-  '20': [new ol.style.Style({
-    image: ol.shape.renderCircle(10,
-        new ol.style.Fill({color: '#666666'}),
-        new ol.style.Stroke({color: '#bada55', width: 1}))
-  })]
+  '10': [
+    new ol.style.Style({
+      image: ol.shape.renderCircle(5, fill, stroke),
+      text: new ol.style.Text({
+        text: '10',
+        textAlign: 'center',
+        textBaseline: 'middle',
+        fill: new ol.style.Fill({
+          color: '#000'
+        }),
+        stroke: new ol.style.Stroke({
+          color: '#fff',
+          width: 2
+        })
+      })
+    })
+  ],
+  '20': [
+    new ol.style.Style({
+      image: ol.shape.renderCircle(10, fill, stroke),
+      text: new ol.style.Text({
+        text: '20',
+        textAlign: 'center',
+        textBaseline: 'middle',
+        fill: new ol.style.Fill({
+          color: '#000'
+        }),
+        stroke: new ol.style.Stroke({
+          color: '#fff',
+          width: 2
+        })
+      })
+    })
+  ]
 };
 
 var vector = new ol.layer.Vector({

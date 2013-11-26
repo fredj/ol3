@@ -10,6 +10,7 @@ goog.require('ol.source.Vector');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+goog.require('ol.style.Text');
 
 var map = new ol.Map({
   layers: [
@@ -97,12 +98,23 @@ var highlightStyle = new ol.style.Style({
   }),
   fill: new ol.style.Fill({
     color: 'rgba(255,0,0,0.1)'
+  }),
+  text: new ol.style.Text({
+    textAlign: 'center',
+    fill: new ol.style.Fill({
+      color: '#000'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#fff',
+      width: 2
+    })
   })
 });
 
 map.on('postcompose', function(evt) {
   if (highlight) {
     var render = evt.getRender();
+    highlightStyle.text.text = highlight.getId();
     render.drawFeature(highlight, highlightStyle);
   }
 });
