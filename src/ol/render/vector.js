@@ -41,6 +41,7 @@ ol.renderer.vector.renderLineStringGeometry_ =
   var replay = replayGroup.getReplay(
       style.zIndex, ol.render.ReplayType.LINE_STRING);
   replay.setFillStrokeStyle(null, style.stroke);
+  replay.setTextStyle(style.text);
   replay.drawLineStringGeometry(lineStringGeometry);
 };
 
@@ -62,6 +63,7 @@ ol.renderer.vector.renderMultiLineStringGeometry_ =
   var replay = replayGroup.getReplay(
       style.zIndex, ol.render.ReplayType.LINE_STRING);
   replay.setFillStrokeStyle(null, style.stroke);
+  replay.setTextStyle(style.text);
   replay.drawMultiLineStringGeometry(multiLineStringGeometry);
 };
 
@@ -83,6 +85,7 @@ ol.renderer.vector.renderMultiPolygonGeometry_ =
   var replay = replayGroup.getReplay(
       style.zIndex, ol.render.ReplayType.POLYGON);
   replay.setFillStrokeStyle(style.fill, style.stroke);
+  replay.setTextStyle(style.text);
   replay.drawMultiPolygonGeometry(multiPolygonGeometry);
 };
 
@@ -102,6 +105,7 @@ ol.renderer.vector.renderPointGeometry_ =
   var pointGeometry = /** @type {ol.geom.Point} */ (geometry);
   var replay = replayGroup.getReplay(style.zIndex, ol.render.ReplayType.IMAGE);
   replay.setImageStyle(style.image);
+  replay.setTextStyle(style.text);
   replay.drawPointGeometry(pointGeometry);
 };
 
@@ -121,6 +125,7 @@ ol.renderer.vector.renderMultiPointGeometry_ =
   var multiPointGeometry = /** @type {ol.geom.MultiPoint} */ (geometry);
   var replay = replayGroup.getReplay(style.zIndex, ol.render.ReplayType.IMAGE);
   replay.setImageStyle(style.image);
+  replay.setTextStyle(style.text);
   replay.drawMultiPointGeometry(multiPointGeometry);
 };
 
@@ -141,6 +146,7 @@ ol.renderer.vector.renderPolygonGeometry_ =
   var replay = replayGroup.getReplay(
       style.zIndex, ol.render.ReplayType.POLYGON);
   replay.setFillStrokeStyle(style.fill, style.stroke);
+  replay.setTextStyle(style.text);
   replay.drawPolygonGeometry(polygonGeometry);
 };
 
