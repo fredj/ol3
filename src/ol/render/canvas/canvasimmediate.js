@@ -213,6 +213,7 @@ ol.render.canvas.Immediate.prototype.drawFeature = function(feature, style) {
   }
   this.setFillStrokeStyle(style.fill, style.stroke);
   this.setImageStyle(style.image);
+  this.setTextStyle(style.text);
   var renderGeometry =
       ol.render.canvas.Immediate.GEOMETRY_RENDERES_[geometry.getType()];
   goog.asserts.assert(goog.isDef(renderGeometry));
