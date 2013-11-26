@@ -134,14 +134,15 @@ ol.render.canvas.Immediate.prototype.drawImages_ = function(geometry) {
 ol.render.canvas.Immediate.prototype.drawText_ = function(geometry) {
   var context = this.context_;
   var state = this.state_;
-  var fillStyle = state.fillStyle;
-  var strokeStyle = state.strokeStyle;
   var textStyle = state.textStyle;
+  var fillStyle = textStyle.fill;
+  var strokeStyle = textStyle.stroke;
   if (!ol.extent.intersects(this.extent_, geometry.getExtent()) ||
       !goog.isDefAndNotNull(textStyle) || !goog.isDef(textStyle.text) ||
       (!goog.isDef(fillStyle) && !goog.isDef(strokeStyle))) {
     return;
   }
+  this.setFillStrokeStyle(fillStyle, strokeStyle);
   this.setFillStrokeStyles_();
   var pixelCoordinates = ol.geom.transformGeometry2D(
       geometry, this.transform_, this.pixelCoordinates_);
