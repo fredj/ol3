@@ -1,1 +1,2 @@
 @exportSymbol ol.shape.renderCircle
+@exportSymbol ol.shape.renderPath
