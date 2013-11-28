@@ -15,12 +15,16 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
+var arrow = ol.shape.renderPath([20, 20], [
+  [0, 1], [0.5, 0], [1, 1], [0.5, 0.8], [0, 1]
+], null, new ol.style.Stroke({color: 'red', width: 1}));
+
 var image = ol.shape.renderCircle(5, null,
     new ol.style.Stroke({color: 'red', width: 1}));
 
 var styles = {
   'Point': [new ol.style.Style({
-    image: image
+    image: arrow
   })],
   'LineString': [new ol.style.Style({
     stroke: new ol.style.Stroke({
