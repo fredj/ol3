@@ -460,7 +460,6 @@ ol.render.canvas.LineStringReplay = function() {
    * @type {{currentStrokeStyle: (string|undefined),
    *         currentLineCap: (string|undefined),
    *         currentLineWidth: (number|undefined),
-   *         lastStroke: number,
    *         strokeStyle: (string|undefined),
    *         lineCap: (string|undefined),
    *         lineWidth: (number|undefined)}|null}
@@ -469,11 +468,16 @@ ol.render.canvas.LineStringReplay = function() {
     currentStrokeStyle: undefined,
     currentLineCap: undefined,
     currentLineWidth: undefined,
-    lastStroke: 0,
     strokeStyle: undefined,
     lineCap: undefined,
     lineWidth: undefined
   };
+
+  /**
+   * @private
+   * @type {number}
+   */
+  this.lastStroke_ = 0;
 
 };
 goog.inherits(ol.render.canvas.LineStringReplay, ol.render.canvas.Replay);
@@ -510,9 +514,9 @@ ol.render.canvas.LineStringReplay.prototype.setStrokeStyle_ = function() {
   if (state.currentStrokeStyle != strokeStyle ||
       state.currentLineCap != lineCap ||
       state.currentLineWidth != lineWidth) {
-    if (state.lastStroke != this.coordinates.length) {
+    if (this.lastStroke_ != this.coordinates.length) {
       this.instructions.push([ol.render.canvas.Instruction.STROKE]);
-      state.lastStroke = this.coordinates.length;
+      this.lastStroke_ = this.coordinates.length;
     }
     this.instructions.push(
         [ol.render.canvas.Instruction.SET_STROKE_STYLE,
@@ -582,7 +586,7 @@ ol.render.canvas.LineStringReplay.prototype.drawMultiLineStringGeometry =
 ol.render.canvas.LineStringReplay.prototype.finish = function() {
   var state = this.state_;
   goog.asserts.assert(!goog.isNull(state));
-  if (state.lastStroke != this.coordinates.length) {
+  if (this.lastStroke_ != this.coordinates.length) {
     this.instructions.push([ol.render.canvas.Instruction.STROKE]);
   }
   this.state_ = null;
