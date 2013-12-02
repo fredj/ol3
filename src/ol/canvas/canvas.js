@@ -21,3 +21,18 @@ ol.canvas.SUPPORTED = (function() {
     return false;
   }
 })();
+
+
+/**
+ * @param {ol.Size} size Canvas size.
+ * @return {CanvasRenderingContext2D}
+ */
+ol.canvas.create = function(size) {
+  var canvas = /** @type {HTMLCanvasElement} */
+      (goog.dom.createElement(goog.dom.TagName.CANVAS));
+
+  canvas.width = size[0];
+  canvas.height = size[1];
+
+  return /** @type {CanvasRenderingContext2D} */ (canvas.getContext('2d'));
+};

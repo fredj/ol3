@@ -1,12 +1,11 @@
 goog.provide('ol.source.TileDebug');
 
-goog.require('goog.dom');
-goog.require('goog.dom.TagName');
 goog.require('ol.Size');
 goog.require('ol.Tile');
 goog.require('ol.TileCache');
 goog.require('ol.TileCoord');
 goog.require('ol.TileState');
+goog.require('ol.canvas');
 goog.require('ol.source.Tile');
 goog.require('ol.tilegrid.TileGrid');
 
@@ -55,14 +54,7 @@ ol.DebugTile_.prototype.getImage = function(opt_context) {
   } else {
 
     var tileSize = this.tileSize_;
-
-    var canvas = /** @type {HTMLCanvasElement} */
-        (goog.dom.createElement(goog.dom.TagName.CANVAS));
-    canvas.width = tileSize[0];
-    canvas.height = tileSize[1];
-
-    var context = /** @type {CanvasRenderingContext2D} */
-        (canvas.getContext('2d'));
+    var context = ol.canvas.create(tileSize);
 
     context.strokeStyle = 'black';
     context.strokeRect(0.5, 0.5, tileSize[0] + 0.5, tileSize[1] + 0.5);
@@ -74,8 +66,8 @@ ol.DebugTile_.prototype.getImage = function(opt_context) {
     context.fillText(
         this.tileCoord_.toString(), tileSize[0] / 2, tileSize[1] / 2);
 
-    this.canvasByContext_[key] = canvas;
-    return canvas;
+    this.canvasByContext_[key] = context.canvas;
+    return context.canvas;
 
   }
 };
