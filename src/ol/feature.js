@@ -1,5 +1,6 @@
 goog.provide('ol.Feature');
 
+goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('ol.Object');
