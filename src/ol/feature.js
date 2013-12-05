@@ -47,16 +47,16 @@ ol.Feature = function(geometryOrValues) {
       this, ol.Object.getChangeEventType(ol.FeatureProperty.GEOMETRY),
       this.handleGeometryChanged_, false, this);
 
-  if (goog.isNull(geometryOrValues) ||
-      geometryOrValues instanceof ol.geom.Geometry) {
-    var geometry = /** @type {ol.geom.Geometry} */ (geometryOrValues);
-    this.setGeometry(geometry);
-  } else {
-    goog.asserts.assert(goog.isObject(geometryOrValues));
-    var values = /** @type {Object.<string, *>} */ (geometryOrValues);
-    this.setValues(values);
+  if (!goog.isNull(geometryOrValues)) {
+    if (geometryOrValues instanceof ol.geom.Geometry) {
+      var geometry = /** @type {ol.geom.Geometry} */ (geometryOrValues);
+      this.setGeometry(geometry);
+    } else {
+      goog.asserts.assert(goog.isObject(geometryOrValues));
+      var values = /** @type {Object.<string, *>} */ (geometryOrValues);
+      this.setValues(values);
+    }
   }
-
 };
 goog.inherits(ol.Feature, ol.Object);
 
