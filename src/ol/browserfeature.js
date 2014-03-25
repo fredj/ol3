@@ -124,6 +124,15 @@ ol.BrowserFeature.HAS_CANVAS = ol.ENABLE_CANVAS && (
 
 
 /**
+ * Indicates if DeviceMotion is supported in the user's browser.
+ * @const
+ * @type {boolean}
+ * @todo stability experimental
+ */
+ol.BrowserFeature.HAS_DEVICE_MOTION = 'DeviceMotionEvent' in goog.global;
+
+
+/**
  * Indicates if DeviceOrientation is supported in the user's browser.
  * @const
  * @type {boolean}
