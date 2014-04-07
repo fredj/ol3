@@ -141,8 +141,18 @@ ol.TileUrlFunction.expandUrl = function(url) {
     for (charCode = startCharCode; charCode <= stopCharCode; ++charCode) {
       urls.push(url.replace(match[0], String.fromCharCode(charCode)));
     }
-  } else {
-    urls.push(url);
+    return urls;
   }
+
+  match = /{switch:([^}]+)}/.exec(url);
+  if (match) {
+    var codes = match[1].split(',');
+    for (var i = 0, ii = codes.length; i < ii; ++i) {
+      urls.push(url.replace(match[0], codes[i]));
+    }
+    return urls;
+  }
+
+  urls.push(url);
   return urls;
 };

@@ -25,6 +25,18 @@ describe('ol.TileUrlFunction', function() {
         ]);
       });
     });
+    describe('with switch', function() {
+      it('creates expected URLs', function() {
+        var template = 'http://tile-{switch:1,z,9}/{z}/{x}/{y}';
+        var urls = ol.TileUrlFunction.expandUrl(template);
+        expect(urls).to.eql([
+          'http://tile-1/{z}/{x}/{y}',
+          'http://tile-z/{z}/{x}/{y}',
+          'http://tile-9/{z}/{x}/{y}'
+        ]);
+      });
+    });
+
   });
 
   describe('createFromTemplate', function() {
