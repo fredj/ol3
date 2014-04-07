@@ -42,7 +42,7 @@ ol.TileUrlFunction.createFromTemplate = function(template) {
         if (goog.isNull(tileCoord)) {
           return undefined;
         } else {
-          return template.replace('{z}', tileCoord.z.toString())
+          return template.replace(/{z(oom)?}/, tileCoord.z.toString())
                          .replace('{x}', tileCoord.x.toString())
                          .replace('{y}', tileCoord.y.toString());
         }

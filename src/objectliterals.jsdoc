@@ -726,7 +726,7 @@
  *     function to get tile URL given a tile coordinate and the projection.
  *     Required if url or urls are not provided.
  * @property {string|undefined} url URL template.  Must include `{x}`, `{y}`,
- *     and `{z}` placeholders.
+ *     and `{z}` (or `{zoom}`) placeholders.
  * @property {Array.<string>|undefined} urls An array of URL templates.
  */
 
@@ -816,7 +816,7 @@
  * @property {ol.TileLoadFunctionType|undefined} tileLoadFunction Optional
  *     function to load a tile given a URL.
  * @property {string|undefined} url URL template. Must include `{x}`, `{y}`,
- *     and `{z}` placeholders. Default is
+ *     and `{z}` (or `{zoom}`) placeholders. Default is
  *     `//{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png`.
  * @todo stability experimental
  */
@@ -910,7 +910,7 @@
  * @property {ol.TileLoadFunctionType|undefined} tileLoadFunction Optional
  *     function to load a tile given a URL.
  * @property {string|undefined} url URL template. Must include `{x}`, `{y}`,
- *     and `{z}` placeholders.
+ *     and `{z}` (or `{zoom}`) placeholders.
  * @todo stability experimental
  */
 
@@ -1051,7 +1051,7 @@
  *     function to get tile URL given a tile coordinate and the projection.
  *     Required if url or urls are not provided.
  * @property {string|undefined} url URL template.  Must include `{x}`, `{y}`,
- *     and `{z}` placeholders.
+ *     and `{z}` (or `{zoom}`) placeholders.
  * @property {Array.<string>|undefined} urls An array of URL templates.
  * @property {boolean|undefined} wrapX Whether to wrap the world horizontally.
  *     Default is `true`.

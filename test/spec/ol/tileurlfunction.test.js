@@ -33,6 +33,10 @@ describe('ol.TileUrlFunction', function() {
       expect(tileUrl(new ol.TileCoord(3, 2, 1))).to.eql('3/2/1');
       expect(tileUrl(null)).to.be(undefined);
     });
+    it('accepts {zoom} placeholder', function() {
+      var tileUrl = ol.TileUrlFunction.createFromTemplate('{zoom}/{x}/{y}');
+      expect(tileUrl(new ol.TileCoord(3, 2, 1))).to.eql('3/2/1');
+    });
   });
 
   describe('createFromTemplates', function() {
