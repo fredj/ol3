@@ -2033,7 +2033,6 @@ olx.layer.GroupOptions.prototype.layers;
  *     gradient: (Array.<string>|undefined),
  *     radius: (number|undefined),
  *     blur: (number|undefined),
- *     shadow: (number|undefined),
  *     weight: (string|function(ol.Feature):number|undefined),
  *     minResolution: (number|undefined),
  *     maxResolution: (number|undefined),
@@ -2087,13 +2086,6 @@ olx.layer.HeatmapOptions.prototype.radius;
  * @type {number|undefined}
  */
 olx.layer.HeatmapOptions.prototype.blur;
-
-
-/**
- * Shadow size in pixels. Default is `250`.
- * @type {number|undefined}
- */
-olx.layer.HeatmapOptions.prototype.shadow;
 
 
 /**

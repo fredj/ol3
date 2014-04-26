@@ -47,8 +47,7 @@ ol.layer.Heatmap = function(opt_options) {
 
   var circle = ol.layer.Heatmap.createCircle_(
       goog.isDef(options.radius) ? options.radius : 8,
-      goog.isDef(options.blur) ? options.blur : 15,
-      goog.isDef(options.shadow) ? options.shadow : 250);
+      goog.isDef(options.blur) ? options.blur : 15);
 
   /**
    * @type {Array.<Array.<ol.style.Style>>}
@@ -130,19 +129,19 @@ ol.layer.Heatmap.createGradient_ = function(colors) {
 /**
  * @param {number} radius Radius size in pixel.
  * @param {number} blur Blur size in pixel.
- * @param {number} shadow Shadow offset size in pixel.
  * @return {string}
  * @private
  */
-ol.layer.Heatmap.createCircle_ = function(radius, blur, shadow) {
+ol.layer.Heatmap.createCircle_ = function(radius, blur) {
+  var shadowOffset = 200;
   var halfSize = radius + blur + 1;
   var size = 2 * halfSize;
   var context = ol.dom.createCanvasContext2D(size, size);
-  context.shadowOffsetX = context.shadowOffsetY = shadow;
+  context.shadowOffsetX = context.shadowOffsetY = shadowOffset;
   context.shadowBlur = blur;
   context.shadowColor = '#000';
   context.beginPath();
-  var center = halfSize - shadow;
+  var center = halfSize - shadowOffset;
   context.arc(center, center, radius, 0, Math.PI * 2, true);
   context.fill();
   return context.canvas.toDataURL();
