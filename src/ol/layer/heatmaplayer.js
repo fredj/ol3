@@ -1,5 +1,6 @@
 goog.provide('ol.layer.Heatmap');
 
+goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.math');
@@ -15,7 +16,9 @@ goog.require('ol.style.Style');
  * @enum {string}
  */
 ol.layer.HeatmapLayerProperty = {
-  GRADIENT: 'gradient'
+  BLUR: 'blur',
+  GRADIENT: 'gradient',
+  RADIUS: 'radius'
 };
 
 
@@ -38,21 +41,23 @@ ol.layer.Heatmap = function(opt_options) {
    */
   this.gradient_ = null;
 
+  /**
+   * @private
+   * @type {Array.<Array.<ol.style.Style>>}
+   */
+  this.styleCache_ = new Array(256);
+
   goog.events.listen(this,
       ol.Object.getChangeEventType(ol.layer.HeatmapLayerProperty.GRADIENT),
       this.handleGradientChanged_, false, this);
 
-  this.setGradient(goog.isDef(options.gradient) ?
-      options.gradient : ol.layer.Heatmap.DEFAULT_GRADIENT);
+  goog.events.listen(this,
+      ol.Object.getChangeEventType(ol.layer.HeatmapLayerProperty.BLUR),
+      this.handleCirclePropertiesChanged_, false, this);
 
-  var circle = ol.layer.Heatmap.createCircle_(
-      goog.isDef(options.radius) ? options.radius : 8,
-      goog.isDef(options.blur) ? options.blur : 15);
-
-  /**
-   * @type {Array.<Array.<ol.style.Style>>}
-   */
-  var styleCache = new Array(256);
+  goog.events.listen(this,
+      ol.Object.getChangeEventType(ol.layer.HeatmapLayerProperty.RADIUS),
+      this.handleCirclePropertiesChanged_, false, this);
 
   var weight = goog.isDef(options.weight) ? options.weight : 'weight';
   var weightFunction;
@@ -65,29 +70,21 @@ ol.layer.Heatmap = function(opt_options) {
   }
   goog.asserts.assert(goog.isFunction(weightFunction));
 
-  this.setStyle(function(feature, resolution) {
-    var weight = weightFunction(feature);
-    var opacity = goog.isDef(weight) ? goog.math.clamp(weight, 0, 1) : 1;
-    // cast to 8 bits
-    var index = (255 * opacity) | 0;
-    var style = styleCache[index];
-    if (!goog.isDef(style)) {
-      style = [
-        new ol.style.Style({
-          image: new ol.style.Icon({
-            opacity: opacity,
-            src: circle
-          })
-        })
-      ];
-      styleCache[index] = style;
-    }
-    return style;
-  });
+  /**
+   * @private
+   * @type {function(ol.Feature): number}
+   */
+  this.weightFunction_ = weightFunction;
 
   // For performance reasons, don't sort the features before rendering.
   // The render order is not relevant for a heatmap representation.
   this.setRenderOrder(null);
+
+  this.setGradient(goog.isDef(options.gradient) ?
+      options.gradient : ol.layer.Heatmap.DEFAULT_GRADIENT);
+
+  this.setRadius(goog.isDef(options.radius) ? options.radius : 8);
+  this.setBlur(goog.isDef(options.blur) ? options.blur : 15);
 
   goog.events.listen(this, ol.render.EventType.RENDER,
       this.handleRender_, false, this);
@@ -149,6 +146,19 @@ ol.layer.Heatmap.createCircle_ = function(radius, blur) {
 
 
 /**
+ * @return {number} Blur size in pixel.
+ */
+ol.layer.Heatmap.prototype.getBlur = function() {
+  return /** @type {number} */ (
+      this.get(ol.layer.HeatmapLayerProperty.BLUR));
+};
+goog.exportProperty(
+    ol.layer.Heatmap.prototype,
+    'getBlur',
+    ol.layer.Heatmap.prototype.getBlur);
+
+
+/**
  * @return {Array.<string>} Colors.
  */
 ol.layer.Heatmap.prototype.getGradient = function() {
@@ -162,10 +172,51 @@ goog.exportProperty(
 
 
 /**
+ * @return {number} Radius size in pixel.
+ */
+ol.layer.Heatmap.prototype.getRadius = function() {
+  return /** @type {number} */ (
+      this.get(ol.layer.HeatmapLayerProperty.RADIUS));
+};
+goog.exportProperty(
+    ol.layer.Heatmap.prototype,
+    'getRadius',
+    ol.layer.Heatmap.prototype.getRadius);
+
+
+/**
  * @private
  */
 ol.layer.Heatmap.prototype.handleGradientChanged_ = function() {
   this.gradient_ = ol.layer.Heatmap.createGradient_(this.getGradient());
+};
+
+
+/**
+ * @private
+ */
+ol.layer.Heatmap.prototype.handleCirclePropertiesChanged_ = function() {
+  goog.array.clear(this.styleCache_);
+  var circle = ol.layer.Heatmap.createCircle_(this.getRadius(), this.getBlur());
+  this.setStyle(goog.bind(function(feature, resolution) {
+    var weight = this.weightFunction_(feature);
+    var opacity = goog.isDef(weight) ? goog.math.clamp(weight, 0, 1) : 1;
+    // cast to 8 bits
+    var index = (255 * opacity) | 0;
+    var style = this.styleCache_[index];
+    if (!goog.isDef(style)) {
+      style = [
+        new ol.style.Style({
+          image: new ol.style.Icon({
+            opacity: opacity,
+            src: circle
+          })
+        })
+      ];
+      this.styleCache_[index] = style;
+    }
+    return style;
+  }, this));
 };
 
 
@@ -193,6 +244,18 @@ ol.layer.Heatmap.prototype.handleRender_ = function(event) {
 
 
 /**
+ * @param {number} blur Blur size.
+ */
+ol.layer.Heatmap.prototype.setBlur = function(blur) {
+  this.set(ol.layer.HeatmapLayerProperty.BLUR, blur);
+};
+goog.exportProperty(
+    ol.layer.Heatmap.prototype,
+    'setBlur',
+    ol.layer.Heatmap.prototype.setBlur);
+
+
+/**
  * @param {Array.<string>} colors Gradient.
  */
 ol.layer.Heatmap.prototype.setGradient = function(colors) {
@@ -202,3 +265,15 @@ goog.exportProperty(
     ol.layer.Heatmap.prototype,
     'setGradient',
     ol.layer.Heatmap.prototype.setGradient);
+
+
+/**
+ * @param {number} radius Radius size.
+ */
+ol.layer.Heatmap.prototype.setRadius = function(radius) {
+  this.set(ol.layer.HeatmapLayerProperty.RADIUS, radius);
+};
+goog.exportProperty(
+    ol.layer.Heatmap.prototype,
+    'setRadius',
+    ol.layer.Heatmap.prototype.setRadius);

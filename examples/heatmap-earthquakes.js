@@ -11,7 +11,8 @@ var vector = new ol.layer.Heatmap({
     projection: 'EPSG:3857',
     url: 'data/kml/2012_Earthquakes_Mag5.kml'
   }),
-  radius: 5
+  radius: 5,
+  blur: 12
 });
 
 vector.getSource().on('addfeature', function(event) {
