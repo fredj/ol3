@@ -100,15 +100,12 @@ ol.layer.Group.prototype.handleLayersChanged_ = function(event) {
           this.handleLayersRemove_, false, this)
     };
 
-    var layersArray = layers.getArray();
-    var i, ii, layer;
-    for (i = 0, ii = layersArray.length; i < ii; i++) {
-      layer = layersArray[i];
+    layers.forEach(function(layer) {
       this.listenerKeys_[goog.getUid(layer).toString()] =
           goog.events.listen(layer,
               [ol.ObjectEventType.PROPERTYCHANGE, goog.events.EventType.CHANGE],
               this.handleLayerChange_, false, this);
-    }
+    }, this);
   }
 
   this.dispatchChangeEvent();
