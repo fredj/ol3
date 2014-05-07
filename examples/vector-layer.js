@@ -125,3 +125,25 @@ $(map.getViewport()).on('mousemove', function(evt) {
 map.on('click', function(evt) {
   displayFeatureInfo(evt.pixel);
 });
+
+
+var source = vectorLayer.getSource();
+
+function has_short_name(feature) {
+  return feature.get('name').length <= 5;
+}
+
+function get_geometry(feature) {
+  return feature.feature.getGeometry();
+}
+
+function have_same_geometry_type(a, b) {
+  return a.getGeometry().getType() === b.getGeometry().getType();
+}
+
+sloth.ify(source.getFeaturesIterator())
+  .filter(has_short_name)
+  .map(get_geometry);
+
+sloth.ify(source.getFeaturesIterator())
+  .group(have_same_geometry_type);

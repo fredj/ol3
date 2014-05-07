@@ -11,6 +11,7 @@ goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventType');
+goog.require('goog.iter');
 goog.require('goog.object');
 goog.require('ol.ObjectEventType');
 goog.require('ol.proj');
@@ -195,7 +196,7 @@ ol.source.Vector.prototype.clear = function() {
  * @todo api
  */
 ol.source.Vector.prototype.forEachFeature = function(f, opt_this) {
-  return this.rBush_.forEach(f, opt_this);
+  return goog.iter.some(this.rBush_, f, opt_this);
 };
 
 
@@ -254,12 +255,7 @@ ol.source.Vector.prototype.forEachFeatureInExtentAtResolution =
  * @todo api
  */
 ol.source.Vector.prototype.getFeatures = function() {
-  var features = this.rBush_.getAll();
-  if (!goog.object.isEmpty(this.nullGeometryFeatures_)) {
-    goog.array.extend(
-        features, goog.object.getValues(this.nullGeometryFeatures_));
-  }
-  return features;
+  return goog.iter.toArray(this.getFeaturesIterator());
 };
 
 
@@ -283,6 +279,17 @@ ol.source.Vector.prototype.getFeaturesAtCoordinate = function(coordinate) {
  */
 ol.source.Vector.prototype.getFeaturesInExtent = function(extent) {
   return this.rBush_.getInExtent(extent);
+};
+
+
+/**
+ * @return {goog.iter.Iterator} Features iterator.
+ * @todo api
+ */
+ol.source.Vector.prototype.getFeaturesIterator = function() {
+  var nullFeatures = goog.object.getValues(this.nullGeometryFeatures_);
+  return goog.iter.chain(
+      goog.iter.toIterator(this.rBush_), goog.iter.toIterator(nullFeatures));
 };
 
 
