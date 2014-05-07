@@ -26,6 +26,7 @@ goog.provide('ol.structs.RBush');
 
 goog.require('goog.array');
 goog.require('goog.asserts');
+goog.require('goog.iter');
 goog.require('goog.iter.Iterator');
 goog.require('goog.iter.StopIteration');
 goog.require('goog.object');
@@ -278,6 +279,44 @@ ol.structs.RBush.prototype.getIterator_ = function(node) {
       }
     }
 
+    throw goog.iter.StopIteration;
+  };
+  return iterator;
+};
+
+
+/**
+ * @private
+ * @param {ol.Extent} extent Extent.
+ * @return {!goog.iter.Iterator} iterator
+ */
+ol.structs.RBush.prototype.getIteratorInExtent_ = function(extent) {
+  var toVisit = [this.root_];
+  var children = new goog.iter.Iterator();
+  var self = this;
+
+  var iterator = new goog.iter.Iterator();
+  iterator.next = function() {
+    var leaf;
+    while (goog.isDef(leaf = goog.iter.nextOrValue(children, undefined))) {
+      return leaf;
+    }
+    while (toVisit.length > 0) {
+      var node = toVisit.pop();
+      if (ol.extent.intersects(extent, node.extent)) {
+        if (node.isLeaf()) {
+          return node.value;
+        } else if (ol.extent.containsExtent(extent, node.extent)) {
+          children = self.getIterator_(node);
+          leaf = goog.iter.nextOrValue(children, undefined);
+          if (goog.isDef(leaf)) {
+            return leaf;
+          }
+        } else {
+          toVisit.push.apply(toVisit, node.children);
+        }
+      }
+    }
     throw goog.iter.StopIteration;
   };
   return iterator;
