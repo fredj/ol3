@@ -5,8 +5,6 @@ goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.object');
-goog.require('ol.Collection');
-goog.require('ol.CollectionEventType');
 goog.require('ol.Feature');
 goog.require('ol.feature');
 goog.require('ol.render.EventType');
@@ -24,21 +22,15 @@ ol.FeatureOverlay = function(opt_options) {
 
   /**
    * @private
-   * @type {ol.Collection}
+   * @type {Array.<ol.Feature>}
    */
-  this.features_ = null;
-
-  /**
-   * @private
-   * @type {Array.<goog.events.Key>}
-   */
-  this.featuresListenerKeys_ = null;
+  this.features_ = [];
 
   /**
    * @private
    * @type {Object.<string, goog.events.Key>}
    */
-  this.featureChangeListenerKeys_ = null;
+  this.featureChangeListenerKeys_ = {};
 
   /**
    * @private
@@ -65,16 +57,7 @@ ol.FeatureOverlay = function(opt_options) {
   this.styleFunction_ = goog.isDef(options.style) ?
       ol.feature.createStyleFunction(options.style) : undefined;
 
-  if (goog.isDef(options.features)) {
-    if (goog.isArray(options.features)) {
-      this.setFeatures(new ol.Collection(goog.array.clone(options.features)));
-    } else {
-      goog.asserts.assertInstanceof(options.features, ol.Collection);
-      this.setFeatures(options.features);
-    }
-  } else {
-    this.setFeatures(new ol.Collection());
-  }
+  this.setFeatures(goog.isDef(options.features) ? options.features : []);
 
   if (goog.isDef(options.map)) {
     this.setMap(options.map);
@@ -93,7 +76,7 @@ ol.FeatureOverlay.prototype.addFeature = function(feature) {
 
 
 /**
- * @return {ol.Collection} Features collection.
+ * @return {Array.<ol.Feature>} Features collection.
  * @todo api
  */
 ol.FeatureOverlay.prototype.getFeatures = function() {
@@ -111,29 +94,25 @@ ol.FeatureOverlay.prototype.handleFeatureChange_ = function() {
 
 /**
  * @private
- * @param {ol.CollectionEvent} collectionEvent Collection event.
+ * @param {ol.Feature} feature Feature.
  */
-ol.FeatureOverlay.prototype.handleFeaturesAdd_ = function(collectionEvent) {
+ol.FeatureOverlay.prototype.observeFeature_ = function(feature) {
   goog.asserts.assert(!goog.isNull(this.featureChangeListenerKeys_));
-  var feature = /** @type {ol.Feature} */ (collectionEvent.element);
   this.featureChangeListenerKeys_[goog.getUid(feature).toString()] =
       goog.events.listen(feature, goog.events.EventType.CHANGE,
       this.handleFeatureChange_, false, this);
-  this.render_();
 };
 
 
 /**
  * @private
- * @param {ol.CollectionEvent} collectionEvent Collection event.
+ * @param {ol.Feature} feature Feature.
  */
-ol.FeatureOverlay.prototype.handleFeaturesRemove_ = function(collectionEvent) {
+ol.FeatureOverlay.prototype.unobserveFeature_ = function(feature) {
   goog.asserts.assert(!goog.isNull(this.featureChangeListenerKeys_));
-  var feature = /** @type {ol.Feature} */ (collectionEvent.element);
   var key = goog.getUid(feature).toString();
   goog.events.unlistenByKey(this.featureChangeListenerKeys_[key]);
   delete this.featureChangeListenerKeys_[key];
-  this.render_();
 };
 
 
@@ -170,7 +149,7 @@ ol.FeatureOverlay.prototype.handleMapPostCompose_ = function(event) {
  * @todo api
  */
 ol.FeatureOverlay.prototype.removeFeature = function(feature) {
-  this.features_.remove(feature);
+  goog.array.remove(this.features_, feature);
 };
 
 
@@ -185,34 +164,33 @@ ol.FeatureOverlay.prototype.render_ = function() {
 
 
 /**
- * @param {ol.Collection} features Features collection.
+ * @param {Array.<ol.Feature>} features Features.
  * @todo api
  */
 ol.FeatureOverlay.prototype.setFeatures = function(features) {
-  if (!goog.isNull(this.featuresListenerKeys_)) {
-    goog.array.forEach(this.featuresListenerKeys_, goog.events.unlistenByKey);
-    this.featuresListenerKeys_ = null;
-  }
-  if (!goog.isNull(this.featureChangeListenerKeys_)) {
-    goog.array.forEach(
-        goog.object.getValues(this.featureChangeListenerKeys_),
-        goog.events.unlistenByKey);
-    this.featureChangeListenerKeys_ = null;
-  }
+  // FIXME: Array.unobserve
+  goog.array.forEach(this.features_, this.unobserveFeature_, this);
+  goog.asserts.assert(goog.object.isEmpty(this.featureChangeListenerKeys_));
+
   this.features_ = features;
   if (!goog.isNull(features)) {
-    this.featuresListenerKeys_ = [
-      goog.events.listen(features, ol.CollectionEventType.ADD,
-          this.handleFeaturesAdd_, false, this),
-      goog.events.listen(features, ol.CollectionEventType.REMOVE,
-          this.handleFeaturesRemove_, false, this)
-    ];
-    this.featureChangeListenerKeys_ = {};
-    features.forEach(function(feature) {
-      this.featureChangeListenerKeys_[goog.getUid(feature).toString()] =
-          goog.events.listen(feature, goog.events.EventType.CHANGE,
-          this.handleFeatureChange_, false, this);
-    }, this);
+    Array.observe(this.features_, goog.bind(function(changes) {
+      var i, ii, j, jj, change;
+      for (i = 0, ii = changes.length; i < ii; ++i) {
+        change = changes[i];
+        if (change.type == 'splice') {
+          for (j = change.index, jj = j + change.addedCount; j < jj; j++) {
+            this.observeFeature_(change.object[j]);
+          }
+          for (j = 0, jj = change.removed.length; j < jj; j++) {
+            this.unobserveFeature_(change.removed[j]);
+          }
+        }
+      }
+      this.render_();
+    }, this));
+
+    goog.array.forEach(this.features_, this.observeFeature_, this);
   }
   this.render_();
 };

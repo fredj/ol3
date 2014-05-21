@@ -3,7 +3,6 @@ goog.provide('ol.interaction.Draw');
 
 goog.require('goog.asserts');
 goog.require('goog.events.Event');
-goog.require('ol.Collection');
 goog.require('ol.Coordinate');
 goog.require('ol.Feature');
 goog.require('ol.FeatureOverlay');
@@ -91,7 +90,7 @@ ol.interaction.Draw = function(options) {
 
   /**
    * Target collection for drawn features.
-   * @type {ol.Collection}
+   * @type {Array.<ol.Feature>}
    * @private
    */
   this.features_ = goog.isDef(options.features) ? options.features : null;
@@ -501,7 +500,7 @@ ol.interaction.Draw.prototype.abortDrawing_ = function() {
     this.sketchFeature_ = null;
     this.sketchPoint_ = null;
     this.sketchLine_ = null;
-    this.overlay_.getFeatures().clear();
+    goog.array.clear(this.overlay_.getFeatures());
   }
   return sketchFeature;
 };
@@ -519,7 +518,7 @@ ol.interaction.Draw.prototype.updateSketchFeatures_ = function() {
   if (!goog.isNull(this.sketchPoint_)) {
     sketchFeatures.push(this.sketchPoint_);
   }
-  this.overlay_.setFeatures(new ol.Collection(sketchFeatures));
+  this.overlay_.setFeatures(sketchFeatures);
 };
 
 
