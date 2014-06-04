@@ -99,6 +99,36 @@ olx.GeolocationOptions.prototype.projection;
 
 
 /**
+ * @typedef {{map: (ol.Map|undefined),
+ *     projection: ol.proj.ProjectionLike,
+ *     targetSize: (number|undefined)}}
+ */
+olx.GraticuleOptions;
+
+
+/**
+ * Reference to an `ol.Map` object.
+ * @type {ol.Map|undefined}
+ */
+olx.GraticuleOptions.prototype.map;
+
+
+/**
+ * The projection to use for the graticule.
+ * @type {ol.proj.ProjectionLike}
+ */
+olx.GraticuleOptions.prototype.projection;
+
+
+/**
+ * The target size of the graticule cells, in pixels. Default
+ * value is 100 pixels.
+ * @type {number|undefined}
+ */
+olx.GraticuleOptions.prototype.targetSize;
+
+
+/**
  * Object literal with config options for the map.
  * @typedef {{controls: (ol.Collection|Array.<ol.control.Control>|undefined),
  *     deviceOptions: (olx.DeviceOptions|undefined),
