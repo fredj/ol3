@@ -101,6 +101,30 @@ ol.proj.Projection = function(options) {
    */
   this.defaultTileGrid_ = null;
 
+  /**
+   * @private
+   * @type {number|undefined}
+   */
+  this.maxLat_ = options.maxLat;
+
+  /**
+   * @private
+   * @type {number|undefined}
+   */
+  this.maxLon_ = options.maxLon;
+
+  /**
+   * @private
+   * @type {number|undefined}
+   */
+  this.minLat_ = options.minLat;
+
+  /**
+   * @private
+   * @type {number|undefined}
+   */
+  this.minLon_ = options.minLon;
+
 };
 
 
@@ -154,6 +178,38 @@ ol.proj.Projection.prototype.getUnits = function() {
  */
 ol.proj.Projection.prototype.getMetersPerUnit = function() {
   return ol.proj.METERS_PER_UNIT[this.units_];
+};
+
+
+/**
+ * @return {number|undefined} Max lat.
+ */
+ol.proj.Projection.prototype.getMaxLat = function() {
+  return this.maxLat_;
+};
+
+
+/**
+ * @return {number|undefined} Max lon.
+ */
+ol.proj.Projection.prototype.getMaxLon = function() {
+  return this.maxLon_;
+};
+
+
+/**
+ * @return {number|undefined} Min lat.
+ */
+ol.proj.Projection.prototype.getMinLat = function() {
+  return this.minLat_;
+};
+
+
+/**
+ * @return {number|undefined} Min lon.
+ */
+ol.proj.Projection.prototype.getMinLon = function() {
+  return this.minLon_;
 };
 
 

@@ -20,7 +20,11 @@ ol.proj.EPSG3857 = function(code) {
     code: code,
     units: ol.proj.Units.METERS,
     extent: ol.proj.EPSG3857.EXTENT,
-    global: true
+    global: true,
+    maxLat: 85,
+    maxLon: 180,
+    minLat: -85,
+    minLon: -180
   });
 };
 goog.inherits(ol.proj.EPSG3857, ol.proj.Projection);

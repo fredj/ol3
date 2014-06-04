@@ -19,7 +19,11 @@ ol.proj.EPSG4326 = function(code, opt_axisOrientation) {
     units: ol.proj.Units.DEGREES,
     extent: ol.proj.EPSG4326.EXTENT,
     axisOrientation: opt_axisOrientation,
-    global: true
+    global: true,
+    maxLat: 90,
+    maxLon: 180,
+    minLat: -90,
+    minLon: 180
   });
 };
 goog.inherits(ol.proj.EPSG4326, ol.proj.Projection);

@@ -274,7 +274,11 @@ olx.OverlayOptions.prototype.offsetY;
  * Object literal with config options for the Proj4js projection.
  * @typedef {{code: string,
  *     extent: (ol.Extent|undefined),
- *     global: (boolean|undefined)}}
+ *     global: (boolean|undefined),
+ *     maxLat: (number|undefined),
+ *     maxLon: (number|undefined),
+ *     minLat: (number|undefined),
+ *     minLon: (number|undefined)}}
  * @todo api
  */
 olx.Proj4jsProjectionOptions;
@@ -302,12 +306,44 @@ olx.Proj4jsProjectionOptions.prototype.global;
 
 
 /**
+ * Maximum latitude value for this projection.
+ * @type {number|undefined}
+ */
+olx.Proj4jsProjectionOptions.prototype.maxLat;
+
+
+/**
+ * Maximum longitute value for this projection.
+ * @type {number|undefined}
+ */
+olx.Proj4jsProjectionOptions.prototype.maxLon;
+
+
+/**
+ * Minimum latitude value for this projection.
+ * @type {number|undefined}
+ */
+olx.Proj4jsProjectionOptions.prototype.minLat;
+
+
+/**
+ * Minimum longitude value for this projection.
+ * @type {number|undefined}
+ */
+olx.Proj4jsProjectionOptions.prototype.minLon;
+
+
+/**
  * Object literal with config options for the projection.
  * @typedef {{code: string,
  *     units: (ol.proj.Units|string),
  *     extent: (ol.Extent|undefined),
  *     axisOrientation: (string|undefined),
- *     global: (boolean|undefined)}}
+ *     global: (boolean|undefined),
+ *     maxLat: (number|undefined),
+ *     maxLon: (number|undefined),
+ *     minLat: (number|undefined),
+ *     minLon: (number|undefined)}}
  * @todo api
  */
 olx.ProjectionOptions;
@@ -346,6 +382,34 @@ olx.ProjectionOptions.prototype.axisOrientation;
  * @type {boolean|undefined}
  */
 olx.ProjectionOptions.prototype.global;
+
+
+/**
+ * Maximum latitude value for this projection.
+ * @type {number|undefined}
+ */
+olx.ProjectionOptions.prototype.maxLat;
+
+
+/**
+ * Maximum longitute value for this projection.
+ * @type {number|undefined}
+ */
+olx.ProjectionOptions.prototype.maxLon;
+
+
+/**
+ * Minimum latitude value for this projection.
+ * @type {number|undefined}
+ */
+olx.ProjectionOptions.prototype.minLat;
+
+
+/**
+ * Minimum longitude value for this projection.
+ * @type {number|undefined}
+ */
+olx.ProjectionOptions.prototype.minLon;
 
 
 /**
