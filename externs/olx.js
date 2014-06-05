@@ -100,7 +100,6 @@ olx.GeolocationOptions.prototype.projection;
 
 /**
  * @typedef {{map: (ol.Map|undefined),
- *     projection: ol.proj.ProjectionLike,
  *     targetSize: (number|undefined)}}
  */
 olx.GraticuleOptions;
@@ -111,13 +110,6 @@ olx.GraticuleOptions;
  * @type {ol.Map|undefined}
  */
 olx.GraticuleOptions.prototype.map;
-
-
-/**
- * The projection to use for the graticule.
- * @type {ol.proj.ProjectionLike}
- */
-olx.GraticuleOptions.prototype.projection;
 
 
 /**

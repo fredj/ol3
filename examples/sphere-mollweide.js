@@ -50,6 +50,5 @@ var map = new ol.Map({
 });
 
 var graticule = new ol.Graticule({
-  map: map,
-  projection: 'ESRI:53009'
+  map: map
 });

@@ -13,10 +13,12 @@ goog.require('ol.style.Stroke');
 
 /**
  * @constructor
- * @param {olx.GraticuleOptions} options Options.
+ * @param {olx.GraticuleOptions=} opt_options Options.
  * @todo api
  */
-ol.Graticule = function(options) {
+ol.Graticule = function(opt_options) {
+
+  var options = goog.isDef(opt_options) ? opt_options : {};
 
   /**
    * @type {ol.Map}
@@ -28,42 +30,31 @@ ol.Graticule = function(options) {
    * @type {ol.proj.Projection}
    * @private
    */
-  this.projection_ = ol.proj.get(options.projection);
-
-  goog.asserts.assert(!goog.isNull(this.projection_));
-
-  var maxLat = this.projection_.getMaxLat();
-  var maxLon = this.projection_.getMaxLon();
-  var minLat = this.projection_.getMinLat();
-  var minLon = this.projection_.getMinLon();
-  goog.asserts.assert(goog.isDef(maxLat));
-  goog.asserts.assert(goog.isDef(maxLon));
-  goog.asserts.assert(goog.isDef(minLat));
-  goog.asserts.assert(goog.isDef(minLon));
+  this.projection_ = null;
 
   /**
    * @type {number}
    * @private
    */
-  this.maxLat_ = maxLat;
+  this.maxLat_ = Infinity;
 
   /**
    * @type {number}
    * @private
    */
-  this.maxLon_ = maxLon;
+  this.maxLon_ = Infinity;
 
   /**
    * @type {number}
    * @private
    */
-  this.minLat_ = minLat;
+  this.minLat_ = -Infinity;
 
   /**
    * @type {number}
    * @private
    */
-  this.minLon_ = minLon;
+  this.minLon_ = -Infinity;
 
   /**
    * @type {number}
@@ -93,28 +84,23 @@ ol.Graticule = function(options) {
     color: 'rgba(0,0,0,0.2)'
   });
 
-  var epsg4326Projection = ol.proj.get('EPSG:4326');
-
   /**
-   * @type {ol.TransformFunction}
+   * @type {ol.TransformFunction|undefined}
    * @private
    */
-  this.fromLonLatTransform_ = ol.proj.getTransform(
-      epsg4326Projection, this.projection_);
+  this.fromLonLatTransform_ = undefined;
 
   /**
-   * @type {ol.TransformFunction}
+   * @type {ol.TransformFunction|undefined}
    * @private
    */
-  this.toLonLatTransform_ = ol.proj.getTransform(
-      this.projection_, epsg4326Projection);
+  this.toLonLatTransform_ = undefined;
 
   /**
    * @type {ol.Coordinate}
    * @private
    */
-  this.projectionCenterLonLat_ = this.toLonLatTransform_(
-      ol.extent.getCenter(this.projection_.getExtent()));
+  this.projectionCenterLonLat_ = null;
 
   this.setMap(goog.isDef(options.map) ? options.map : null);
 };
@@ -298,11 +284,18 @@ ol.Graticule.prototype.getParallels = function() {
 ol.Graticule.prototype.handlePostCompose_ = function(e) {
   var vectorContext = e.vectorContext;
   var frameState = e.frameState;
-  var center = frameState.view2DState.center;
-  var resolution = frameState.view2DState.resolution;
+  var view2DState = frameState.view2DState;
+  var center = view2DState.center;
+  var projection = view2DState.projection;
+  var resolution = view2DState.resolution;
   var pixelRatio = frameState.pixelRatio;
   var squaredTolerance =
       resolution * resolution / (4 * pixelRatio * pixelRatio);
+
+  if (goog.isNull(this.projection_) ||
+      !ol.proj.equivalent(this.projection_, projection)) {
+    this.updateProjectionInfo_(projection);
+  }
 
   // Create the graticule
   this.createGraticule_(center, resolution, squaredTolerance);
@@ -318,6 +311,45 @@ ol.Graticule.prototype.handlePostCompose_ = function(e) {
     line = this.parallels_[i];
     vectorContext.drawLineStringGeometry(line, null);
   }
+};
+
+
+/**
+ * @param {ol.proj.Projection} projection Projection.
+ * @private
+ */
+ol.Graticule.prototype.updateProjectionInfo_ = function(projection) {
+  goog.asserts.assert(!goog.isNull(projection));
+
+  var extent = projection.getExtent();
+  var maxLat = projection.getMaxLat();
+  var maxLon = projection.getMaxLon();
+  var minLat = projection.getMinLat();
+  var minLon = projection.getMinLon();
+
+  goog.asserts.assert(!goog.isNull(extent));
+  goog.asserts.assert(goog.isDef(maxLat));
+  goog.asserts.assert(goog.isDef(maxLon));
+  goog.asserts.assert(goog.isDef(minLat));
+  goog.asserts.assert(goog.isDef(minLon));
+
+  this.maxLat_ = maxLat;
+  this.maxLon_ = maxLon;
+  this.minLat_ = minLat;
+  this.minLon_ = minLon;
+
+  var epsg4326Projection = ol.proj.get('EPSG:4326');
+
+  this.fromLonLatTransform_ = ol.proj.getTransform(
+      epsg4326Projection, projection);
+
+  this.toLonLatTransform_ = ol.proj.getTransform(
+      projection, epsg4326Projection);
+
+  this.projectionCenterLonLat_ = this.toLonLatTransform_(
+      ol.extent.getCenter(extent));
+
+  this.projection_ = projection;
 };
 
 

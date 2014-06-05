@@ -21,7 +21,5 @@ var map = new ol.Map({
 });
 
 // Create the graticule component
-var graticule = new ol.Graticule({
-  projection: map.getView().getProjection()
-});
+var graticule = new ol.Graticule();
 graticule.setMap(map);
