@@ -4741,6 +4741,58 @@ olx.style.StrokeOptions.prototype.width;
 
 
 /**
+ * @typedef {{image: (ol.style.Image|undefined),
+ *     offset: (number|undefined),
+ *     offsetUnits: (ol.style.IconAnchorUnits|undefined),
+ *     repeate: (number|undefined),
+ *     repeateUnits: (ol.style.IconAnchorUnits|undefined)}}
+ * @todo api
+ */
+olx.style.StrokeIconOptions;
+
+
+/**
+ * Image style.
+ * @type {ol.style.Image|undefined}
+ */
+olx.style.StrokeIconOptions.prototype.image;
+
+
+/**
+ * The distance from the start of the line at which an icon is to be rendered.
+ * Defaults is `1`.
+ * @type {number|undefined}
+ */
+olx.style.StrokeIconOptions.prototype.offset;
+
+
+/**
+ * Units in which the offset value is specified. A value of `'fraction'`
+ * indicates the value is a fraction of the line. A value of `'pixels'`
+ * indicates value in pixels. Default is `'fraction'`.
+ * @type {ol.style.IconAnchorUnits|undefined}
+ */
+olx.style.StrokeIconOptions.prototype.offsetUnits;
+
+
+/**
+ * The distance between consecutive icons on the line.
+ * Set to `0` to disable repetition. Defaults is `0`.
+ * @type {number|undefined}
+ */
+olx.style.StrokeIconOptions.prototype.repeat;
+
+
+/**
+ * Units in which the repeat value is specified. A value of `'fraction'`
+ * indicates the value is a fraction of the line. A value of `'pixels'`
+ * indicates value in pixels. Default is `'fraction'`.
+ * @type {ol.style.IconAnchorUnits|undefined}
+ */
+olx.style.StrokeIconOptions.prototype.repeatUnits;
+
+
+/**
  * @typedef {{font: (string|undefined),
  *     offsetX: (number|undefined),
  *     offsetY: (number|undefined),
