@@ -939,6 +939,13 @@ ol.Map.prototype.handleTargetChanged_ = function() {
   if (goog.isNull(targetElement)) {
     goog.dom.removeNode(this.viewport_);
   } else {
+    var container = this.getOverlayContainerStopEvent();
+    var children = targetElement.querySelectorAll('[data-ol-control]');
+    for (var i = 0, ii = children.length; i < ii; i++) {
+      var node = children.item(i);
+      goog.dom.appendChild(container, goog.dom.removeNode(node));
+    }
+
     goog.dom.appendChild(targetElement, this.viewport_);
 
     var keyboardEventTarget = goog.isNull(this.keyboardEventTarget_) ?

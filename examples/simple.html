@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="../resources/layout.css" type="text/css">
     <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap-responsive.min.css" type="text/css">
     <title>Simple example</title>
+    <style>
+      #barrel-roll {
+        position: absolute;
+        top: 80px;
+        left: 0.5em;
+      }
+    </style>
   </head>
   <body>
 
@@ -24,7 +31,9 @@
 
       <div class="row-fluid">
         <div class="span12">
-          <div id="map" class="map"></div>
+          <div id="map" class="map">
+            <button id="barrel-roll" class="btn btn-danger" data-ol-control>do a barrel roll</button>
+          </div>
         </div>
       </div>
 
