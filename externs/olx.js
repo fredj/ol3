@@ -4714,6 +4714,54 @@ olx.style.IconOptions.prototype.src;
 
 
 /**
+ * @typedef {{anchor: (ol.Coordinate|undefined),
+ *     fill: (ol.style.Fill|undefined),
+ *     path: string,
+ *     rotation: (number|undefined),
+ *     scale: (number|undefined),
+ *     stroke: (ol.style.Stroke|undefined)}}
+ * @api
+ */
+olx.style.ShapeOptions;
+
+
+/**
+ * @type {ol.Coordinate|undefined}
+ */
+olx.style.ShapeOptions.prototype.anchor;
+
+
+/**
+ * @type {ol.style.Fill|undefined}
+ */
+olx.style.ShapeOptions.prototype.fill;
+
+
+/**
+ * @type {string}
+ */
+olx.style.ShapeOptions.prototype.path;
+
+
+/**
+ * @type {number|undefined}
+ */
+olx.style.ShapeOptions.prototype.rotation;
+
+
+/**
+ * @type {number|undefined}
+ */
+olx.style.ShapeOptions.prototype.scale;
+
+
+/**
+ * @type {ol.style.Stroke|undefined}
+ */
+olx.style.ShapeOptions.prototype.stroke;
+
+
+/**
  * @typedef {{color: (ol.Color|string|undefined),
  *     lineCap: (string|undefined),
  *     lineJoin: (string|undefined),
