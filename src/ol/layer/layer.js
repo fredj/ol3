@@ -1,11 +1,26 @@
 goog.provide('ol.layer.Layer');
+goog.provide('ol.layer.LayerOptions');
 
 goog.require('goog.asserts');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
-goog.require('goog.object');
 goog.require('ol.layer.Base');
 goog.require('ol.source.Source');
+
+
+/**
+ * @typedef {{brightness: (number|undefined),
+ *     contrast: (number|undefined),
+ *     hue: (number|undefined),
+ *     opacity: (number|undefined),
+ *     saturation: (number|undefined),
+ *     source: ol.source.Source,
+ *     visible: (boolean|undefined),
+ *     extent: (ol.Extent|undefined),
+ *     minResolution: (number|undefined),
+ *     maxResolution: (number|undefined)}}
+ */
+ol.layer.LayerOptions;
 
 
 
@@ -21,15 +36,22 @@ goog.require('ol.source.Source');
  * @extends {ol.layer.Base}
  * @fires ol.render.Event
  * @fires change Triggered when the state of the source changes.
- * @param {olx.layer.LayerOptions} options Layer options.
+ * @param {ol.layer.LayerOptions} options Layer options.
  * @api stable
  */
 ol.layer.Layer = function(options) {
 
-  var baseOptions = goog.object.clone(options);
-  delete baseOptions.source;
-
-  goog.base(this, /** @type {olx.layer.LayerOptions} */ (baseOptions));
+  goog.base(this, {
+    brightness: options.brightness,
+    contrast: options.contrast,
+    hue: options.hue,
+    opacity: options.opacity,
+    saturation: options.saturation,
+    visible: options.visible,
+    extent: options.extent,
+    minResolution: options.minResolution,
+    maxResolution: options.maxResolution
+  });
 
   /**
    * @private

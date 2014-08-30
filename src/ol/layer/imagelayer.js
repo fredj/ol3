@@ -19,7 +19,18 @@ goog.require('ol.layer.Layer');
  * @api stable
  */
 ol.layer.Image = function(options) {
-  goog.base(this,  /** @type {olx.layer.LayerOptions} */ (options));
+  goog.base(this, {
+    brightness: options.brightness,
+    contrast: options.contrast,
+    hue: options.hue,
+    opacity: options.opacity,
+    saturation: options.saturation,
+    source: options.source,
+    visible: options.visible,
+    extent: options.extent,
+    minResolution: options.minResolution,
+    maxResolution: options.maxResolution
+  });
 };
 goog.inherits(ol.layer.Image, ol.layer.Layer);
 

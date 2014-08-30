@@ -1,6 +1,5 @@
 goog.provide('ol.layer.Vector');
 
-goog.require('goog.object');
 goog.require('ol.layer.Layer');
 goog.require('ol.style.Style');
 
@@ -29,13 +28,20 @@ ol.layer.VectorProperty = {
  */
 ol.layer.Vector = function(opt_options) {
 
-  var options = goog.isDef(opt_options) ?
-      opt_options : /** @type {olx.layer.VectorOptions} */ ({});
+  var options = goog.isDef(opt_options) ? opt_options : {};
 
-  var baseOptions = goog.object.clone(options);
-
-  delete baseOptions.style;
-  goog.base(this, /** @type {olx.layer.LayerOptions} */ (baseOptions));
+  goog.base(this, {
+    brightness: options.brightness,
+    contrast: options.contrast,
+    hue: options.hue,
+    opacity: options.opacity,
+    saturation: options.saturation,
+    source: options.source,
+    visible: options.visible,
+    extent: options.extent,
+    minResolution: options.minResolution,
+    maxResolution: options.maxResolution
+  });
 
   /**
    * User provided style.
