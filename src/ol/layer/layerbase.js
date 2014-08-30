@@ -41,6 +41,20 @@ ol.layer.LayerProperty = {
 ol.layer.LayerState;
 
 
+/**
+ * @typedef {{brightness: (number|undefined),
+ *     contrast: (number|undefined),
+ *     hue: (number|undefined),
+ *     opacity: (number|undefined),
+ *     saturation: (number|undefined),
+ *     visible: (boolean|undefined),
+ *     extent: (ol.Extent|undefined),
+ *     minResolution: (number|undefined),
+ *     maxResolution: (number|undefined)}}
+ */
+ol.layer.BaseOptions;
+
+
 
 /**
  * @classdesc
@@ -52,7 +66,7 @@ ol.layer.LayerState;
  *
  * @constructor
  * @extends {ol.Object}
- * @param {olx.layer.BaseOptions} options Layer options.
+ * @param {ol.layer.BaseOptions} options Layer options.
  */
 ol.layer.Base = function(options) {
 
