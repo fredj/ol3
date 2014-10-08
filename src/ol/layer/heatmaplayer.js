@@ -81,6 +81,10 @@ ol.layer.Heatmap = function(opt_options) {
     if (!goog.isDef(style)) {
       style = [
         new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: '#fff',
+            width: 1
+          }),
           image: new ol.style.Icon({
             opacity: opacity,
             src: circle
