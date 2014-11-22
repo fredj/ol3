@@ -13,6 +13,7 @@ goog.require('goog.events.Event');
 goog.require('goog.functions');
 goog.require('goog.object');
 goog.require('ol.Observable');
+goog.require('ol.has');
 
 
 /**
@@ -194,6 +195,12 @@ ol.Object = function(opt_values) {
    * @type {Object.<string, goog.events.Key>}
    */
   this.listeners_ = {};
+
+  /**
+   * @private
+   * @type {ObjectNotifier}
+   */
+  this.notifier_ = ol.has.OBJECT_NOTIFY ? Object.getNotifier(this) : null;
 
   if (goog.isDef(opt_values)) {
     this.setProperties(opt_values);
@@ -433,6 +440,13 @@ ol.Object.prototype.notify = function(key, oldValue) {
   this.dispatchEvent(new ol.ObjectEvent(eventType, key, oldValue));
   eventType = ol.ObjectEventType.PROPERTYCHANGE;
   this.dispatchEvent(new ol.ObjectEvent(eventType, key, oldValue));
+  if (!goog.isNull(this.notifier_)) {
+    this.notifier_.notify({
+      type: 'update',
+      name: key,
+      oldValue: oldValue
+    });
+  }
 };
 
 

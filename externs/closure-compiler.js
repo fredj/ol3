@@ -30,3 +30,21 @@ Touch.prototype.webkitRadiusX;
 
 /** @type {number} */
 Touch.prototype.webkitRadiusY;
+
+
+/**
+ * @constructor
+ */
+function ObjectNotifier() {};
+
+/**
+ * @param {Object} notification
+ */
+ObjectNotifier.prototype.notify = function(notification) {};
+
+/**
+ * @param {Object} obj
+ * @return {ObjectNotifier}
+ * @see http://wiki.ecmascript.org/doku.php?id=harmony:observe_public_api#object.getnotifier
+ */
+Object.getNotifier = function(obj) {};

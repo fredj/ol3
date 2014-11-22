@@ -89,6 +89,13 @@ ol.has.GEOLOCATION = 'geolocation' in goog.global.navigator;
 
 
 /**
+ * @const
+ * @type {boolean}
+ */
+ol.has.OBJECT_NOTIFY = !!(Object.getNotifier);
+
+
+/**
  * True if browser supports touch events.
  * @const
  * @type {boolean}
