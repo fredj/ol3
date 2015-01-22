@@ -504,7 +504,7 @@ ol.interaction.Modify.handleUpEvent_ = function(evt) {
  */
 ol.interaction.Modify.handleEvent = function(mapBrowserEvent) {
   var handled;
-  if (!mapBrowserEvent.map.getView().getHints()[ol.ViewHint.INTERACTING] &&
+  if (!mapBrowserEvent.frameState.viewHints[ol.ViewHint.INTERACTING] &&
       mapBrowserEvent.type == ol.MapBrowserEvent.EventType.POINTERMOVE) {
     this.handlePointerMove_(mapBrowserEvent);
   }
