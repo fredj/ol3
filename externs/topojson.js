@@ -84,6 +84,12 @@ var TopoJSONGeometry = function() {};
 TopoJSONGeometry.prototype.id;
 
 
+/**
+ * @type {Object.<string, *>}
+ */
+TopoJSONGeometry.prototype.properties;
+
+
 
 /**
  * @constructor
@@ -103,6 +109,11 @@ TopoJSONGeometryCollection.prototype.geometries;
  */
 TopoJSONGeometryCollection.prototype.id;
 
+
+/**
+ * @type {Object.<string, *>}
+ */
+TopoJSONGeometryCollection.prototype.properties;
 
 
 /**
