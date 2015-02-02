@@ -98,6 +98,12 @@ var TopoJSONGeometryCollection = function() {};
 TopoJSONGeometryCollection.prototype.geometries;
 
 
+/**
+ * @type {string|number|undefined}
+ */
+TopoJSONGeometryCollection.prototype.id;
+
+
 
 /**
  * @constructor
