@@ -10,13 +10,27 @@
 /**
  * @constructor
  */
-var TopoJSONTopology = function() {};
+var TopoJSONObject = function() {};
+
+
+/**
+ * @type {!Array.<number>|undefined}
+ */
+TopoJSONObject.prototype.bbox;
 
 
 /**
  * @type {string}
  */
-TopoJSONTopology.prototype.type;
+TopoJSONObject.prototype.type;
+
+
+
+/**
+ * @constructor
+ * @extends {TopoJSONObject}
+ */
+var TopoJSONTopology = function() {};
 
 
 /**
@@ -59,14 +73,9 @@ TopoJSONTransform.prototype.translate;
 
 /**
  * @constructor
+ * @extends {TopoJSONObject}
  */
 var TopoJSONGeometry = function() {};
-
-
-/**
- * @type {string}
- */
-TopoJSONGeometry.prototype.type;
 
 
 /**
@@ -78,6 +87,7 @@ TopoJSONGeometry.prototype.id;
 
 /**
  * @constructor
+ * @extends {TopoJSONObject}
  */
 var TopoJSONGeometryCollection = function() {};
 
