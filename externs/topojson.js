@@ -1,7 +1,7 @@
 
 /**
  * @fileoverview Externs for TopoJSON.
- * @see https://github.com/mbostock/topojson/wiki/Specification
+ * @see https://github.com/topojson/topojson-specification/blob/master/README.md
  * @externs
  */
 
