@@ -104,6 +104,15 @@ goog.inherits(ol.Collection, ol.Object);
 
 
 /**
+ * @inheritDoc
+ */
+ol.Collection.prototype.disposeInternal = function() {
+  this.clear();
+  goog.base(this, 'disposeInternal');
+};
+
+
+/**
  * Remove all elements from the collection.
  * @api stable
  */
