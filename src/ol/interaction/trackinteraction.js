@@ -83,20 +83,21 @@ ol.interaction.Track = function(opt_options) {
       '&z={zoom}&output=json';
 
   var defaulStyle = new ol.style.Style({
-    fill: new ol.style.Fill({
-      color: '#d80000'
-    }),
     stroke: new ol.style.Stroke({
       color: '#d80000',
-      width: 3
+      width: 2
     }),
     image: new ol.style.RegularShape(
         /** @type {olx.style.RegularShapeOptions} */({
+          stroke: new ol.style.Stroke({
+            color: '#d80000',
+            width: 2
+          }),
           fill: new ol.style.Fill({
-            color: '#d80000'
+            color: 'rgba(216, 0, 0, 0.5)'
           }),
           points: 4,
-          radius: 8,
+          radius: 6,
           angle: Math.PI / 4
         }))
   });
@@ -104,11 +105,15 @@ ol.interaction.Track = function(opt_options) {
   var defaulSketchStyle = new ol.style.Style({
     image: new ol.style.RegularShape(
         /** @type {olx.style.RegularShapeOptions} */({
+          stroke: new ol.style.Stroke({
+            color: '#d80000',
+            width: 2
+          }),
           fill: new ol.style.Fill({
-            color: '#d80000'
+            color: 'rgba(216, 0, 0, 0.5)'
           }),
           points: 4,
-          radius: 8,
+          radius: 6,
           angle: Math.PI / 4
         }))
   });
