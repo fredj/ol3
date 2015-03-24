@@ -48,8 +48,20 @@ ol.interaction.DrawTrack = function(opt_options) {
   goog.events.listen(this.drawInteraction_, ol.DrawEventType.DRAWEND,
       this.onDrawEnd_, false, this);
 
+  goog.events.listen(this,
+      ol.Object.getChangeEventType(ol.interaction.InteractionProperty.ACTIVE),
+      this.handleActiveChanged_, false, this);
+
 };
 goog.inherits(ol.interaction.DrawTrack, ol.interaction.Track);
+
+
+/**
+ * @private
+ */
+ol.interaction.DrawTrack.prototype.handleActiveChanged_ = function() {
+  this.drawInteraction_.setActive(this.getActive());
+};
 
 
 /**
