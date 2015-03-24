@@ -16,6 +16,7 @@ goog.require('ol.style.Style');
 
 /**
  * @typedef {{
+ *    elevation: (boolean),
  *    snap: (boolean),
  *    style:(ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined),
  *    sketchStyle:(ol.style.Style|Array.<ol.style.Style>|ol.style.StyleFunction|undefined)
@@ -53,6 +54,12 @@ ol.interaction.Track = function(opt_options) {
   goog.base(this, {});
 
   /**
+   * Request elevation data from OSRM?
+   * @type {boolean}
+   */
+  this.elevation = goog.isDef(options.elevation) ? options.elevation : true;
+
+  /**
    * Should the points and segments be snapped?
    * @type {boolean}
    */
@@ -68,19 +75,25 @@ ol.interaction.Track = function(opt_options) {
   /**
    * @type {string}
    */
-  this.osrmProfile = 'quiet';
-  // this.osrmProfile = 'neutral';
+  this.osrmProfile = 'neutral';
 
-  // this.baseOsrmUrl = 'http://chmobil-osrm.dev.bgdi.ch/';
-  this.baseOsrmUrl =
-      'http://provelobern-geomapfish.prod.sig.cloud.camptocamp.net/';
+  /**
+   * @type {string}
+   */
+  this.baseOsrmUrl = 'http://chmobil-osrm.dev.bgdi.ch/';
 
+  /**
+   * @type {string}
+   */
   this.osrmLocateUrl = this.baseOsrmUrl + '{profile}/nearest?loc={point}';
 
+  /**
+   * @type {string}
+   */
   this.osrmRoutingUrl =
       this.baseOsrmUrl +
       '{profile}/viaroute?loc={from}&loc={to}&instructions=false&alt=false' +
-      '&z={zoom}&output=json';
+      '&z={zoom}&output=json&elevation={elevation}';
 
   var defaultStyle = new ol.style.Style({
     stroke: new ol.style.Stroke({

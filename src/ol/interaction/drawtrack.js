@@ -258,6 +258,7 @@ ol.interaction.DrawTrack.prototype.requestRoute_ =
       this.getMap().getView().getProjection(), 'EPSG:4326');
 
   var url = this.osrmRoutingUrl
+    .replace('{elevation}', this.elevation ? 'true' : 'false')
     .replace('{profile}', this.osrmProfile)
     .replace('{from}', from[1] + ',' + from[0])
     .replace('{to}', to[1] + ',' + to[0])
@@ -271,7 +272,11 @@ ol.interaction.DrawTrack.prototype.requestRoute_ =
 
     var response = xhr.getResponseJson();
     if (response['status'] === 0) {
-      var format = new ol.format.Polyline({factor: 1e6});
+      var format = new ol.format.Polyline({
+        factor: 1e6,
+        geometryLayout: this.elevation ?
+            ol.geom.GeometryLayout.XYZ : ol.geom.GeometryLayout.XY
+      });
       var route = format.readGeometry(response['route_geometry'], {
         dataProjection: 'EPSG:4326',
         featureProjection: this.getMap().getView().getProjection()
