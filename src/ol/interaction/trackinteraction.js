@@ -82,7 +82,7 @@ ol.interaction.Track = function(opt_options) {
       '{profile}/viaroute?loc={from}&loc={to}&instructions=false&alt=false' +
       '&z={zoom}&output=json';
 
-  var defaulStyle = new ol.style.Style({
+  var defaultStyle = new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: '#d80000',
       width: 2
@@ -102,7 +102,7 @@ ol.interaction.Track = function(opt_options) {
         }))
   });
 
-  var defaulSketchStyle = new ol.style.Style({
+  var defaultSketchStyle = new ol.style.Style({
     image: new ol.style.RegularShape(
         /** @type {olx.style.RegularShapeOptions} */({
           stroke: new ol.style.Stroke({
@@ -118,9 +118,9 @@ ol.interaction.Track = function(opt_options) {
         }))
   });
 
-  this.style = goog.isDef(options.style) ? options.style : [defaulStyle];
+  this.style = goog.isDef(options.style) ? options.style : [defaultStyle];
   this.sketchStyle = goog.isDef(options.sketchStyle) ?
-      options.sketchStyle : [defaulSketchStyle];
+      options.sketchStyle : [defaultSketchStyle];
 
   /**
    * The control points of the track.
