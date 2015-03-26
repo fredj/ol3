@@ -168,6 +168,17 @@ goog.inherits(ol.interaction.Track, ol.interaction.Pointer);
 
 
 /**
+ * @api
+ */
+ol.interaction.Track.prototype.clear = function() {
+  this.pointOverlay.getFeatures().clear();
+  this.segmentOverlay.getFeatures().clear();
+  this.controlPoints.length = 0;
+  this.segments.length = 0;
+};
+
+
+/**
  * @return {boolean} Snap?
  * @api
  */

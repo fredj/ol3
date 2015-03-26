@@ -60,7 +60,11 @@ goog.inherits(ol.interaction.DrawTrack, ol.interaction.Track);
  * @private
  */
 ol.interaction.DrawTrack.prototype.handleActiveChanged_ = function() {
-  this.drawInteraction_.setActive(this.getActive());
+  var active = this.getActive();
+  this.drawInteraction_.setActive(active);
+  if (!active) {
+    this.clear();
+  }
 };
 
 
