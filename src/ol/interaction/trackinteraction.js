@@ -51,7 +51,7 @@ ol.interaction.Track = function(opt_options) {
 
   var options = goog.isDef(opt_options) ? opt_options : {};
 
-  goog.base(this, {});
+  goog.base(this);
 
   /**
    * Request elevation data from OSRM?
@@ -100,35 +100,33 @@ ol.interaction.Track = function(opt_options) {
       color: '#d80000',
       width: 2
     }),
-    image: new ol.style.RegularShape(
-        /** @type {olx.style.RegularShapeOptions} */({
-          stroke: new ol.style.Stroke({
-            color: '#d80000',
-            width: 2
-          }),
-          fill: new ol.style.Fill({
-            color: 'rgba(216, 0, 0, 0.5)'
-          }),
-          points: 4,
-          radius: 6,
-          angle: Math.PI / 4
-        }))
+    image: new ol.style.RegularShape({
+      stroke: new ol.style.Stroke({
+        color: '#d80000',
+        width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: 'rgba(216, 0, 0, 0.5)'
+      }),
+      points: 4,
+      radius: 6,
+      angle: Math.PI / 4
+    })
   });
 
   var defaultSketchStyle = new ol.style.Style({
-    image: new ol.style.RegularShape(
-        /** @type {olx.style.RegularShapeOptions} */({
-          stroke: new ol.style.Stroke({
-            color: '#d80000',
-            width: 2
-          }),
-          fill: new ol.style.Fill({
-            color: 'rgba(216, 0, 0, 0.5)'
-          }),
-          points: 4,
-          radius: 6,
-          angle: Math.PI / 4
-        }))
+    image: new ol.style.RegularShape({
+      stroke: new ol.style.Stroke({
+        color: '#d80000',
+        width: 2
+      }),
+      fill: new ol.style.Fill({
+        color: 'rgba(216, 0, 0, 0.5)'
+      }),
+      points: 4,
+      radius: 6,
+      angle: Math.PI / 4
+    })
   });
 
   this.style = goog.isDef(options.style) ? options.style : [defaultStyle];

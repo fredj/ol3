@@ -6,10 +6,12 @@ goog.require('goog.math.Coordinate');
 goog.require('goog.net.XhrIo');
 goog.require('ol.DrawEventType');
 goog.require('ol.Feature');
+goog.require('ol.Object');
 goog.require('ol.format.Polyline');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.interaction.Draw');
+goog.require('ol.interaction.InteractionProperty');
 goog.require('ol.interaction.Track');
 goog.require('ol.proj');
 

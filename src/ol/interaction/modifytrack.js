@@ -1,18 +1,14 @@
 goog.provide('ol.interaction.ModifyTrack');
 
 goog.require('goog.array');
-goog.require('goog.asserts');
-goog.require('goog.events');
-goog.require('goog.math.Coordinate');
-goog.require('goog.net.XhrIo');
-goog.require('ol.DrawEventType');
+goog.require('ol.Collection');
 goog.require('ol.Feature');
-goog.require('ol.format.Polyline');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.Point');
 goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.Track');
-goog.require('ol.proj');
+goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
 
 
 
@@ -38,19 +34,18 @@ ol.interaction.ModifyTrack = function(opt_options) {
       color: '#7E0000',
       width: 3
     }),
-    image: new ol.style.RegularShape(
-        /** @type {olx.style.RegularShapeOptions} */({
-          fill: new ol.style.Fill({
-            color: '#7E0000'
-          }),
-          stroke: new ol.style.Stroke({
-            color: '#7E0000',
-            width: 1
-          }),
-          points: 4,
-          radius: 8,
-          angle: Math.PI / 4
-        }))
+    image: new ol.style.RegularShape({
+      fill: new ol.style.Fill({
+        color: '#7E0000'
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#7E0000',
+        width: 1
+      }),
+      points: 4,
+      radius: 8,
+      angle: Math.PI / 4
+    })
   });
 
   this.modifyFeatures_ = new ol.Collection();
@@ -81,6 +76,8 @@ ol.interaction.ModifyTrack.prototype.setMap = function(map) {
 
 
 /**
+ * @param {Array.<ol.Feature>} controlPoints Control points.
+ * @param {Array.<ol.Feature>} segments Segments.
  * @api
  */
 ol.interaction.ModifyTrack.prototype.setTrack =
