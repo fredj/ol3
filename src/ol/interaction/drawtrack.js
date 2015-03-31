@@ -2,11 +2,11 @@ goog.provide('ol.interaction.DrawTrack');
 
 goog.require('goog.asserts');
 goog.require('goog.events');
-goog.require('goog.math.Coordinate');
 goog.require('goog.net.XhrIo');
 goog.require('ol.DrawEventType');
 goog.require('ol.Feature');
 goog.require('ol.Object');
+goog.require('ol.coordinate');
 goog.require('ol.format.Polyline');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
@@ -309,9 +309,8 @@ ol.interaction.DrawTrack.prototype.isValidSnap_ =
   var mappedPointPx =
       map.getPixelFromCoordinate(mappedPoint.getCoordinates());
 
-  var distance = goog.math.Coordinate.distance(
-      new goog.math.Coordinate(originalPointPx[0], originalPointPx[1]),
-      new goog.math.Coordinate(mappedPointPx[0], mappedPointPx[1]));
+  var distance =
+      Math.sqrt(ol.coordinate.squaredDistance(originalPointPx, mappedPointPx));
 
   return distance < this.snapTolerance;
 };
