@@ -241,6 +241,9 @@ ol.interaction.DrawTrack.prototype.snapPoint_ = function(feature, mappedPoint) {
     // between the points
     if (previousFeature.get('snapped') && feature.get('snapped')) {
       this.requestRoute_(previousFeature, feature);
+    } else {
+      this.dispatchSegmentChangeEvent();
+      console.log('segment not snapped');
     }
   }
   this.dispatchChangeEvent();
@@ -288,6 +291,9 @@ ol.interaction.DrawTrack.prototype.requestRoute_ =
         featureProjection: this.getMap().getView().getProjection()
       });
       featureTo.get('segment').setGeometry(route);
+      this.dispatchSegmentChangeEvent();
+      console.log('segment snapped');
+
       this.dispatchChangeEvent();
     }
   }, this));

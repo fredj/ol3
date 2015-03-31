@@ -7,6 +7,8 @@ goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('ol.Feature');
 goog.require('ol.FeatureOverlay');
+goog.require('ol.coordinate');
+goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
@@ -34,7 +36,13 @@ ol.interaction.TrackEventType = {
    * Triggered when the track has changed.
    * @event goog.events.Event#trackchanged
    */
-  TRACKCHANGED: 'trackchanged'
+  TRACKCHANGED: 'trackchanged',
+
+  /**
+   * Triggered when a segment has changed.
+   * @event goog.events.Event#trackchanged
+   */
+  SEGMENTCHANGED: 'segmentchanged'
 };
 
 
@@ -98,7 +106,7 @@ ol.interaction.Track = function(opt_options) {
   var defaultStyle = new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: '#d80000',
-      width: 2
+      width: 3
     }),
     image: new ol.style.RegularShape({
       stroke: new ol.style.Stroke({
@@ -118,7 +126,7 @@ ol.interaction.Track = function(opt_options) {
     image: new ol.style.RegularShape({
       stroke: new ol.style.Stroke({
         color: '#d80000',
-        width: 2
+        width: 3
       }),
       fill: new ol.style.Fill({
         color: 'rgba(216, 0, 0, 0.5)'
@@ -213,6 +221,65 @@ ol.interaction.Track.prototype.setProfile = function(profile) {
 
 
 /**
+ * Returns a single 'XY' ol.geom.LineString from the segments.
+ * @return {ol.geom.LineString}
+ * @api
+ */
+ol.interaction.Track.prototype.getLineString = function() {
+  var flatCoordinates = [];
+  var segment, geometry, flat, stride;
+  for (var i = 0, ii = this.segments.length; i < ii; i++) {
+    segment = this.segments[i];
+    geometry = /** @type {ol.geom.LineString} */ (segment.getGeometry());
+    flat = geometry.getFlatCoordinates();
+    stride = geometry.getStride();
+    if (stride == 3) {
+      for (var j = 0, jj = flat.length - 1; j < jj; j += 3) {
+        flatCoordinates = flatCoordinates.concat(flat.slice(j, j + 2));
+      }
+    } else {
+      goog.asserts.assert(stride == 2);
+    }
+  }
+  var line = new ol.geom.LineString(null);
+  line.setFlatCoordinates(ol.geom.GeometryLayout.XY, flatCoordinates);
+  return line;
+};
+
+
+/**
+ * @return {Array.<Array.<number>>}
+ * @api
+ */
+ol.interaction.Track.prototype.getHeightProfile = function() {
+  var distance = 0;
+  var profile = [];
+  var previous = null;
+
+  for (var i = 0, ii = this.segments.length; i < ii; i++) {
+    var linestring =
+        /** @type {ol.geom.LineString} */ (this.segments[i].getGeometry());
+    var coordinates = linestring.getCoordinates();
+    for (var j = 0, jj = coordinates.length; j < jj; j++) {
+      var coordinate = coordinates[j];
+      if (!goog.isNull(previous)) {
+        var squared = ol.coordinate.squaredDistance(coordinate, previous);
+        distance += Math.sqrt(squared);
+      }
+      profile.push([
+        coordinate[0],
+        coordinate[1],
+        coordinate[2] * 10000,
+        distance
+      ]);
+      previous = coordinate;
+    }
+  }
+  return profile;
+};
+
+
+/**
  * @return {boolean} Does the track have points?
  * @api
  */
@@ -238,4 +305,13 @@ ol.interaction.Track.prototype.setMap = function(map) {
 ol.interaction.Track.prototype.dispatchChangeEvent = function() {
   this.dispatchEvent(new goog.events.Event(
       ol.interaction.TrackEventType.TRACKCHANGED));
+};
+
+
+/**
+ * @protected
+ */
+ol.interaction.Track.prototype.dispatchSegmentChangeEvent = function() {
+  this.dispatchEvent(new goog.events.Event(
+      ol.interaction.TrackEventType.SEGMENTCHANGED));
 };
