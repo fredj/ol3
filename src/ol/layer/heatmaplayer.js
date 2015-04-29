@@ -133,6 +133,29 @@ ol.layer.Heatmap = function(opt_options) {
   goog.events.listen(this, ol.render.EventType.RENDER,
       this.handleRender_, false, this);
 
+  var worker = function() {
+    onmessage = function(event) {
+      var gradient = event.data.gradient;
+      var image = event.data.image;
+      var view8 = image.data;
+      var i, ii, alpha, offset;
+      for (i = 0, ii = view8.length; i < ii; i += 4) {
+        alpha = view8[i + 3] * 4;
+        if (alpha) {
+          view8[i] = gradient[alpha];
+          view8[i + 1] = gradient[alpha + 1];
+          view8[i + 2] = gradient[alpha + 2];
+        }
+      }
+      postMessage(image);
+    };
+  };
+  var blob = new Blob(['(', worker.toString() ,')()'], {
+    type: 'application/javascript'
+  });
+  var blobURL = window.URL.createObjectURL(blob);
+  this.worker = new Worker(blobURL);
+  URL.revokeObjectURL(blobURL);
 };
 goog.inherits(ol.layer.Heatmap, ol.layer.Vector);
 
@@ -252,19 +275,27 @@ ol.layer.Heatmap.prototype.handleRender_ = function(event) {
   goog.asserts.assert(!goog.isNull(this.gradient_),
       'this.gradient_ should not be null');
   var context = event.context;
+  this.context___ = event.context;
   var canvas = context.canvas;
-  var image = context.getImageData(0, 0, canvas.width, canvas.height);
-  var view8 = image.data;
-  var i, ii, alpha, offset;
-  for (i = 0, ii = view8.length; i < ii; i += 4) {
-    alpha = view8[i + 3] * 4;
-    if (alpha) {
-      view8[i] = this.gradient_[alpha];
-      view8[i + 1] = this.gradient_[alpha + 1];
-      view8[i + 2] = this.gradient_[alpha + 2];
-    }
-  }
-  context.putImageData(image, 0, 0);
+  this.worker.postMessage({
+    image: context.getImageData(0, 0, canvas.width, canvas.height),
+    gradient: this.gradient_
+  });
+  this.worker.onmessage = function(event) {
+    context.putImageData(event.data, 0, 0);
+  };
+
+  // var view8 = image.data;
+  // var i, ii, alpha, offset;
+  // for (i = 0, ii = view8.length; i < ii; i += 4) {
+  //   alpha = view8[i + 3] * 4;
+  //   if (alpha) {
+  //     view8[i] = this.gradient_[alpha];
+  //     view8[i + 1] = this.gradient_[alpha + 1];
+  //     view8[i + 2] = this.gradient_[alpha + 2];
+  //   }
+  // }
+  // context.putImageData(image, 0, 0);
 };
 
 
