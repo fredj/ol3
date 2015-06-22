@@ -75,8 +75,6 @@ goog.inherits(ol.DragBoxEvent, goog.events.Event);
  * (see {@link ol.interaction.DragZoom} and
  * {@link ol.interaction.DragRotateAndZoom}).
  *
- * This interaction is only supported for mouse devices.
- *
  * @constructor
  * @extends {ol.interaction.Pointer}
  * @fires ol.DragBoxEvent
@@ -128,10 +126,6 @@ goog.inherits(ol.interaction.DragBox, ol.interaction.Pointer);
  * @private
  */
 ol.interaction.DragBox.handleDragEvent_ = function(mapBrowserEvent) {
-  if (!ol.events.condition.mouseOnly(mapBrowserEvent)) {
-    return;
-  }
-
   this.box_.setPixels(this.startPixel_, mapBrowserEvent.pixel);
 };
 
@@ -162,10 +156,6 @@ ol.interaction.DragBox.prototype.onBoxEnd = goog.nullFunction;
  * @private
  */
 ol.interaction.DragBox.handleUpEvent_ = function(mapBrowserEvent) {
-  if (!ol.events.condition.mouseOnly(mapBrowserEvent)) {
-    return true;
-  }
-
   this.box_.setMap(null);
 
   var deltaX = mapBrowserEvent.pixel[0] - this.startPixel_[0];
@@ -188,12 +178,7 @@ ol.interaction.DragBox.handleUpEvent_ = function(mapBrowserEvent) {
  * @private
  */
 ol.interaction.DragBox.handleDownEvent_ = function(mapBrowserEvent) {
-  if (!ol.events.condition.mouseOnly(mapBrowserEvent)) {
-    return false;
-  }
-
-  var browserEvent = mapBrowserEvent.browserEvent;
-  if (browserEvent.isMouseActionButton() && this.condition_(mapBrowserEvent)) {
+  if (this.condition_(mapBrowserEvent)) {
     this.startPixel_ = mapBrowserEvent.pixel;
     this.box_.setMap(mapBrowserEvent.map);
     this.box_.setPixels(this.startPixel_, this.startPixel_);

@@ -14,8 +14,6 @@ goog.require('ol.interaction.Pointer');
  * normally combined with an {@link ol.events.condition} that limits
  * it to when the alt and shift keys are held down.
  *
- * This interaction is only supported for mouse devices.
- *
  * @constructor
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.DragRotateOptions=} opt_options Options.
@@ -59,10 +57,6 @@ goog.inherits(ol.interaction.DragRotate, ol.interaction.Pointer);
  * @private
  */
 ol.interaction.DragRotate.handleDragEvent_ = function(mapBrowserEvent) {
-  if (!ol.events.condition.mouseOnly(mapBrowserEvent)) {
-    return;
-  }
-
   var map = mapBrowserEvent.map;
   var size = map.getSize();
   var offset = mapBrowserEvent.pixel;
@@ -87,10 +81,6 @@ ol.interaction.DragRotate.handleDragEvent_ = function(mapBrowserEvent) {
  * @private
  */
 ol.interaction.DragRotate.handleUpEvent_ = function(mapBrowserEvent) {
-  if (!ol.events.condition.mouseOnly(mapBrowserEvent)) {
-    return true;
-  }
-
   var map = mapBrowserEvent.map;
   var view = map.getView();
   view.setHint(ol.ViewHint.INTERACTING, -1);
@@ -108,10 +98,6 @@ ol.interaction.DragRotate.handleUpEvent_ = function(mapBrowserEvent) {
  * @private
  */
 ol.interaction.DragRotate.handleDownEvent_ = function(mapBrowserEvent) {
-  if (!ol.events.condition.mouseOnly(mapBrowserEvent)) {
-    return false;
-  }
-
   var browserEvent = mapBrowserEvent.browserEvent;
   if (browserEvent.isMouseActionButton() && this.condition_(mapBrowserEvent)) {
     var map = mapBrowserEvent.map;
