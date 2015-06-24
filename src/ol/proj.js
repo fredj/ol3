@@ -99,18 +99,18 @@ ol.proj.getPointResolution = function(projection, resolution, point) {
  * Registers transformation functions that don't alter coordinates. Those allow
  * to transform between projections with equal meaning.
  *
- * @param {Array.<ol.proj.Projection>} projections Projections.
+ * @param {!Array.<ol.proj.Projection>} projections Projections.
  * @api
  */
 ol.proj.addEquivalentProjections = function(projections) {
   ol.proj.addProjections(projections);
-  projections.forEach(function(source) {
-    projections.forEach(function(destination) {
+  for (let source of projections) {
+    for (let destination of projections) {
       if (source !== destination) {
         ol.proj.transforms.add(source, destination, ol.proj.cloneTransform);
       }
-    });
-  });
+    }
+  }
 };
 
 

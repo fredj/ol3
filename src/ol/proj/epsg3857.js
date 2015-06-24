@@ -64,7 +64,7 @@ ol.proj.EPSG3857.WORLD_EXTENT = [-180, -85, 180, 85];
 /**
  * Lists several projection codes with the same meaning as EPSG:3857.
  *
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  */
 ol.proj.EPSG3857.CODES = [
   'EPSG:3857',
@@ -81,7 +81,7 @@ ol.proj.EPSG3857.CODES = [
  * Projections equal to EPSG:3857.
  *
  * @const
- * @type {Array.<ol.proj.Projection>}
+ * @type {!Array.<ol.proj.Projection>}
  */
 ol.proj.EPSG3857.PROJECTIONS = ol.proj.EPSG3857.CODES.map(function(code) {
   return new ol.proj.EPSG3857.Projection_(code);

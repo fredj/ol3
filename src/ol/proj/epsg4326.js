@@ -54,7 +54,7 @@ ol.proj.EPSG4326.METERS_PER_UNIT = Math.PI * ol.sphere.WGS84.radius / 180;
  * Projections equal to EPSG:4326.
  *
  * @const
- * @type {Array.<ol.proj.Projection>}
+ * @type {!Array.<ol.proj.Projection>}
  */
 ol.proj.EPSG4326.PROJECTIONS = [
   new ol.proj.EPSG4326.Projection_('CRS:84'),

@@ -379,14 +379,9 @@ ol.Map = function(options) {
   // is "defined" already.
   this.setProperties(optionsInternal.values);
 
-  this.controls_.forEach(
-      /**
-       * @param {ol.control.Control} control Control.
-       * @this {ol.Map}
-       */
-      function(control) {
-        control.setMap(this);
-      }, this);
+  for (let control of this.controls_.getArray()) {
+    control.setMap(this);
+  }
 
   ol.events.listen(this.controls_, ol.CollectionEventType.ADD,
       /**
