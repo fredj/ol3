@@ -83,9 +83,7 @@ ol.proj.EPSG3857.CODES = [
  * @const
  * @type {!Array.<ol.proj.Projection>}
  */
-ol.proj.EPSG3857.PROJECTIONS = ol.proj.EPSG3857.CODES.map(function(code) {
-  return new ol.proj.EPSG3857.Projection_(code);
-});
+ol.proj.EPSG3857.PROJECTIONS = ol.proj.EPSG3857.CODES.map(code => new ol.proj.EPSG3857.Projection_(code));
 
 
 /**

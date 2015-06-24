@@ -206,16 +206,14 @@ ol.interaction.Translate.handleMoveEvent_ = function(event) {
  * @private
  */
 ol.interaction.Translate.prototype.featuresAtPixel_ = function(pixel, map) {
-  return map.forEachFeatureAtPixel(pixel,
-      function(feature) {
-        if (!this.features_ ||
-            ol.array.includes(this.features_.getArray(), feature)) {
-          return feature;
-        }
-      }.bind(this), {
-        layerFilter: this.layerFilter_,
-        hitTolerance: this.hitTolerance_
-      });
+  return map.forEachFeatureAtPixel(pixel, (feature) => {
+    if (!this.features_ || ol.array.includes(this.features_.getArray(), feature)) {
+      return feature;
+    }
+  }, {
+    layerFilter: this.layerFilter_,
+    hitTolerance: this.hitTolerance_
+  });
 };
 
 

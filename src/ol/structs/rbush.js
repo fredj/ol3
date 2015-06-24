@@ -116,9 +116,7 @@ ol.structs.RBush.prototype.update = function(extent, value) {
  */
 ol.structs.RBush.prototype.getAll = function() {
   var items = this.rbush_.all();
-  return items.map(function(item) {
-    return item.value;
-  });
+  return items.map(item => item.value);
 };
 
 
@@ -136,9 +134,7 @@ ol.structs.RBush.prototype.getInExtent = function(extent) {
     maxY: extent[3]
   };
   var items = this.rbush_.search(bbox);
-  return items.map(function(item) {
-    return item.value;
-  });
+  return items.map(item => item.value);
 };
 
 

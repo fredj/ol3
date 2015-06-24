@@ -176,10 +176,10 @@ ol.Map = function(options) {
   /**
    * @private
    */
-  this.animationDelay_ = function() {
+  this.animationDelay_ = () => {
     this.animationDelayKey_ = undefined;
     this.renderFrame_.call(this, Date.now());
-  }.bind(this);
+  };
 
   /**
    * @private
@@ -383,21 +383,8 @@ ol.Map = function(options) {
     control.setMap(this);
   }
 
-  ol.events.listen(this.controls_, ol.CollectionEventType.ADD,
-      /**
-       * @param {ol.Collection.Event} event Collection event.
-       */
-      function(event) {
-        event.element.setMap(this);
-      }, this);
-
-  ol.events.listen(this.controls_, ol.CollectionEventType.REMOVE,
-      /**
-       * @param {ol.Collection.Event} event Collection event.
-       */
-      function(event) {
-        event.element.setMap(null);
-      }, this);
+  ol.events.listen(this.controls_, ol.CollectionEventType.ADD, event => event.element.setMap(this));
+  ol.events.listen(this.controls_, ol.CollectionEventType.REMOVE, event => event.element.setMap(null));
 
   this.interactions_.forEach(
       /**

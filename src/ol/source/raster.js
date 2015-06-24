@@ -350,9 +350,7 @@ ol.source.Raster.context_ = null;
  * @private
  */
 ol.source.Raster.getLayerStatesArray_ = function(renderers) {
-  return renderers.map(function(renderer) {
-    return renderer.getLayer().getLayerState();
-  });
+  return renderers.map(renderer => renderer.getLayer().getLayerState());
 };
 
 
