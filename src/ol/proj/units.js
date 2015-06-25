@@ -24,9 +24,9 @@ ol.proj.Units = {
  * @type {Object.<ol.proj.Units, number>}
  * @api
  */
-ol.proj.Units.METERS_PER_UNIT = {};
-ol.proj.Units.METERS_PER_UNIT[ol.proj.Units.DEGREES] =
-    2 * Math.PI * ol.sphere.NORMAL.radius / 360;
-ol.proj.Units.METERS_PER_UNIT[ol.proj.Units.FEET] = 0.3048;
-ol.proj.Units.METERS_PER_UNIT[ol.proj.Units.METERS] = 1;
-ol.proj.Units.METERS_PER_UNIT[ol.proj.Units.USFEET] = 1200 / 3937;
+ol.proj.Units.METERS_PER_UNIT = {
+  [ol.proj.Units.DEGREES]: 2 * Math.PI * ol.sphere.NORMAL.radius / 360,
+  [ol.proj.Units.FEET]: 0.3048,
+  [ol.proj.Units.METERS]: 1,
+  [ol.proj.Units.USFEET]: 1200 / 3937
+};
