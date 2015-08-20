@@ -20,12 +20,10 @@ goog.require('ol.obj');
  *
  * @constructor
  * @extends {ol.control.Control}
- * @param {olx.control.AttributionOptions=} opt_options Attribution options.
+ * @param {olx.control.AttributionOptions=} options Attribution options.
  * @api
  */
-ol.control.Attribution = function(opt_options) {
-
-  var options = opt_options ? opt_options : {};
+ol.control.Attribution = function(options = {}) {
 
   /**
    * @private

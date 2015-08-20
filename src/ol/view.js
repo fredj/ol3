@@ -492,15 +492,12 @@ ol.View.prototype.constrainCenter = function(center) {
 /**
  * Get the constrained resolution of this view.
  * @param {number|undefined} resolution Resolution.
- * @param {number=} opt_delta Delta. Default is `0`.
- * @param {number=} opt_direction Direction. Default is `0`.
+ * @param {number=} delta Delta. Default is `0`.
+ * @param {number=} direction Direction. Default is `0`.
  * @return {number|undefined} Constrained resolution.
  * @api
  */
-ol.View.prototype.constrainResolution = function(
-    resolution, opt_delta, opt_direction) {
-  var delta = opt_delta || 0;
-  var direction = opt_direction || 0;
+ol.View.prototype.constrainResolution = function(resolution, delta = 0, direction = 0) {
   return this.constraints_.resolution(resolution, delta, direction);
 };
 
@@ -508,12 +505,11 @@ ol.View.prototype.constrainResolution = function(
 /**
  * Get the constrained rotation of this view.
  * @param {number|undefined} rotation Rotation.
- * @param {number=} opt_delta Delta. Default is `0`.
+ * @param {number=} delta Delta. Default is `0`.
  * @return {number|undefined} Constrained rotation.
  * @api
  */
-ol.View.prototype.constrainRotation = function(rotation, opt_delta) {
-  var delta = opt_delta || 0;
+ol.View.prototype.constrainRotation = function(rotation, delta = 0) {
   return this.constraints_.rotation(rotation, delta);
 };
 
@@ -688,11 +684,10 @@ ol.View.prototype.getResolutionForExtent = function(extent, opt_size) {
 /**
  * Return a function that returns a value between 0 and 1 for a
  * resolution. Exponential scaling is assumed.
- * @param {number=} opt_power Power.
+ * @param {number=} power Power. Default is `2`.
  * @return {function(number): number} Resolution for value function.
  */
-ol.View.prototype.getResolutionForValueFunction = function(opt_power) {
-  var power = opt_power || 2;
+ol.View.prototype.getResolutionForValueFunction = function(power = 2) {
   var maxResolution = this.maxResolution_;
   var minResolution = this.minResolution_;
   var max = Math.log(maxResolution / minResolution) / Math.log(power);
@@ -722,11 +717,10 @@ ol.View.prototype.getRotation = function() {
 /**
  * Return a function that returns a resolution for a value between
  * 0 and 1. Exponential scaling is assumed.
- * @param {number=} opt_power Power.
+ * @param {number=} power Power. Default is `2`.
  * @return {function(number): number} Value for resolution function.
  */
-ol.View.prototype.getValueForResolutionFunction = function(opt_power) {
-  var power = opt_power || 2;
+ol.View.prototype.getValueForResolutionFunction = function(power = 2) {
   var maxResolution = this.maxResolution_;
   var minResolution = this.minResolution_;
   var max = Math.log(maxResolution / minResolution) / Math.log(power);

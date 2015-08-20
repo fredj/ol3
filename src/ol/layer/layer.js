@@ -89,8 +89,7 @@ ol.layer.Layer.visibleAtResolution = function(layerState, resolution) {
 /**
  * @inheritDoc
  */
-ol.layer.Layer.prototype.getLayersArray = function(opt_array) {
-  var array = opt_array ? opt_array : [];
+ol.layer.Layer.prototype.getLayersArray = function(array = []) {
   array.push(this);
   return array;
 };
@@ -99,8 +98,7 @@ ol.layer.Layer.prototype.getLayersArray = function(opt_array) {
 /**
  * @inheritDoc
  */
-ol.layer.Layer.prototype.getLayerStatesArray = function(opt_states) {
-  var states = opt_states ? opt_states : [];
+ol.layer.Layer.prototype.getLayerStatesArray = function(states = []) {
   states.push(this.getLayerState());
   return states;
 };

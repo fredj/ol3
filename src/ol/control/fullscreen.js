@@ -22,12 +22,10 @@ goog.require('ol.events.EventType');
  *
  * @constructor
  * @extends {ol.control.Control}
- * @param {olx.control.FullScreenOptions=} opt_options Options.
+ * @param {olx.control.FullScreenOptions=} options Options.
  * @api
  */
-ol.control.FullScreen = function(opt_options) {
-
-  var options = opt_options ? opt_options : {};
+ol.control.FullScreen = function(options = {}) {
 
   /**
    * @private

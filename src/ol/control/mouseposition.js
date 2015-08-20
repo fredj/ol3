@@ -19,13 +19,11 @@ goog.require('ol.proj');
  *
  * @constructor
  * @extends {ol.control.Control}
- * @param {olx.control.MousePositionOptions=} opt_options Mouse position
+ * @param {olx.control.MousePositionOptions=} options Mouse position
  *     options.
  * @api
  */
-ol.control.MousePosition = function(opt_options) {
-
-  var options = opt_options ? opt_options : {};
+ol.control.MousePosition = function(options = {}) {
 
   var element = document.createElement('DIV');
   element.className = options.className !== undefined ? options.className : 'ol-mouse-position';

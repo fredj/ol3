@@ -22,12 +22,11 @@ goog.require('ol.source.State');
  *
  * @constructor
  * @extends {ol.layer.Base}
- * @param {olx.layer.GroupOptions=} opt_options Layer options.
+ * @param {olx.layer.GroupOptions=} options Layer options.
  * @api
  */
-ol.layer.Group = function(opt_options) {
+ol.layer.Group = function(options = {}) {
 
-  var options = opt_options || {};
   var baseOptions = /** @type {olx.layer.GroupOptions} */
       (ol.obj.assign({}, options));
   delete baseOptions.layers;
@@ -182,8 +181,7 @@ ol.layer.Group.prototype.setLayers = function(layers) {
 /**
  * @inheritDoc
  */
-ol.layer.Group.prototype.getLayersArray = function(opt_array) {
-  var array = opt_array !== undefined ? opt_array : [];
+ol.layer.Group.prototype.getLayersArray = function(array = []) {
   this.getLayers().forEach(function(layer) {
     layer.getLayersArray(array);
   });
@@ -194,9 +192,7 @@ ol.layer.Group.prototype.getLayersArray = function(opt_array) {
 /**
  * @inheritDoc
  */
-ol.layer.Group.prototype.getLayerStatesArray = function(opt_states) {
-  var states = opt_states !== undefined ? opt_states : [];
-
+ol.layer.Group.prototype.getLayerStatesArray = function(states = []) {
   var pos = states.length;
 
   this.getLayers().forEach(function(layer) {

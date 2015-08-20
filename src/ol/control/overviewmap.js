@@ -24,12 +24,10 @@ goog.require('ol.extent');
  * defined map.
  * @constructor
  * @extends {ol.control.Control}
- * @param {olx.control.OverviewMapOptions=} opt_options OverviewMap options.
+ * @param {olx.control.OverviewMapOptions=} options OverviewMap options.
  * @api
  */
-ol.control.OverviewMap = function(opt_options) {
-
-  var options = opt_options ? opt_options : {};
+ol.control.OverviewMap = function(options = {}) {
 
   /**
    * @type {boolean}
