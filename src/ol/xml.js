@@ -506,8 +506,7 @@ ol.xml.makeObjectPropertySetter =
  * @return {Object.<string, Object.<string, ol.xml.Parser>>} Parsers NS.
  */
 ol.xml.makeParsersNS = function(namespaceURIs, parsers, opt_parsersNS) {
-  return /** @type {Object.<string, Object.<string, ol.xml.Parser>>} */ (
-      ol.xml.makeStructureNS(namespaceURIs, parsers, opt_parsersNS));
+  return ol.xml.makeStructureNS(namespaceURIs, parsers, opt_parsersNS);
 };
 
 
