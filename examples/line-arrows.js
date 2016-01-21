@@ -6,7 +6,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
-goog.require('ol.style.Icon');
+goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
@@ -35,10 +35,13 @@ var styleFunction = function(feature) {
     // arrows
     styles.push(new ol.style.Style({
       geometry: new ol.geom.Point(end),
-      image: new ol.style.Icon({
-        src: 'data/arrow.png',
-        anchor: [0.75, 0.5],
-        rotateWithView: false,
+      image: new ol.style.RegularShape({
+        fill: new ol.style.Stroke({
+          color: '#ffcc33'
+        }),
+        radius: 6,
+        points: 3,
+        angle: Math.PI / 2,
         rotation: -rotation
       })
     }));
