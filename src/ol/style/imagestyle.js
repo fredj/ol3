@@ -30,6 +30,7 @@ ol.style.ImageOptions;
  * {@link ol.style.RegularShape}.
  *
  * @constructor
+ * @struct
  * @param {ol.style.ImageOptions} options Options.
  * @api
  */
