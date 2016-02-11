@@ -26,6 +26,7 @@ ol.reproj.Triangle;
  * @param {ol.Extent} maxSourceExtent Maximal source extent that can be used.
  * @param {number} errorThreshold Acceptable error (in source units).
  * @constructor
+ * @struct
  */
 ol.reproj.Triangulation = function(sourceProj, targetProj, targetExtent,
     maxSourceExtent, errorThreshold) {
