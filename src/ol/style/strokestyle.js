@@ -13,6 +13,7 @@ goog.require('ol.color');
  * the options; they will not return the default.
  *
  * @constructor
+ * @struct
  * @param {olx.style.StrokeOptions=} opt_options Options.
  * @api
  */
