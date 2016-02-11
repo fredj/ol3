@@ -8,6 +8,7 @@ goog.require('ol.color');
  * Set fill style for vector features.
  *
  * @constructor
+ * @struct
  * @param {olx.style.FillOptions=} opt_options Options.
  * @api
  */
