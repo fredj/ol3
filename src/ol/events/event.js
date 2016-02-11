@@ -11,6 +11,7 @@ goog.provide('ol.events.Event');
  * for higher level events defined in the library, and works with
  * {@link ol.events.EventTarget}.
  *
+ * FIXME @struct
  * @constructor
  * @implements {oli.events.Event}
  * @param {string} type Type.
