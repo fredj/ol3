@@ -503,6 +503,30 @@ ol.format.GMLBase.prototype.readFlatCoordinatesFromNode_ = function(node, object
  * @type {Object.<string, Object.<string, ol.xml.Parser>>}
  * @private
  */
+ol.format.GMLBase.prototype.GEOMETRY_PARSERS_;
+
+
+/**
+ * @const
+ * @type {Object.<string, Object.<string, ol.xml.Parser>>}
+ * @private
+ */
+ol.format.GMLBase.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_;
+
+
+/**
+ * @const
+ * @type {Object.<string, Object.<string, ol.xml.Parser>>}
+ * @private
+ */
+ol.format.GMLBase.prototype.FLAT_LINEAR_RINGS_PARSERS_;
+
+
+/**
+ * @const
+ * @type {Object.<string, Object.<string, ol.xml.Parser>>}
+ * @private
+ */
 ol.format.GMLBase.prototype.MULTIPOINT_PARSERS_ = {
   'http://www.opengis.net/gml' : {
     'pointMember': ol.xml.makeArrayPusher(

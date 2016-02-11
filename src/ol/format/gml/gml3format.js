@@ -449,9 +449,7 @@ ol.format.GML3.prototype.readFlatPosList_ = function(node, objectStack) {
 
 
 /**
- * @const
- * @type {Object.<string, Object.<string, ol.xml.Parser>>}
- * @private
+ * @inheritDoc
  */
 ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_ = {
   'http://www.opengis.net/gml' : {
@@ -462,9 +460,7 @@ ol.format.GML3.prototype.GEOMETRY_FLAT_COORDINATES_PARSERS_ = {
 
 
 /**
- * @const
- * @type {Object.<string, Object.<string, ol.xml.Parser>>}
- * @private
+ * @inheritDoc
  */
 ol.format.GML3.prototype.FLAT_LINEAR_RINGS_PARSERS_ = {
   'http://www.opengis.net/gml' : {
@@ -475,9 +471,7 @@ ol.format.GML3.prototype.FLAT_LINEAR_RINGS_PARSERS_ = {
 
 
 /**
- * @const
- * @type {Object.<string, Object.<string, ol.xml.Parser>>}
- * @private
+ * @inheritDoc
  */
 ol.format.GML3.prototype.GEOMETRY_PARSERS_ = {
   'http://www.opengis.net/gml' : {
