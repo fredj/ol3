@@ -12,6 +12,7 @@ goog.require('ol.geom.GeometryType');
  * API is limited to getting the type and extent of the geometry.
  *
  * @constructor
+ * @struct
  * @param {ol.geom.GeometryType} type Geometry type.
  * @param {Array.<number>} flatCoordinates Flat coordinates. These always need
  *     to be right-handed for polygons.
