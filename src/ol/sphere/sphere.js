@@ -23,6 +23,7 @@ goog.require('ol.math');
  * ```
  *
  * @constructor
+ * @struct
  * @param {number} radius Radius.
  * @api
  */
