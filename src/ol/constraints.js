@@ -3,6 +3,7 @@ goog.provide('ol.Constraints');
 
 /**
  * @constructor
+ * @struct
  * @param {ol.CenterConstraintType} centerConstraint Center constraint.
  * @param {ol.ResolutionConstraintType} resolutionConstraint
  *     Resolution constraint.
