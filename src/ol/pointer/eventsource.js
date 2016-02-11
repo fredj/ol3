@@ -6,6 +6,7 @@ goog.provide('ol.pointer.EventSource');
  * @param {!Object.<string, function(Event)>} mapping Event
  *     mapping.
  * @constructor
+ * @struct
  */
 ol.pointer.EventSource = function(dispatcher, mapping) {
   /**
