@@ -9,6 +9,7 @@ goog.require('ol.style.Fill');
  * Set text style for vector features.
  *
  * @constructor
+ * @struct
  * @param {olx.style.TextOptions=} opt_options Options.
  * @api
  */
