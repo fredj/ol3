@@ -14,6 +14,7 @@ goog.require('ol.style.Stroke');
 /**
  * Render a grid for a coordinate system on a map.
  * @constructor
+ * @struct
  * @param {olx.GraticuleOptions=} opt_options Options.
  * @api
  */
