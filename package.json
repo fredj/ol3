@@ -77,6 +77,9 @@
   },
   "eslintConfig": {
     "extends": "openlayers",
+    "env": {
+      "es6": true
+    },
     "globals": {
       "ArrayBuffer": false,
       "Float32Array": false,
