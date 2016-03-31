@@ -2,6 +2,7 @@ goog.provide('ol.layer.Base');
 goog.provide('ol.layer.LayerProperty');
 goog.provide('ol.layer.LayerState');
 
+goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.Object');
 goog.require('ol.math');
@@ -70,6 +71,19 @@ ol.layer.Base = function(options) {
       options.minResolution !== undefined ? options.minResolution : 0;
 
   this.setProperties(properties);
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.stateRevision_ = -1;
+
+  /**
+   * @type {?ol.layer.LayerState}
+   * @private
+   */
+  this.state_ = null;
+
 };
 goog.inherits(ol.layer.Base, ol.Object);
 
@@ -78,24 +92,30 @@ goog.inherits(ol.layer.Base, ol.Object);
  * @return {ol.layer.LayerState} Layer state.
  */
 ol.layer.Base.prototype.getLayerState = function() {
-  var opacity = this.getOpacity();
-  var sourceState = this.getSourceState();
-  var visible = this.getVisible();
-  var extent = this.getExtent();
-  var zIndex = this.getZIndex();
-  var maxResolution = this.getMaxResolution();
-  var minResolution = this.getMinResolution();
-  return {
-    layer: /** @type {ol.layer.Layer} */ (this),
-    opacity: ol.math.clamp(opacity, 0, 1),
-    sourceState: sourceState,
-    visible: visible,
-    managed: true,
-    extent: extent,
-    zIndex: zIndex,
-    maxResolution: maxResolution,
-    minResolution: Math.max(minResolution, 0)
-  };
+  var revision = this.getRevision();
+  if (revision !== this.stateRevision_) {
+    var opacity = this.getOpacity();
+    var sourceState = this.getSourceState();
+    var visible = this.getVisible();
+    var extent = this.getExtent();
+    var zIndex = this.getZIndex();
+    var maxResolution = this.getMaxResolution();
+    var minResolution = this.getMinResolution();
+    this.state_ = {
+      layer: /** @type {ol.layer.Layer} */ (this),
+      opacity: ol.math.clamp(opacity, 0, 1),
+      sourceState: sourceState,
+      visible: visible,
+      managed: true,
+      extent: extent,
+      zIndex: zIndex,
+      maxResolution: maxResolution,
+      minResolution: Math.max(minResolution, 0)
+    };
+    this.stateRevision_ = revision;
+  }
+  goog.asserts.assert(this.state_);
+  return this.state_;
 };
 
 
