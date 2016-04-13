@@ -232,9 +232,9 @@ ol.array.find = function(arr, func) {
 
 
 /**
-* @param {Array|Uint8ClampedArray} arr1 The first array to compare.
-* @param {Array|Uint8ClampedArray} arr2 The second array to compare.
-* @return {boolean} Whether the two arrays are equal.
+ * @param {Array|Uint8ClampedArray} arr1 The first array to compare.
+ * @param {Array|Uint8ClampedArray} arr2 The second array to compare.
+ * @return {boolean} Whether the two arrays are equal.
  */
 ol.array.equals = function(arr1, arr2) {
   var len1 = arr1.length;
@@ -251,8 +251,8 @@ ol.array.equals = function(arr1, arr2) {
 
 
 /**
-* @param {Array.<*>} arr The array to sort (modifies original).
-* @param {Function} compareFnc Comparison function.
+ * @param {Array.<*>} arr The array to sort (modifies original).
+ * @param {Function} compareFnc Comparison function.
  */
 ol.array.stableSort = function(arr, compareFnc) {
   var length = arr.length;
@@ -271,9 +271,9 @@ ol.array.stableSort = function(arr, compareFnc) {
 
 
 /**
-* @param {!Array.<*>} arr The array to search in.
-* @param {Function} func Comparison function.
-* @return {number} Return index.
+ * @param {!Array.<*>} arr The array to search in.
+ * @param {Function} func Comparison function.
+ * @return {number} Return index.
  */
 ol.array.findIndex = function(arr, func) {
   var index;
@@ -286,10 +286,10 @@ ol.array.findIndex = function(arr, func) {
 
 
 /**
-* @param {!Array.<*>} arr The array to test.
-* @param {Function=} opt_func Comparison function.
-* @param {boolean=} opt_strict Strictly sorted (default false).
-* @return {boolean} Return index.
+ * @param {!Array.<*>} arr The array to test.
+ * @param {Function=} opt_func Comparison function.
+ * @param {boolean=} opt_strict Strictly sorted (default false).
+ * @return {boolean} Return index.
  */
 ol.array.isSorted = function(arr, opt_func, opt_strict) {
   var compare = opt_func || ol.array.numberSafeCompareFunction;
