@@ -271,7 +271,7 @@ ol.array.stableSort = function(arr, compareFnc) {
 
 
 /**
-* @param {Array.<*>} arr The array to search in.
+* @param {!Array.<*>} arr The array to search in.
 * @param {Function} func Comparison function.
 * @return {number} Return index.
  */
