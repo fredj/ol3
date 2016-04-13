@@ -76,7 +76,7 @@ ol.format.WMSGetFeatureInfo.prototype.readFeatures_ = function(node, objectStack
   goog.asserts.assert(node.nodeType == goog.dom.NodeType.ELEMENT,
       'node.nodeType should be ELEMENT');
   var localName = node.localName;
-  /** @type {Array.<ol.Feature>} */
+  /** @type {!Array.<ol.Feature>} */
   var features = [];
   if (node.childNodes.length === 0) {
     return features;

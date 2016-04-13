@@ -282,10 +282,10 @@ ol.style.defaultStyleFunction = function(feature, resolution) {
 
 /**
  * Default styles for editing features.
- * @return {Object.<ol.geom.GeometryType, Array.<ol.style.Style>>} Styles
+ * @return {Object.<ol.geom.GeometryType, !Array.<ol.style.Style>>} Styles
  */
 ol.style.createDefaultEditingStyles = function() {
-  /** @type {Object.<ol.geom.GeometryType, Array.<ol.style.Style>>} */
+  /** @type {Object.<ol.geom.GeometryType, !Array.<ol.style.Style>>} */
   var styles = {};
   var white = [255, 255, 255, 1];
   var blue = [0, 153, 255, 1];

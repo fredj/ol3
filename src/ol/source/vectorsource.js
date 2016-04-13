@@ -553,7 +553,7 @@ ol.source.Vector.prototype.getFeaturesCollection = function() {
 
 /**
  * Get all features on the source.
- * @return {Array.<ol.Feature>} Features.
+ * @return {!Array.<ol.Feature>} Features.
  * @api stable
  */
 ol.source.Vector.prototype.getFeatures = function() {

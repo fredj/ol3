@@ -109,7 +109,7 @@ ol.format.XMLFeature.prototype.readFeatures = function(source, opt_options) {
  */
 ol.format.XMLFeature.prototype.readFeaturesFromDocument = function(
     doc, opt_options) {
-  /** @type {Array.<ol.Feature>} */
+  /** @type {!Array.<ol.Feature>} */
   var features = [];
   var n;
   for (n = doc.firstChild; n; n = n.nextSibling) {

@@ -180,7 +180,7 @@ ol.array.flatten = function(arr) {
 
 
 /**
- * @param {Array.<VALUE>} arr  The array to modify.
+ * @param {!Array.<VALUE>} arr The array to modify.
  * @param {Array.<VALUE>|VALUE} data The elements or arrays of elements
  *     to add to arr.
  * @template VALUE

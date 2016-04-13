@@ -142,7 +142,7 @@ ol.structs.RBush.prototype.update = function(extent, value) {
 
 /**
  * Return all values in the RBush.
- * @return {Array.<T>} All.
+ * @return {!Array.<T>} All.
  */
 ol.structs.RBush.prototype.getAll = function() {
   var items = this.rbush_.all();
@@ -155,7 +155,7 @@ ol.structs.RBush.prototype.getAll = function() {
 /**
  * Return all values in the given extent.
  * @param {ol.Extent} extent Extent.
- * @return {Array.<T>} All in extent.
+ * @return {!Array.<T>} All in extent.
  */
 ol.structs.RBush.prototype.getInExtent = function(extent) {
   var items = this.rbush_.search(extent);
