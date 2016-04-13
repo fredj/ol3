@@ -234,7 +234,7 @@ ol.WEBGL_MAX_TEXTURE_SIZE; // value is set in `ol.has`
 /**
  * List of supported WebGL extensions.
  * @const
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  */
 ol.WEBGL_EXTENSIONS; // value is set in `ol.has`
 

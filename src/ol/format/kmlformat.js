@@ -116,7 +116,7 @@ goog.inherits(ol.format.KML, ol.format.XMLFeature);
 
 /**
  * @const
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  * @private
  */
 ol.format.KML.EXTENSIONS_ = ['.kml'];
@@ -124,7 +124,7 @@ ol.format.KML.EXTENSIONS_ = ['.kml'];
 
 /**
  * @const
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  * @private
  */
 ol.format.KML.GX_NAMESPACE_URIS_ = [
@@ -134,7 +134,7 @@ ol.format.KML.GX_NAMESPACE_URIS_ = [
 
 /**
  * @const
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  * @private
  */
 ol.format.KML.NAMESPACE_URIS_ = [
@@ -293,7 +293,7 @@ ol.format.KML.DEFAULT_STYLE_ = new ol.style.Style({
 
 /**
  * @const
- * @type {Array.<ol.style.Style>}
+ * @type {!Array.<ol.style.Style>}
  * @private
  */
 ol.format.KML.DEFAULT_STYLE_ARRAY_ = [ol.format.KML.DEFAULT_STYLE_];

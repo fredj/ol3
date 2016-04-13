@@ -47,7 +47,7 @@ goog.inherits(ol.format.GPX, ol.format.XMLFeature);
 /**
  * @const
  * @private
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  */
 ol.format.GPX.NAMESPACE_URIS_ = [
   null,
@@ -675,7 +675,7 @@ ol.format.GPX.writeWpt_ = function(node, feature, objectStack) {
 
 /**
  * @const
- * @type {Array.<string>}
+ * @type {!Array.<string>}
  * @private
  */
 ol.format.GPX.LINK_SEQUENCE_ = ['text', 'type'];

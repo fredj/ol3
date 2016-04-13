@@ -85,7 +85,7 @@ ol.array.numberSafeCompareFunction = function(a, b) {
 
 /**
  * Whether the array contains the given object.
- * @param {Array.<*>} arr The array to test for the presence of the element.
+ * @param {!Array.<*>} arr The array to test for the presence of the element.
  * @param {*} obj The object for which to test.
  * @return {boolean} The object is in the array.
  */

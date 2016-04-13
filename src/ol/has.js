@@ -140,7 +140,7 @@ ol.has.WEBGL;
   if (ol.ENABLE_WEBGL) {
     var hasWebGL = false;
     var textureSize;
-    var /** @type {Array.<string>} */ extensions = [];
+    var /** @type {!Array.<string>} */ extensions = [];
 
     if ('WebGLRenderingContext' in ol.global) {
       try {
