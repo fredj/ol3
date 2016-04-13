@@ -286,7 +286,7 @@ ol.array.findIndex = function(arr, func) {
 
 
 /**
-* @param {Array.<*>} arr The array to test.
+* @param {!Array.<*>} arr The array to test.
 * @param {Function=} opt_func Comparison function.
 * @param {boolean=} opt_strict Strictly sorted (default false).
 * @return {boolean} Return index.
