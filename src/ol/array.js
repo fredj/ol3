@@ -164,7 +164,7 @@ ol.array.reverseSubArray = function(arr, begin, end) {
 
 
 /**
- * @param {Array.<*>} arr Array.
+ * @param {!Array.<*>} arr Array.
  * @return {!Array.<?>} Flattened Array.
  */
 ol.array.flatten = function(arr) {
