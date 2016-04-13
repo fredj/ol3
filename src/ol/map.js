@@ -365,13 +365,13 @@ ol.Map = function(options) {
 
   /**
    * @private
-   * @type {Array.<ol.PreRenderFunction>}
+   * @type {!Array.<ol.PreRenderFunction>}
    */
   this.preRenderFunctions_ = [];
 
   /**
    * @private
-   * @type {Array.<ol.PostRenderFunction>}
+   * @type {!Array.<ol.PostRenderFunction>}
    */
   this.postRenderFunctions_ = [];
 

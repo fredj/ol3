@@ -196,7 +196,7 @@ ol.array.extend = function(arr, data) {
 
 
 /**
- * @param {Array.<VALUE>} arr  The array to modify.
+ * @param {!Array.<VALUE>} arr The array to modify.
  * @param {VALUE} obj The element to remove.
  * @template VALUE
  * @return {boolean} If the element was removed.

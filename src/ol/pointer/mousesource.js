@@ -56,7 +56,7 @@ ol.pointer.MouseSource = function(dispatcher) {
 
   /**
    * @const
-   * @type {Array.<ol.Pixel>}
+   * @type {!Array.<ol.Pixel>}
    */
   this.lastTouches = [];
 };
