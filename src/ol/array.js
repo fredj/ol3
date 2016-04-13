@@ -212,7 +212,7 @@ ol.array.remove = function(arr, obj) {
 
 
 /**
- * @param {Array.<VALUE>} arr  The array to search in.
+ * @param {!Array.<VALUE>} arr The array to search in.
  * @param {function(VALUE, number, ?) : boolean} func The function to compare.
  * @template VALUE
  * @return {VALUE} The element found.
