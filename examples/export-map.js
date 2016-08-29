@@ -1,3 +1,4 @@
+// NOCOMPILE
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control');
@@ -31,20 +32,66 @@ var map = new ol.Map({
   })
 });
 
-var exportPNGElement = document.getElementById('export-png');
 
-if ('download' in exportPNGElement) {
-  exportPNGElement.addEventListener('click', function() {
-    map.once('postcompose', function(event) {
-      var canvas = event.context.canvas;
-      exportPNGElement.href = canvas.toDataURL('image/png');
-    });
-    map.renderSync();
-  }, false);
-} else {
-  var info = document.getElementById('no-download');
-  /**
-   * display error message
-   */
-  info.style.display = '';
+var pdfImageConfig = {
+  image: undefined,
+  width: 800
+};
+var pdfConfig = {
+  pageMargins: 20,
+  pageSize: 'A4',
+  pageOrientation: 'landscape',
+  content: [{
+    text: 'Client side PDF export.',
+    style: 'title'
+  }, pdfImageConfig, {
+    text: 'Powered by OpenLayers 3 and pdfmake'
+  }],
+  footer: function() {
+    return {
+      text: new Date().toString(),
+      style: 'footer'
+    };
+  },
+  styles: {
+    title: {
+      fontSize: 18,
+      bold: true
+    },
+    footer: {
+      fontSize: 8,
+      alignment: 'right',
+      margin: [20, 0]
+    }
+  }
+};
+
+document.getElementById('export').addEventListener('click', function() {
+  toDataURL(map, [800, 480], function(data) {
+    pdfImageConfig.image = data;
+    pdfMake.createPdf(pdfConfig).download('ol-map.pdf');
+  });
+});
+
+// FIXME: image dpi (pixelRatio)
+// FIXME: filter layers
+// FIXME: custom view
+// FIXME: custom format
+function toDataURL(map, size, callback) {
+  var offlineMap = new ol.Map({
+    controls: [],
+    interactions: [],
+    renderer: 'canvas',
+    pixelRatio: 1,
+    target: document.createElement('div')
+  });
+  offlineMap.setSize(size);
+  offlineMap.setLayerGroup(map.getLayerGroup());
+  offlineMap.setView(map.getView());
+
+  offlineMap.once('postcompose', function(event) {
+    callback(event.context.canvas.toDataURL('image/png'));
+    offlineMap = null;
+  });
+  offlineMap.renderSync();
 }

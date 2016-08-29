@@ -1,14 +1,13 @@
 ---
 layout: example.html
 title: Map Export
-shortdesc: Example of exporting a map as a PNG image.
+shortdesc: Example of exporting a map as a PDF.
 docs: >
-  Example of exporting a map as a PNG image.
-tags: "export, png, openstreetmap"
+  Example of exporting a map as a PDF.
+tags: "export, pdf, openstreetmap"
+resources:
+  - https://cdn.rawgit.com/bpampuch/pdfmake/master/build/pdfmake.js
+  - https://cdn.rawgit.com/bpampuch/pdfmake/master/build/vfs_fonts.js
 ---
 <div id="map" class="map"></div>
-<div id="no-download" class="alert alert-danger" style="display: none">
-  This example requires a browser that supports the
-  <a href="http://caniuse.com/#feat=download">link download</a> attribute.
-</div>
-<a id="export-png" class="btn btn-default" download="map.png"><i class="fa fa-download"></i> Download PNG</a>
+<a id="export" class="btn btn-default"><i class="fa fa-download"></i> Export as PDF</a>
