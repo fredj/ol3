@@ -551,6 +551,14 @@ ol.SourceUrlTileOptions;
 
 
 /**
+ * @typedef {{image: ol.style.Image,
+ *            offset: (string|undefined),
+ *            repeat: (number|undefined)}}
+ */
+ol.StrokeIcon;
+
+
+/**
  * A function that takes an {@link ol.Feature} and a `{number}` representing
  * the view's resolution. The function should return a {@link ol.style.Style}
  * or an array of them. This way e.g. a vector layer can be styled.

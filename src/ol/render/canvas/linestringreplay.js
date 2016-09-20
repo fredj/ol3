@@ -166,6 +166,9 @@ ol.render.canvas.LineStringReplay.prototype.drawLineString = function(lineString
       flatCoordinates, 0, flatCoordinates.length, stride);
   this.hitDetectionInstructions.push([ol.render.canvas.Instruction.STROKE]);
   this.endGeometry(lineStringGeometry, feature);
+  if (state.icons) {
+    // FIXME: create a ol.render.canvas.ImageReplay ?
+  }
 };
 
 
@@ -240,6 +243,7 @@ ol.render.canvas.LineStringReplay.prototype.setFillStrokeStyle = function(fillSt
   var strokeStyleMiterLimit = strokeStyle.getMiterLimit();
   this.state_.miterLimit = strokeStyleMiterLimit !== undefined ?
       strokeStyleMiterLimit : ol.render.canvas.defaultMiterLimit;
+  this.state_.icons = strokeStyle.getIcons();
 
   if (this.state_.lineWidth > this.maxLineWidth) {
     this.maxLineWidth = this.state_.lineWidth;

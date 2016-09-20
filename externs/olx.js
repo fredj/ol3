@@ -6933,6 +6933,7 @@ olx.style.RegularShapeOptions.prototype.atlasManager;
 
 /**
  * @typedef {{color: (ol.Color|ol.ColorLike|undefined),
+ *     icons: (Array.<ol.StrokeIcon>|undefined),
  *     lineCap: (string|undefined),
  *     lineJoin: (string|undefined),
  *     lineDash: (Array.<number>|undefined),
@@ -6950,6 +6951,13 @@ olx.style.StrokeOptions;
  * @api
  */
 olx.style.StrokeOptions.prototype.color;
+
+
+/**
+ * @type {Array.<ol.StrokeIcon>|undefined}
+ * @api
+ */
+olx.style.StrokeOptions.prototype.icons;
 
 
 /**

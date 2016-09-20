@@ -24,6 +24,12 @@ ol.style.Stroke = function(opt_options) {
 
   /**
    * @private
+   * @type {Array.<ol.StrokeIcon>}
+   */
+  this.icons_ = options.icons !== undefined ? options.icons : null;
+
+  /**
+   * @private
    * @type {string|undefined}
    */
   this.lineCap_ = options.lineCap;
@@ -85,6 +91,15 @@ ol.style.Stroke.prototype.clone = function() {
  */
 ol.style.Stroke.prototype.getColor = function() {
   return this.color_;
+};
+
+
+/**
+ * @return {Array.<ol.StrokeIcon>} Icons.
+ * @api
+ */
+ol.style.Stroke.prototype.getIcons = function() {
+  return this.icons_;
 };
 
 
