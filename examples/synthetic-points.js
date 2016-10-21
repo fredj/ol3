@@ -131,3 +131,21 @@ map.on('pointermove', function(evt) {
     map.getTarget().style.cursor = '';
   }
 });
+
+
+var getEventPixelTime = function() {
+  var t0, t1, t = 0;
+  var pixel = [];
+  var size = map.getSize();
+  for (var x = 0; x < size[0]; x++) {
+    for (var y = 0; y < size[1]; y++) {
+      pixel[0] = x;
+      pixel[1] = y;
+      t0 = performance.now();
+      map.hasFeatureAtPixel(pixel)
+      t1 = performance.now();
+      t += t1 - t0;
+    }
+  }
+  console.log(size, Math.floor(t));
+};
