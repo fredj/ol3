@@ -187,17 +187,15 @@ ol.interaction.Pointer.handleEvent = function(mapBrowserEvent) {
     if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERDRAG) {
       this.handleDragEvent_(mapBrowserEvent);
     } else if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERUP) {
-      this.handleUpEvent_(mapBrowserEvent);
-      this.handlingDownUpSequence = false;
+      this.handlingDownUpSequence = this.handleUpEvent_(mapBrowserEvent);
     }
-  } else {
-    if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERDOWN) {
-      var handled = this.handleDownEvent_(mapBrowserEvent);
-      this.handlingDownUpSequence = handled;
-      stopEvent = this.shouldStopEvent(handled);
-    } else if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERMOVE) {
-      this.handleMoveEvent_(mapBrowserEvent);
-    }
+  }
+  if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERDOWN) {
+    var handled = this.handleDownEvent_(mapBrowserEvent);
+    this.handlingDownUpSequence = handled;
+    stopEvent = this.shouldStopEvent(handled);
+  } else if (mapBrowserEvent.type == ol.MapBrowserEventType.POINTERMOVE) {
+    this.handleMoveEvent_(mapBrowserEvent);
   }
   return !stopEvent;
 };
