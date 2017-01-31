@@ -2900,12 +2900,24 @@ olx.interaction.ExtentOptions.prototype.wrapX;
 
 /**
  * @typedef {{
+ *     condition: (ol.EventsConditionType|undefined),
  *     features: (ol.Collection.<ol.Feature>|undefined),
  *     layers: (undefined|Array.<ol.layer.Layer>|function(ol.layer.Layer): boolean),
  *     hitTolerance: (number|undefined)
  * }}
  */
 olx.interaction.TranslateOptions;
+
+
+/**
+ * A function that takes an {@link ol.MapBrowserEvent} and returns a boolean
+ * to indicate whether that event will be considered to translate a feature.
+ *
+ * Default is {@link ol.events.condition.primaryAction}.
+ * @type {ol.EventsConditionType|undefined}
+ * @api
+ */
+olx.interaction.TranslateOptions.prototype.condition;
 
 
 /**

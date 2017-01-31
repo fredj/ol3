@@ -3,6 +3,7 @@ goog.provide('ol.interaction.Translate');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.events.Event');
+goog.require('ol.events.condition');
 goog.require('ol.functions');
 goog.require('ol.array');
 goog.require('ol.interaction.Pointer');
@@ -27,6 +28,14 @@ ol.interaction.Translate = function(opt_options) {
   });
 
   var options = opt_options ? opt_options : {};
+
+  /**
+   * @private
+   * @type {ol.EventsConditionType}
+   */
+  this.condition_ = options.condition ?
+      options.condition : ol.events.condition.primaryAction;
+
 
   /**
    * @type {string|undefined}
@@ -93,7 +102,7 @@ ol.inherits(ol.interaction.Translate, ol.interaction.Pointer);
  */
 ol.interaction.Translate.handleDownEvent_ = function(event) {
   this.lastFeature_ = this.featuresAtPixel_(event.pixel, event.map);
-  if (!this.lastCoordinate_ && this.lastFeature_) {
+  if (this.condition_(event) && !this.lastCoordinate_ && this.lastFeature_) {
     this.lastCoordinate_ = event.coordinate;
     ol.interaction.Translate.handleMoveEvent_.call(this, event);
 
