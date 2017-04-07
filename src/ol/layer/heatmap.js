@@ -92,23 +92,31 @@ ol.layer.Heatmap = function(opt_options) {
   }
 
   this.setStyle(function(feature, resolution) {
-    var weight = weightFunction(feature);
-    var opacity = weight !== undefined ? ol.math.clamp(weight, 0, 1) : 1;
-    // cast to 8 bits
-    var index = (255 * opacity) | 0;
-    var style = this.styleCache_[index];
-    if (!style) {
-      style = [
-        new ol.style.Style({
-          image: new ol.style.Icon({
-            opacity: opacity,
-            src: this.circleImage_
-          })
-        })
-      ];
-      this.styleCache_[index] = style;
-    }
-    return style;
+    var opacity = 0.3 + (Math.random() * 1e-8)
+    return new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, ' + opacity + ')',
+        width: 5
+      })
+    });
+
+    // var weight = weightFunction(feature);
+    // var opacity = weight !== undefined ? ol.math.clamp(weight, 0, 1) : 1;
+    // // cast to 8 bits
+    // var index = (255 * opacity) | 0;
+    // var style = this.styleCache_[index];
+    // if (!style) {
+    //   style = [
+    //     new ol.style.Style({
+    //       image: new ol.style.Icon({
+    //         opacity: opacity,
+    //         src: this.circleImage_
+    //       })
+    //     })
+    //   ];
+    //   this.styleCache_[index] = style;
+    // }
+    // return style;
   }.bind(this));
 
   // For performance reasons, don't sort the features before rendering.

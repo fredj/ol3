@@ -226,6 +226,12 @@ ol.render.canvas.Replay.prototype.fill_ = function(context, rotation) {
 ol.render.canvas.Replay.prototype.replay_ = function(
     context, pixelRatio, transform, viewRotation, skippedFeaturesHash,
     instructions, featureCallback, opt_hitExtent) {
+
+
+  //context.shadowOffsetX = context.shadowOffsetY = 250;
+  //context.shadowBlur = 10;
+  //context.shadowColor = 'rgba(0, 0, 0, 1)';
+
   /** @type {Array.<number>} */
   var pixelCoordinates;
   if (this.pixelCoordinates_ && ol.array.equals(transform, this.renderedTransform_)) {

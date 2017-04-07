@@ -9,6 +9,7 @@ goog.require('ol.interaction');
 goog.require('ol.interaction.DragAndDrop');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
+goog.require('ol.layer.Heatmap');
 goog.require('ol.source.BingMaps');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Circle');
@@ -96,12 +97,6 @@ var dragAndDropInteraction = new ol.interaction.DragAndDrop({
 var map = new ol.Map({
   interactions: ol.interaction.defaults().extend([dragAndDropInteraction]),
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.BingMaps({
-        imagerySet: 'Aerial',
-        key: 'As1HiMj1PvLPlqc_gtM7AqZfBL8ZL3VrjaS3zIb22Uvb9WKhuJObROC-qUpa81U5'
-      })
-    })
   ],
   target: 'map',
   view: new ol.View({
@@ -114,9 +109,8 @@ dragAndDropInteraction.on('addfeatures', function(event) {
   var vectorSource = new ol.source.Vector({
     features: event.features
   });
-  map.addLayer(new ol.layer.Vector({
-    source: vectorSource,
-    style: styleFunction
+  map.addLayer(new ol.layer.Heatmap({
+    source: vectorSource
   }));
   map.getView().fit(vectorSource.getExtent());
 });
