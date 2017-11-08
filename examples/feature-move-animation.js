@@ -129,7 +129,7 @@ var vectorLayer = new ol.layer.Vector({
 var center = [-5639523.95, -3501274.52];
 var map = new ol.Map({
   target: document.getElementById('map'),
-  loadTilesWhileAnimating: true,
+  maxLoadTilesWhileAnimating: 8,
   view: new ol.View({
     center: center,
     zoom: 10,

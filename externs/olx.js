@@ -292,6 +292,9 @@ olx.interaction.InteractionOptions.prototype.handleEvent;
  *     layers: (Array.<ol.layer.Base>|ol.Collection.<ol.layer.Base>|undefined),
  *     loadTilesWhileAnimating: (boolean|undefined),
  *     loadTilesWhileInteracting: (boolean|undefined),
+ *     maxLoadTiles: (number|undefined),
+ *     maxLoadTilesWhileAnimating: (number|undefined),
+ *     maxLoadTilesWhileInteracting: (number|undefined),
  *     logo: (boolean|string|olx.LogoOptions|Element|undefined),
  *     moveTolerance: (number|undefined),
  *     overlays: (ol.Collection.<ol.Overlay>|Array.<ol.Overlay>|undefined),
@@ -358,6 +361,10 @@ olx.MapOptions.prototype.layers;
  * When set to true, tiles will be loaded during animations. This may improve
  * the user experience, but can also make animations stutter on devices with
  * slow memory. Default is `false`.
+ *
+ * Deprecated: Use `maxLoadTilesWhileAnimating` option. Setting to true will
+ *             set `maxLoadTilesWhileAnimating` to `8`.
+ *
  * @type {boolean|undefined}
  * @api
  */
@@ -368,10 +375,41 @@ olx.MapOptions.prototype.loadTilesWhileAnimating;
  * When set to true, tiles will be loaded while interacting with the map. This
  * may improve the user experience, but can also make map panning and zooming
  * choppy on devices with slow memory. Default is `false`.
+ *
+ * Deprecated: Use `maxLoadTilesWhileInteracting` option. Setting to true will
+ *             set `maxLoadTilesWhileInteracting` to `8`.
+ *
  * @type {boolean|undefined}
  * @api
  */
 olx.MapOptions.prototype.loadTilesWhileInteracting;
+
+/**
+ * Defines the maximum number of tiles to load when the map is idle (no animation or interaction).
+ * Default is `16`.
+ * @type {number|undefined}
+ * @api
+ */
+olx.MapOptions.prototype.maxLoadTiles;
+
+/**
+ * Defines the maximum number of tiles to load during animations.
+ * This may improve the user experience, but can also make animations stutter
+ * on devices with slow memory. Default is `0`.
+ * @type {number|undefined}
+ * @api
+ */
+olx.MapOptions.prototype.maxLoadTilesWhileAnimating;
+
+
+/**
+ * Defines the maximum number of tiles to load while interacting with the map.
+ * This may improve the user experience, but can also make animations stutter
+ * on devices with slow memory. Default is `0`.
+ * @type {number|undefined}
+ * @api
+ */
+olx.MapOptions.prototype.maxLoadTilesWhileInteracting;
 
 
 /**

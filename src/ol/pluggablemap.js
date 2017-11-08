@@ -48,20 +48,34 @@ ol.PluggableMap = function(options) {
   var optionsInternal = ol.PluggableMap.createOptionsInternal(options);
 
   /**
-   * @type {boolean}
+   * @type {number}
    * @private
    */
-  this.loadTilesWhileAnimating_ =
-      options.loadTilesWhileAnimating !== undefined ?
-        options.loadTilesWhileAnimating : false;
+  this.maxLoadTiles_ = options.maxLoadTiles !== undefined ? options.maxLoadTiles : 16;
 
   /**
-   * @type {boolean}
+   * @type {number}
    * @private
    */
-  this.loadTilesWhileInteracting_ =
-      options.loadTilesWhileInteracting !== undefined ?
-        options.loadTilesWhileInteracting : false;
+  this.maxLoadTilesWhileAnimating_ =
+      options.maxLoadTilesWhileAnimating !== undefined ?
+        options.maxLoadTilesWhileAnimating : 0;
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.maxLoadTilesWhileInteracting_ =
+      options.maxLoadTilesWhileInteracting !== undefined ?
+        options.maxLoadTilesWhileInteracting : 0;
+
+  // TODO: remove in the next major version
+  if (options.loadTilesWhileAnimating) {
+    this.maxLoadTilesWhileAnimating_ = 8;
+  }
+  if (options.loadTilesWhileInteracting) {
+    this.maxLoadTilesWhileInteracting_ = 8;
+  }
 
   /**
    * @private
@@ -883,16 +897,16 @@ ol.PluggableMap.prototype.handlePostRender = function() {
   //   loading tiles that will quickly disappear from view.
   var tileQueue = this.tileQueue_;
   if (!tileQueue.isEmpty()) {
-    var maxTotalLoading = 16;
+    var maxTotalLoading = this.maxLoadTiles_;
     var maxNewLoads = maxTotalLoading;
     if (frameState) {
       var hints = frameState.viewHints;
       if (hints[ol.ViewHint.ANIMATING]) {
-        maxTotalLoading = this.loadTilesWhileAnimating_ ? 8 : 0;
+        maxTotalLoading = this.maxLoadTilesWhileAnimating_;
         maxNewLoads = 2;
       }
       if (hints[ol.ViewHint.INTERACTING]) {
-        maxTotalLoading = this.loadTilesWhileInteracting_ ? 8 : 0;
+        maxTotalLoading = this.maxLoadTilesWhileInteracting_;
         maxNewLoads = 2;
       }
     }

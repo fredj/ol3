@@ -26,7 +26,7 @@ var map = new ol.Map({
   ],
   // Improve user experience by loading tiles while animating. Will make
   // animations stutter on mobile or slow devices.
-  loadTilesWhileAnimating: true,
+  maxLoadTilesWhileAnimating: 8,
   view: view
 });
 
