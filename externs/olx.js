@@ -8449,7 +8449,6 @@ olx.view.FitOptions.prototype.callback;
  *     index: number,
  *     layerStates: Object.<number, ol.LayerState>,
  *     layerStatesArray: Array.<ol.LayerState>,
- *     logos: Object.<string, (string|Element)>,
  *     pixelRatio: number,
  *     pixelToCoordinateTransform: ol.Transform,
  *     postRenderFunctions: Array.<ol.PostRenderFunction>,

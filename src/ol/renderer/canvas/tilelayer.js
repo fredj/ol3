@@ -291,7 +291,6 @@ ol.renderer.canvas.TileLayer.prototype.prepareFrame = function(frameState, layer
   this.manageTilePyramid(frameState, tileSource, tileGrid, pixelRatio,
       projection, extent, z, tileLayer.getPreload());
   this.scheduleExpireCache(frameState, tileSource);
-  this.updateLogos(frameState, tileSource);
 
   return this.renderedTiles.length > 0;
 };

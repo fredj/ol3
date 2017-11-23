@@ -301,8 +301,6 @@ ol.renderer.canvas.VectorLayer.prototype.prepareFrame = function(frameState, lay
   var vectorLayer = /** @type {ol.layer.Vector} */ (this.getLayer());
   var vectorSource = vectorLayer.getSource();
 
-  this.updateLogos(frameState, vectorSource);
-
   var animating = frameState.viewHints[ol.ViewHint.ANIMATING];
   var interacting = frameState.viewHints[ol.ViewHint.INTERACTING];
   var updateWhileAnimating = vectorLayer.getUpdateWhileAnimating();

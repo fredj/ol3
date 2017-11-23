@@ -353,7 +353,6 @@ ol.renderer.webgl.TileLayer.prototype.prepareFrame = function(frameState, layerS
         }
       }, this);
   this.scheduleExpireCache(frameState, tileSource);
-  this.updateLogos(frameState, tileSource);
 
   var texCoordMatrix = this.texCoordMatrix;
   ol.transform.reset(texCoordMatrix);

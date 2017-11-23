@@ -4,7 +4,6 @@ goog.require('ol');
 goog.require('ol.ImageState');
 goog.require('ol.Observable');
 goog.require('ol.TileState');
-goog.require('ol.asserts');
 goog.require('ol.events');
 goog.require('ol.events.EventType');
 goog.require('ol.functions');
@@ -161,25 +160,6 @@ ol.renderer.Layer.prototype.scheduleExpireCache = function(frameState, tileSourc
     frameState.postRenderFunctions.push(
         /** @type {ol.PostRenderFunction} */ (postRenderFunction)
     );
-  }
-};
-
-
-/**
- * @param {olx.FrameState} frameState Frame state.
- * @param {ol.source.Source} source Source.
- * @protected
- */
-ol.renderer.Layer.prototype.updateLogos = function(frameState, source) {
-  var logo = source.getLogo();
-  if (logo !== undefined) {
-    if (typeof logo === 'string') {
-      frameState.logos[logo] = '';
-    } else if (logo) {
-      ol.asserts.assert(typeof logo.href == 'string', 44); // `logo.href` should be a string.
-      ol.asserts.assert(typeof logo.src == 'string', 45); // `logo.src` should be a string.
-      frameState.logos[logo.src] = logo.href;
-    }
   }
 };
 

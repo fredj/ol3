@@ -114,7 +114,6 @@ ol.source.Raster = function(options) {
     index: 0,
     layerStates: layerStates,
     layerStatesArray: layerStatesArray,
-    logos: {},
     pixelRatio: 1,
     pixelToCoordinateTransform: ol.transform.create(),
     postRenderFunctions: [],

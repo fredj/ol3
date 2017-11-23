@@ -189,8 +189,6 @@ ol.renderer.webgl.ImageLayer.prototype.prepareFrame = function(frameState, layer
 
     this.image_ = image;
     this.texture = texture;
-
-    this.updateLogos(frameState, imageSource);
   }
 
   return !!image;
