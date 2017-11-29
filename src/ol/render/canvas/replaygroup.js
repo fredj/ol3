@@ -185,6 +185,11 @@ ol.render.canvas.ReplayGroup.getCircleArray_ = function(radius) {
 };
 
 
+/**
+ * @param {Object.<string, ol.DeclutterGroup>} declutterReplays Declutter replays.
+ * @param {CanvasRenderingContext2D} context Context.
+ * @param {number} rotation Rotation.
+ */
 ol.render.canvas.ReplayGroup.replayDeclutter = function(declutterReplays, context, rotation) {
   var zs = Object.keys(declutterReplays).map(Number).sort(ol.array.numberSafeCompareFunction);
   for (var z = 0, zz = zs.length; z < zz; ++z) {
@@ -198,6 +203,14 @@ ol.render.canvas.ReplayGroup.replayDeclutter = function(declutterReplays, contex
 };
 
 
+/**
+ * @param {Object.<string, ol.DeclutterGroup>} declutterReplays Declutter replays.
+ * @param {CanvasRenderingContext2D} context Context.
+ * @param {number} rotation Rotation.
+ * @param {function((ol.Feature|ol.render.Feature)): T} featureCallback Feature callback.
+ * @param {ol.Extent} hitExtent Only check features that intersect this extent.
+ * @return {T|undefined} Callback result.
+ */
 ol.render.canvas.ReplayGroup.replayDeclutterHitDetection = function(
     declutterReplays, context, rotation, featureCallback, hitExtent) {
   var zs = Object.keys(declutterReplays).map(Number).sort(ol.array.numberSafeCompareFunction);
