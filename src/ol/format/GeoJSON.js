@@ -74,7 +74,7 @@ function readGeometry(object, opt_options) {
   if (!object) {
     return null;
   }
-  var geometryReader = GeoJSON.GEOMETRY_READERS_[object.type];
+  var geometryReader = GEOMETRY_READERS_[object.type];
   return (
     /** @type {ol.geom.Geometry} */ FeatureFormat.transformWithOptions(
         geometryReader(object), false, opt_options)
@@ -160,7 +160,7 @@ function readPolygonGeometry(object) {
  * @return {GeoJSONGeometry|GeoJSONGeometryCollection} GeoJSON geometry.
  */
 function writeGeometry(geometry, opt_options) {
-  var geometryWriter = GeoJSON.GEOMETRY_WRITERS_[geometry.getType()];
+  var geometryWriter = GEOMETRY_WRITERS_[geometry.getType()];
   return geometryWriter(/** @type {ol.geom.Geometry} */ (
     FeatureFormat.transformWithOptions(geometry, true, opt_options)),
   opt_options);
@@ -285,10 +285,9 @@ function writePolygonGeometry(geometry, opt_options) {
 
 /**
  * @const
- * @private
  * @type {Object.<string, function(GeoJSONObject): ol.geom.Geometry>}
  */
-GeoJSON.GEOMETRY_READERS_ = {
+var GEOMETRY_READERS = {
   'Point': readPointGeometry,
   'LineString': readLineStringGeometry,
   'Polygon': readPolygonGeometry,
@@ -301,10 +300,9 @@ GeoJSON.GEOMETRY_READERS_ = {
 
 /**
  * @const
- * @private
  * @type {Object.<string, function(ol.geom.Geometry, olx.format.WriteOptions=): (GeoJSONGeometry|GeoJSONGeometryCollection)>}
  */
-GeoJSON.GEOMETRY_WRITERS_ = {
+var GEOMETRY_WRITERS = {
   'Point': writePointGeometry,
   'LineString': writeLineStringGeometry,
   'Polygon': writePolygonGeometry,
