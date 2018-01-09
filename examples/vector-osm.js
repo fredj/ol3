@@ -4,7 +4,7 @@ import {defaults as defaultControls} from '../src/ol/control.js';
 import OSMXML from '../src/ol/format/OSMXML.js';
 import TileLayer from '../src/ol/layer/Tile.js';
 import _ol_layer_Vector_ from '../src/ol/layer/Vector.js';
-import _ol_loadingstrategy_ from '../src/ol/loadingstrategy.js';
+import {bbox} from '../src/ol/loadingstrategy.js';
 import {transformExtent} from '../src/ol/proj.js';
 import _ol_source_BingMaps_ from '../src/ol/source/BingMaps.js';
 import _ol_source_Vector_ from '../src/ol/source/Vector.js';
@@ -95,7 +95,7 @@ var vectorSource = new _ol_source_Vector_({
         ');rel(bn)->.foo;way(bn);node(w)->.foo;rel(bw););out meta;';
     client.send(query);
   },
-  strategy: _ol_loadingstrategy_.bbox
+  strategy: bbox
 });
 
 var vector = new _ol_layer_Vector_({

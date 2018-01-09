@@ -3,7 +3,7 @@ import _ol_View_ from '../src/ol/View.js';
 import EsriJSON from '../src/ol/format/EsriJSON.js';
 import TileLayer from '../src/ol/layer/Tile.js';
 import _ol_layer_Vector_ from '../src/ol/layer/Vector.js';
-import _ol_loadingstrategy_ from '../src/ol/loadingstrategy.js';
+import {tile} from '../src/ol/loadingstrategy.js';
 import {fromLonLat} from '../src/ol/proj.js';
 import _ol_source_Vector_ from '../src/ol/source/Vector.js';
 import _ol_source_XYZ_ from '../src/ol/source/XYZ.js';
@@ -82,7 +82,7 @@ var vectorSource = new _ol_source_Vector_({
       }
     }});
   },
-  strategy: _ol_loadingstrategy_.tile(_ol_tilegrid_.createXYZ({
+  strategy: tile(_ol_tilegrid_.createXYZ({
     tileSize: 512
   }))
 });

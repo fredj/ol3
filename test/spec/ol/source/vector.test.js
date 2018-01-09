@@ -6,7 +6,7 @@ import _ol_View_ from '../../../../src/ol/View.js';
 import Point from '../../../../src/ol/geom/Point.js';
 import LineString from '../../../../src/ol/geom/LineString.js';
 import _ol_layer_Vector_ from '../../../../src/ol/layer/Vector.js';
-import _ol_loadingstrategy_ from '../../../../src/ol/loadingstrategy.js';
+import {bbox} from '../../../../src/ol/loadingstrategy.js';
 import {get as getProjection, transformExtent, fromLonLat} from '../../../../src/ol/proj.js';
 import _ol_source_Vector_ from '../../../../src/ol/source/Vector.js';
 
@@ -425,7 +425,7 @@ describe('ol.source.Vector', function() {
       it('requests the view extent plus render buffer', function(done) {
         var center = [-97.6114, 38.8403];
         var source = new _ol_source_Vector_({
-          strategy: _ol_loadingstrategy_.bbox,
+          strategy: bbox,
           loader: function(extent) {
             setTimeout(function() {
               var lonLatExtent = transformExtent(extent, 'EPSG:3857', 'EPSG:4326');

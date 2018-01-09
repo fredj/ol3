@@ -1,7 +1,6 @@
 /**
  * @module ol/loadingstrategy
  */
-var _ol_loadingstrategy_ = {};
 
 
 /**
@@ -11,9 +10,9 @@ var _ol_loadingstrategy_ = {};
  * @return {Array.<ol.Extent>} Extents.
  * @api
  */
-_ol_loadingstrategy_.all = function(extent, resolution) {
+export function all(extent, resolution) {
   return [[-Infinity, -Infinity, Infinity, Infinity]];
-};
+}
 
 
 /**
@@ -24,9 +23,9 @@ _ol_loadingstrategy_.all = function(extent, resolution) {
  * @return {Array.<ol.Extent>} Extents.
  * @api
  */
-_ol_loadingstrategy_.bbox = function(extent, resolution) {
+export function bbox(extent, resolution) {
   return [extent];
-};
+}
 
 
 /**
@@ -35,7 +34,7 @@ _ol_loadingstrategy_.bbox = function(extent, resolution) {
  * @return {function(ol.Extent, number): Array.<ol.Extent>} Loading strategy.
  * @api
  */
-_ol_loadingstrategy_.tile = function(tileGrid) {
+export function tile(tileGrid) {
   return (
   /**
        * @param {ol.Extent} extent Extent.
@@ -58,5 +57,4 @@ _ol_loadingstrategy_.tile = function(tileGrid) {
       }
       return extents;
     });
-};
-export default _ol_loadingstrategy_;
+}
