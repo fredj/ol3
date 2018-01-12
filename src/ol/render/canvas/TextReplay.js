@@ -147,9 +147,8 @@ inherits(_ol_render_canvas_TextReplay_, _ol_render_canvas_Replay_);
 _ol_render_canvas_TextReplay_.measureTextWidths = function(font, lines, widths) {
   const numLines = lines.length;
   let width = 0;
-  let currentWidth, i;
-  for (i = 0; i < numLines; ++i) {
-    currentWidth = _ol_render_canvas_.measureTextWidth(font, lines[i]);
+  for (let i = 0; i < numLines; ++i) {
+    const currentWidth = _ol_render_canvas_.measureTextWidth(font, lines[i]);
     width = Math.max(width, currentWidth);
     widths.push(currentWidth);
   }

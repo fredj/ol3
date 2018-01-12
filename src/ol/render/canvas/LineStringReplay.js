@@ -95,10 +95,8 @@ _ol_render_canvas_LineStringReplay_.prototype.drawMultiLineString = function(mul
   const flatCoordinates = multiLineStringGeometry.getFlatCoordinates();
   const stride = multiLineStringGeometry.getStride();
   let offset = 0;
-  let i, ii;
-  for (i = 0, ii = ends.length; i < ii; ++i) {
-    offset = this.drawFlatCoordinates_(
-      flatCoordinates, offset, ends[i], stride);
+  for (let i = 0, ii = ends.length; i < ii; ++i) {
+    offset = this.drawFlatCoordinates_(flatCoordinates, offset, ends[i], stride);
   }
   this.hitDetectionInstructions.push([_ol_render_canvas_Instruction_.STROKE]);
   this.endGeometry(multiLineStringGeometry, feature);

@@ -19,8 +19,7 @@ let signX = 1;
 let signY = -1;
 
 // Create a square spiral.
-let i;
-for (i = 0; i < count; ++i) {
+for (let i = 0; i < count; ++i) {
   delta = (i + 1) * 2500;
   if (i % 2 === 0) {
     signY *= -1;

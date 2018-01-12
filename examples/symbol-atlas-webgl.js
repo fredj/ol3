@@ -42,10 +42,9 @@ const symbolInfo = [{
 const radiuses = [3, 6, 9, 15, 19, 25];
 const symbolCount = symbolInfo.length * radiuses.length * 2;
 const symbols = [];
-let i, j;
-for (i = 0; i < symbolInfo.length; ++i) {
+for (let i = 0; i < symbolInfo.length; ++i) {
   const info = symbolInfo[i];
-  for (j = 0; j < radiuses.length; ++j) {
+  for (let j = 0; j < radiuses.length; ++j) {
     // circle symbol
     symbols.push(new CircleStyle({
       opacity: info.opacity,
@@ -87,7 +86,7 @@ const featureCount = 50000;
 const features = new Array(featureCount);
 let feature, geometry;
 const e = 25000000;
-for (i = 0; i < featureCount; ++i) {
+for (let i = 0; i < featureCount; ++i) {
   geometry = new Point(
     [2 * e * Math.random() - e, 2 * e * Math.random() - e]);
   feature = new Feature(geometry);

@@ -736,8 +736,7 @@ VectorSource.prototype.loadFeatures = function(
   extent, resolution, projection) {
   const loadedExtentsRtree = this.loadedExtentsRtree_;
   const extentsToLoad = this.strategy_(extent, resolution);
-  let i, ii;
-  for (i = 0, ii = extentsToLoad.length; i < ii; ++i) {
+  for (let i = 0, ii = extentsToLoad.length; i < ii; ++i) {
     const extentToLoad = extentsToLoad[i];
     const alreadyLoaded = loadedExtentsRtree.forEachInExtent(extentToLoad,
       /**

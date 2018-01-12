@@ -53,8 +53,7 @@ const urlTpl = 'https://{1-4}.{base}.maps.cit.api.here.com' +
   '/{type}/2.1/maptile/newest/{scheme}/{z}/{x}/{y}/256/png' +
   '?app_id={app_id}&app_code={app_code}';
 const layers = [];
-let i, ii;
-for (i = 0, ii = hereLayers.length; i < ii; ++i) {
+for (let i = 0, ii = hereLayers.length; i < ii; ++i) {
   const layerDesc = hereLayers[i];
   layers.push(new TileLayer({
     visible: false,

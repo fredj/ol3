@@ -157,10 +157,8 @@ _ol_renderer_vector_.renderGeometry_ = function(replayGroup, geometry, style, fe
  */
 _ol_renderer_vector_.renderGeometryCollectionGeometry_ = function(replayGroup, geometry, style, feature) {
   const geometries = geometry.getGeometriesArray();
-  let i, ii;
-  for (i = 0, ii = geometries.length; i < ii; ++i) {
-    const geometryRenderer =
-        _ol_renderer_vector_.GEOMETRY_RENDERERS_[geometries[i].getType()];
+  for (let i = 0, ii = geometries.length; i < ii; ++i) {
+    const geometryRenderer = _ol_renderer_vector_.GEOMETRY_RENDERERS_[geometries[i].getType()];
     geometryRenderer(replayGroup, geometries[i], style, feature);
   }
 };

@@ -150,8 +150,7 @@ CanvasVectorTileLayerRenderer.prototype.prepareFrame = function(frameState, laye
  * @param {olx.FrameState} frameState Frame state.
  * @private
  */
-CanvasVectorTileLayerRenderer.prototype.createReplayGroup_ = function(
-  tile, frameState) {
+CanvasVectorTileLayerRenderer.prototype.createReplayGroup_ = function(tile, frameState) {
   const layer = this.getLayer();
   const pixelRatio = frameState.pixelRatio;
   const projection = frameState.viewState.projection;
@@ -279,12 +278,10 @@ CanvasVectorTileLayerRenderer.prototype.forEachFeatureAtCoordinate = function(co
   const source = /** @type {ol.source.VectorTile} */ (layer.getSource());
   const tileGrid = source.getTileGridForProjection(frameState.viewState.projection);
   let bufferedExtent, found;
-  let i, ii, replayGroup;
-  let tile, tileCoord, tileExtent;
-  for (i = 0, ii = renderedTiles.length; i < ii; ++i) {
-    tile = renderedTiles[i];
-    tileCoord = tile.wrappedTileCoord;
-    tileExtent = tileGrid.getTileCoordExtent(tileCoord, this.tmpExtent);
+  for (let i = 0, ii = renderedTiles.length; i < ii; ++i) {
+    const tile = renderedTiles[i];
+    const tileCoord = tile.wrappedTileCoord;
+    const tileExtent = tileGrid.getTileCoordExtent(tileCoord, this.tmpExtent);
     bufferedExtent = buffer(tileExtent, hitTolerance * resolution, bufferedExtent);
     if (!containsCoordinate(bufferedExtent, coordinate)) {
       continue;
@@ -294,7 +291,7 @@ CanvasVectorTileLayerRenderer.prototype.forEachFeatureAtCoordinate = function(co
       if (sourceTile.getState() == TileState.ERROR) {
         continue;
       }
-      replayGroup = sourceTile.getReplayGroup(layer, tile.tileCoord.toString());
+      const replayGroup = sourceTile.getReplayGroup(layer, tile.tileCoord.toString());
       found = found || replayGroup.forEachFeatureAtCoordinate(
         coordinate, resolution, rotation, hitTolerance, {},
         /**

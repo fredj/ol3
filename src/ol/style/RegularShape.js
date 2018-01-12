@@ -423,7 +423,6 @@ RegularShape.prototype.render_ = function(atlasManager) {
  * @param {number} y The origin for the symbol (y).
  */
 RegularShape.prototype.draw_ = function(renderOptions, context, x, y) {
-  let i, angle0, radiusC;
   // reset transform
   context.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -438,14 +437,13 @@ RegularShape.prototype.draw_ = function(renderOptions, context, x, y) {
       renderOptions.size / 2, renderOptions.size / 2,
       this.radius_, 0, 2 * Math.PI, true);
   } else {
-    const radius2 = (this.radius2_ !== undefined) ? this.radius2_
-      : this.radius_;
+    const radius2 = this.radius2_ !== undefined ? this.radius2_ : this.radius_;
     if (radius2 !== this.radius_) {
       points = 2 * points;
     }
-    for (i = 0; i <= points; i++) {
-      angle0 = i * 2 * Math.PI / points - Math.PI / 2 + this.angle_;
-      radiusC = i % 2 === 0 ? this.radius_ : radius2;
+    for (let i = 0; i <= points; i++) {
+      const angle0 = i * 2 * Math.PI / points - Math.PI / 2 + this.angle_;
+      const radiusC = i % 2 === 0 ? this.radius_ : radius2;
       context.lineTo(renderOptions.size / 2 + radiusC * Math.cos(angle0),
         renderOptions.size / 2 + radiusC * Math.sin(angle0));
     }
@@ -518,15 +516,13 @@ RegularShape.prototype.drawHitDetectionCanvas_ = function(renderOptions, context
       renderOptions.size / 2, renderOptions.size / 2,
       this.radius_, 0, 2 * Math.PI, true);
   } else {
-    const radius2 = (this.radius2_ !== undefined) ? this.radius2_
-      : this.radius_;
+    const radius2 = this.radius2_ !== undefined ? this.radius2_ : this.radius_;
     if (radius2 !== this.radius_) {
       points = 2 * points;
     }
-    let i, radiusC, angle0;
-    for (i = 0; i <= points; i++) {
-      angle0 = i * 2 * Math.PI / points - Math.PI / 2 + this.angle_;
-      radiusC = i % 2 === 0 ? this.radius_ : radius2;
+    for (let i = 0; i <= points; i++) {
+      const angle0 = i * 2 * Math.PI / points - Math.PI / 2 + this.angle_;
+      const radiusC = i % 2 === 0 ? this.radius_ : radius2;
       context.lineTo(renderOptions.size / 2 + radiusC * Math.cos(angle0),
         renderOptions.size / 2 + radiusC * Math.sin(angle0));
     }

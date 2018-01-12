@@ -147,8 +147,7 @@ _ol_geom_flat_simplify_.douglasPeucker = function(flatCoordinates, offset, end,
 _ol_geom_flat_simplify_.douglasPeuckers = function(flatCoordinates, offset,
   ends, stride, squaredTolerance, simplifiedFlatCoordinates,
   simplifiedOffset, simplifiedEnds) {
-  let i, ii;
-  for (i = 0, ii = ends.length; i < ii; ++i) {
+  for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
     simplifiedOffset = _ol_geom_flat_simplify_.douglasPeucker(
       flatCoordinates, offset, end, stride, squaredTolerance,
@@ -175,8 +174,7 @@ _ol_geom_flat_simplify_.douglasPeuckers = function(flatCoordinates, offset,
 _ol_geom_flat_simplify_.douglasPeuckerss = function(
   flatCoordinates, offset, endss, stride, squaredTolerance,
   simplifiedFlatCoordinates, simplifiedOffset, simplifiedEndss) {
-  let i, ii;
-  for (i = 0, ii = endss.length; i < ii; ++i) {
+  for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
     const simplifiedEnds = [];
     simplifiedOffset = _ol_geom_flat_simplify_.douglasPeuckers(
@@ -356,8 +354,7 @@ _ol_geom_flat_simplify_.quantizes = function(
   flatCoordinates, offset, ends, stride,
   tolerance,
   simplifiedFlatCoordinates, simplifiedOffset, simplifiedEnds) {
-  let i, ii;
-  for (i = 0, ii = ends.length; i < ii; ++i) {
+  for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
     simplifiedOffset = _ol_geom_flat_simplify_.quantize(
       flatCoordinates, offset, end, stride,
@@ -386,8 +383,7 @@ _ol_geom_flat_simplify_.quantizess = function(
   flatCoordinates, offset, endss, stride,
   tolerance,
   simplifiedFlatCoordinates, simplifiedOffset, simplifiedEndss) {
-  let i, ii;
-  for (i = 0, ii = endss.length; i < ii; ++i) {
+  for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
     const simplifiedEnds = [];
     simplifiedOffset = _ol_geom_flat_simplify_.quantizes(

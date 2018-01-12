@@ -221,12 +221,10 @@ GMLBase.prototype.readGeometryElement = function(node, objectStack) {
  * @return {ol.Feature} Feature.
  */
 GMLBase.prototype.readFeatureElement = function(node, objectStack) {
-  let n;
-  const fid = node.getAttribute('fid') ||
-      _ol_xml_.getAttributeNS(node, GMLBase.GMLNS, 'id');
+  const fid = node.getAttribute('fid') || _ol_xml_.getAttributeNS(node, GMLBase.GMLNS, 'id');
   const values = {};
   let geometryName;
-  for (n = node.firstElementChild; n; n = n.nextElementSibling) {
+  for (let n = node.firstElementChild; n; n = n.nextElementSibling) {
     const localName = n.localName;
     // Assume attribute elements have one child node and that the child
     // is a text or CDATA node (to be treated as text).
@@ -264,8 +262,7 @@ GMLBase.prototype.readFeatureElement = function(node, objectStack) {
  * @return {ol.geom.Point|undefined} Point.
  */
 GMLBase.prototype.readPoint = function(node, objectStack) {
-  const flatCoordinates =
-      this.readFlatCoordinatesFromNode_(node, objectStack);
+  const flatCoordinates = this.readFlatCoordinatesFromNode_(node, objectStack);
   if (flatCoordinates) {
     const point = new Point(null);
     point.setFlatCoordinates(GeometryLayout.XYZ, flatCoordinates);
@@ -429,8 +426,7 @@ GMLBase.prototype.readPolygon = function(node, objectStack) {
     const polygon = new Polygon(null);
     const flatCoordinates = flatLinearRings[0];
     const ends = [flatCoordinates.length];
-    let i, ii;
-    for (i = 1, ii = flatLinearRings.length; i < ii; ++i) {
+    for (let i = 1, ii = flatLinearRings.length; i < ii; ++i) {
       extend(flatCoordinates, flatLinearRings[i]);
       ends.push(flatCoordinates.length);
     }

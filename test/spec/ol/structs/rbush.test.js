@@ -126,8 +126,7 @@ describe('ol.structs.RBush', function() {
     describe('#remove', function() {
 
       it('can remove each object', function() {
-        let i, ii;
-        for (i = 0, ii = objs.length; i < ii; ++i) {
+        for (let i = 0, ii = objs.length; i < ii; ++i) {
           expect(rBush.getAll()).to.contain(objs[i]);
           rBush.remove(objs[i]);
           expect(rBush.getAll()).not.to.contain(objs[i]);
@@ -155,8 +154,7 @@ describe('ol.structs.RBush', function() {
     describe('#getInExtent', function() {
 
       it('returns the expected objects', function() {
-        let i, ii;
-        for (i = 0, ii = objs.length; i < ii; ++i) {
+        for (let i = 0, ii = objs.length; i < ii; ++i) {
           expect(rBush.getInExtent(extents[i])).to.eql([objs[i]]);
         }
       });
@@ -174,8 +172,7 @@ describe('ol.structs.RBush', function() {
     describe('#remove', function() {
 
       it('can remove each object in turn', function() {
-        let i, ii;
-        for (i = 0, ii = objs.length; i < ii; ++i) {
+        for (let i = 0, ii = objs.length; i < ii; ++i) {
           expect(rBush.getInExtent(extents[i])).to.eql([objs[i]]);
           rBush.remove(objs[i]);
           expect(rBush.getInExtent(extents[i])).to.be.empty();
@@ -185,15 +182,14 @@ describe('ol.structs.RBush', function() {
       });
 
       it('can remove objects in random order', function() {
-        let i, ii, j;
         // http://en.wikipedia.org/wiki/Random_permutation
         const indexes = [];
-        for (i = 0, ii = objs.length; i < ii; ++i) {
-          j = Math.floor(Math.random() * (i + 1));
+        for (let i = 0, ii = objs.length; i < ii; ++i) {
+          const j = Math.floor(Math.random() * (i + 1));
           indexes[i] = indexes[j];
           indexes[j] = i;
         }
-        for (i = 0, ii = objs.length; i < ii; ++i) {
+        for (let i = 0, ii = objs.length; i < ii; ++i) {
           const index = indexes[i];
           expect(rBush.getInExtent(extents[index])).to.eql([objs[index]]);
           rBush.remove(objs[index]);
@@ -289,9 +285,8 @@ describe('ol.structs.RBush', function() {
 
       it('can remove all 1000 objects', function() {
         const objs = rBush.getAll();
-        let i, value;
-        for (i = objs.length - 1; i >= 0; --i) {
-          value = objs[i];
+        for (let i = objs.length - 1; i >= 0; --i) {
+          const value = objs[i];
           rBush.remove(value);
         }
         expect(rBush.isEmpty()).to.be(true);

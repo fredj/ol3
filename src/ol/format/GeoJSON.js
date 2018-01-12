@@ -389,10 +389,8 @@ GeoJSON.prototype.readFeaturesFromObject = function(object, opt_options) {
         (object);
     features = [];
     const geoJSONFeatures = geoJSONFeatureCollection.features;
-    let i, ii;
-    for (i = 0, ii = geoJSONFeatures.length; i < ii; ++i) {
-      features.push(this.readFeatureFromObject(geoJSONFeatures[i],
-        opt_options));
+    for (let i = 0, ii = geoJSONFeatures.length; i < ii; ++i) {
+      features.push(this.readFeatureFromObject(geoJSONFeatures[i], opt_options));
     }
   } else {
     features = [this.readFeatureFromObject(object, opt_options)];
@@ -525,8 +523,7 @@ GeoJSON.prototype.writeFeatures;
 GeoJSON.prototype.writeFeaturesObject = function(features, opt_options) {
   opt_options = this.adaptOptions(opt_options);
   const objects = [];
-  let i, ii;
-  for (i = 0, ii = features.length; i < ii; ++i) {
+  for (let i = 0, ii = features.length; i < ii; ++i) {
     objects.push(this.writeFeatureObject(features[i], opt_options));
   }
   return /** @type {GeoJSONFeatureCollection} */ ({

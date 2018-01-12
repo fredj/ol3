@@ -19,8 +19,7 @@ import Projection from './Projection.js';
 export function register(proj4) {
   const projCodes = Object.keys(proj4.defs);
   const len = projCodes.length;
-  let i, j;
-  for (i = 0; i < len; ++i) {
+  for (let i = 0; i < len; ++i) {
     const code = projCodes[i];
     if (!get(code)) {
       const def = proj4.defs(code);
@@ -32,10 +31,10 @@ export function register(proj4) {
       }));
     }
   }
-  for (i = 0; i < len; ++i) {
+  for (let i = 0; i < len; ++i) {
     const code1 = projCodes[i];
     const proj1 = get(code1);
-    for (j = 0; j < len; ++j) {
+    for (let j = 0; j < len; ++j) {
       const code2 = projCodes[j];
       const proj2 = get(code2);
       if (!getTransform(code1, code2)) {

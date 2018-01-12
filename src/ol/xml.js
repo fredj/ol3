@@ -390,8 +390,7 @@ _ol_xml_.makeStructureNS = function(namespaceURIs, structure, opt_structureNS) {
    * @type {Object.<string, *>}
    */
   const structureNS = opt_structureNS !== undefined ? opt_structureNS : {};
-  let i, ii;
-  for (i = 0, ii = namespaceURIs.length; i < ii; ++i) {
+  for (let i = 0, ii = namespaceURIs.length; i < ii; ++i) {
     structureNS[namespaceURIs[i]] = structure;
   }
   return structureNS;

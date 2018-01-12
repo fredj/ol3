@@ -247,8 +247,7 @@ GML3.prototype.readSurface_ = function(node, objectStack) {
     const polygon = new Polygon(null);
     const flatCoordinates = flatLinearRings[0];
     const ends = [flatCoordinates.length];
-    let i, ii;
-    for (i = 1, ii = flatLinearRings.length; i < ii; ++i) {
+    for (let i = 1, ii = flatLinearRings.length; i < ii; ++i) {
       extend(flatCoordinates, flatLinearRings[i]);
       ends.push(flatCoordinates.length);
     }
@@ -324,8 +323,7 @@ GML3.prototype.readFlatPos_ = function(node, objectStack) {
     axisOrientation = proj.getAxisOrientation();
   }
   if (axisOrientation === 'neu') {
-    let i, ii;
-    for (i = 0, ii = flatCoordinates.length; i < ii; i += 3) {
+    for (let i = 0, ii = flatCoordinates.length; i < ii; i += 3) {
       const y = flatCoordinates[i];
       const x = flatCoordinates[i + 1];
       flatCoordinates[i] = x;
@@ -374,12 +372,11 @@ GML3.prototype.readFlatPosList_ = function(node, objectStack) {
   } else if (contextDimension) {
     dim = XSD.readNonNegativeIntegerString(contextDimension);
   }
-  let x, y, z;
   const flatCoordinates = [];
   for (let i = 0, ii = coords.length; i < ii; i += dim) {
-    x = parseFloat(coords[i]);
-    y = parseFloat(coords[i + 1]);
-    z = (dim === 3) ? parseFloat(coords[i + 2]) : 0;
+    const x = parseFloat(coords[i]);
+    const y = parseFloat(coords[i + 1]);
+    const z = (dim === 3) ? parseFloat(coords[i + 2]) : 0;
     if (axisOrientation.substr(0, 2) === 'en') {
       flatCoordinates.push(x, y, z);
     } else {
@@ -642,9 +639,8 @@ GML3.prototype.writePosList_ = function(node, value, objectStack) {
   const points = value.getCoordinates();
   const len = points.length;
   const parts = new Array(len);
-  let point;
   for (let i = 0; i < len; ++i) {
-    point = points[i];
+    const point = points[i];
     parts[i] = this.getCoords_(point, srsName, hasZ);
   }
   XSD.writeStringTextNode(node, parts.join(' '));

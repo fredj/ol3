@@ -91,8 +91,7 @@ Collection.prototype.clear = function() {
  * @api
  */
 Collection.prototype.extend = function(arr) {
-  let i, ii;
-  for (i = 0, ii = arr.length; i < ii; ++i) {
+  for (let i = 0, ii = arr.length; i < ii; ++i) {
     this.push(arr[i]);
   }
   return this;
@@ -201,8 +200,7 @@ Collection.prototype.push = function(elem) {
  */
 Collection.prototype.remove = function(elem) {
   const arr = this.array_;
-  let i, ii;
-  for (i = 0, ii = arr.length; i < ii; ++i) {
+  for (let i = 0, ii = arr.length; i < ii; ++i) {
     if (arr[i] === elem) {
       return this.removeAt(i);
     }

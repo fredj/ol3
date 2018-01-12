@@ -178,10 +178,8 @@ _ol_render_canvas_PolygonReplay_.prototype.drawMultiPolygon = function(multiPoly
   const flatCoordinates = multiPolygonGeometry.getOrientedFlatCoordinates();
   const stride = multiPolygonGeometry.getStride();
   let offset = 0;
-  let i, ii;
-  for (i = 0, ii = endss.length; i < ii; ++i) {
-    offset = this.drawFlatCoordinatess_(
-      flatCoordinates, offset, endss[i], stride);
+  for (let i = 0, ii = endss.length; i < ii; ++i) {
+    offset = this.drawFlatCoordinatess_(flatCoordinates, offset, endss[i], stride);
   }
   this.endGeometry(multiPolygonGeometry, feature);
 };
@@ -200,8 +198,7 @@ _ol_render_canvas_PolygonReplay_.prototype.finish = function() {
   const tolerance = this.tolerance;
   if (tolerance !== 0) {
     const coordinates = this.coordinates;
-    let i, ii;
-    for (i = 0, ii = coordinates.length; i < ii; ++i) {
+    for (let i = 0, ii = coordinates.length; i < ii; ++i) {
       coordinates[i] = _ol_geom_flat_simplify_.snap(coordinates[i], tolerance);
     }
   }

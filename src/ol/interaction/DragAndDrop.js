@@ -73,9 +73,8 @@ inherits(DragAndDrop, Interaction);
  */
 DragAndDrop.handleDrop_ = function(event) {
   const files = event.dataTransfer.files;
-  let i, ii, file;
-  for (i = 0, ii = files.length; i < ii; ++i) {
-    file = files.item(i);
+  for (let i = 0, ii = files.length; i < ii; ++i) {
+    const file = files.item(i);
     const reader = new FileReader();
     reader.addEventListener(EventType.LOAD,
       this.handleResult_.bind(this, file));
@@ -111,8 +110,7 @@ DragAndDrop.prototype.handleResult_ = function(file, event) {
 
   const formatConstructors = this.formatConstructors_;
   let features = [];
-  let i, ii;
-  for (i = 0, ii = formatConstructors.length; i < ii; ++i) {
+  for (let i = 0, ii = formatConstructors.length; i < ii; ++i) {
     /**
      * Avoid "cannot instantiate abstract class" error.
      * @type {Function}

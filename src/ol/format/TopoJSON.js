@@ -78,9 +78,7 @@ function concatenateArcs(indices, arcs) {
   /** @type {Array.<ol.Coordinate>} */
   const coordinates = [];
   let index, arc;
-  let i, ii;
-  let j, jj;
-  for (i = 0, ii = indices.length; i < ii; ++i) {
+  for (let i = 0, ii = indices.length; i < ii; ++i) {
     index = indices[i];
     if (i > 0) {
       // splicing together arcs, discard last point
@@ -96,7 +94,7 @@ function concatenateArcs(indices, arcs) {
     coordinates.push.apply(coordinates, arc);
   }
   // provide fresh copies of coordinate arrays
-  for (j = 0, jj = coordinates.length; j < jj; ++j) {
+  for (let j = 0, jj = coordinates.length; j < jj; ++j) {
     coordinates[j] = coordinates[j].slice();
   }
   return coordinates;
@@ -130,9 +128,8 @@ function readPointGeometry(object, scale, translate) {
  */
 function readMultiPointGeometry(object, scale, translate) {
   const coordinates = object.coordinates;
-  let i, ii;
   if (scale && translate) {
-    for (i = 0, ii = coordinates.length; i < ii; ++i) {
+    for (let i = 0, ii = coordinates.length; i < ii; ++i) {
       transformVertex(coordinates[i], scale, translate);
     }
   }
@@ -162,8 +159,7 @@ function readLineStringGeometry(object, arcs) {
  */
 function readMultiLineStringGeometry(object, arcs) {
   const coordinates = [];
-  let i, ii;
-  for (i = 0, ii = object.arcs.length; i < ii; ++i) {
+  for (let i = 0, ii = object.arcs.length; i < ii; ++i) {
     coordinates[i] = concatenateArcs(object.arcs[i], arcs);
   }
   return new MultiLineString(coordinates);
@@ -179,8 +175,7 @@ function readMultiLineStringGeometry(object, arcs) {
  */
 function readPolygonGeometry(object, arcs) {
   const coordinates = [];
-  let i, ii;
-  for (i = 0, ii = object.arcs.length; i < ii; ++i) {
+  for (let i = 0, ii = object.arcs.length; i < ii; ++i) {
     coordinates[i] = concatenateArcs(object.arcs[i], arcs);
   }
   return new Polygon(coordinates);
@@ -196,13 +191,11 @@ function readPolygonGeometry(object, arcs) {
  */
 function readMultiPolygonGeometry(object, arcs) {
   const coordinates = [];
-  let polyArray, ringCoords, j, jj;
-  let i, ii;
-  for (i = 0, ii = object.arcs.length; i < ii; ++i) {
+  for (let i = 0, ii = object.arcs.length; i < ii; ++i) {
     // for each polygon
-    polyArray = object.arcs[i];
-    ringCoords = [];
-    for (j = 0, jj = polyArray.length; j < jj; ++j) {
+    const polyArray = object.arcs[i];
+    const ringCoords = [];
+    for (let j = 0, jj = polyArray.length; j < jj; ++j) {
       // for each ring
       ringCoords[j] = concatenateArcs(polyArray[j], arcs);
     }
@@ -229,8 +222,7 @@ function readMultiPolygonGeometry(object, arcs) {
 function readFeaturesFromGeometryCollection(collection, arcs, scale, translate, property, name, opt_options) {
   const geometries = collection.geometries;
   const features = [];
-  let i, ii;
-  for (i = 0, ii = geometries.length; i < ii; ++i) {
+  for (let i = 0, ii = geometries.length; i < ii; ++i) {
     features[i] = readFeatureFromGeometry(
       geometries[i], arcs, scale, translate, property, name, opt_options);
   }
@@ -343,8 +335,7 @@ TopoJSON.prototype.readFeaturesFromObject = function(
  * @param {Array.<number>} translate Translation for each dimension.
  */
 function transformArcs(arcs, scale, translate) {
-  let i, ii;
-  for (i = 0, ii = arcs.length; i < ii; ++i) {
+  for (let i = 0, ii = arcs.length; i < ii; ++i) {
     transformArc(arcs[i], scale, translate);
   }
 }
@@ -360,10 +351,8 @@ function transformArcs(arcs, scale, translate) {
 function transformArc(arc, scale, translate) {
   let x = 0;
   let y = 0;
-  let vertex;
-  let i, ii;
-  for (i = 0, ii = arc.length; i < ii; ++i) {
-    vertex = arc[i];
+  for (let i = 0, ii = arc.length; i < ii; ++i) {
+    const vertex = arc[i];
     x += vertex[0];
     y += vertex[1];
     vertex[0] = x;

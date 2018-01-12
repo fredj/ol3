@@ -104,8 +104,7 @@ EsriJSON.convertRings_ = function(rings, layout) {
   const flatRing = [];
   const outerRings = [];
   const holes = [];
-  let i, ii;
-  for (i = 0, ii = rings.length; i < ii; ++i) {
+  for (let i = 0, ii = rings.length; i < ii; ++i) {
     flatRing.length = 0;
     _ol_geom_flat_deflate_.coordinates(flatRing, 0, rings[i], layout.length);
     // is this ring an outer ring? is it clockwise?
@@ -121,7 +120,7 @@ EsriJSON.convertRings_ = function(rings, layout) {
     const hole = holes.shift();
     let matched = false;
     // loop over all outer rings and see if they contain our hole.
-    for (i = outerRings.length - 1; i >= 0; i--) {
+    for (let i = outerRings.length - 1; i >= 0; i--) {
       const outerRing = outerRings[i][0];
       const containsHole = containsExtent(
         new LinearRing(outerRing).getExtent(),
@@ -372,8 +371,7 @@ EsriJSON.writeMultiPointGeometry_ = function(geometry, opt_options) {
  * @private
  * @return {EsriJSONPolygon} EsriJSON geometry.
  */
-EsriJSON.writeMultiPolygonGeometry_ = function(geometry,
-  opt_options) {
+EsriJSON.writeMultiPolygonGeometry_ = function(geometry, opt_options) {
   const hasZM = EsriJSON.getHasZM_(/** @type {ol.geom.MultiPolygon} */(geometry));
   const coordinates = /** @type {ol.geom.MultiPolygon} */ (geometry).getCoordinates(false);
   const output = [];
@@ -494,9 +492,8 @@ EsriJSON.prototype.readFeaturesFromObject = function(
     /** @type {Array.<ol.Feature>} */
     const features = [];
     const esriJSONFeatures = esriJSONFeatureCollection.features;
-    let i, ii;
     options.idField = object.objectIdFieldName;
-    for (i = 0, ii = esriJSONFeatures.length; i < ii; ++i) {
+    for (let i = 0, ii = esriJSONFeatures.length; i < ii; ++i) {
       features.push(this.readFeatureFromObject(esriJSONFeatures[i],
         options));
     }
@@ -665,8 +662,7 @@ EsriJSON.prototype.writeFeatures;
 EsriJSON.prototype.writeFeaturesObject = function(features, opt_options) {
   opt_options = this.adaptOptions(opt_options);
   const objects = [];
-  let i, ii;
-  for (i = 0, ii = features.length; i < ii; ++i) {
+  for (let i = 0, ii = features.length; i < ii; ++i) {
     objects.push(this.writeFeatureObject(features[i], opt_options));
   }
   return /** @type {EsriJSONFeatureCollection} */ ({

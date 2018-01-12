@@ -38,11 +38,9 @@ const iconInfo = [{
   size: [44, 44]
 }];
 
-let i;
-
 const iconCount = iconInfo.length;
 const icons = new Array(iconCount);
-for (i = 0; i < iconCount; ++i) {
+for (let i = 0; i < iconCount; ++i) {
   const info = iconInfo[i];
   icons[i] = new Icon({
     offset: info.offset,
@@ -60,7 +58,7 @@ const featureCount = 50000;
 const features = new Array(featureCount);
 let feature, geometry;
 const e = 25000000;
-for (i = 0; i < featureCount; ++i) {
+for (let i = 0; i < featureCount; ++i) {
   geometry = new Point(
     [2 * e * Math.random() - e, 2 * e * Math.random() - e]);
   feature = new Feature(geometry);
@@ -90,7 +88,7 @@ const map = new Map({
 });
 
 const overlayFeatures = [];
-for (i = 0; i < featureCount; i += 30) {
+for (let i = 0; i < featureCount; i += 30) {
   const clone = features[i].clone();
   clone.setStyle(null);
   overlayFeatures.push(clone);
