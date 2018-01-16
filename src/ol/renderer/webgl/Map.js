@@ -6,7 +6,7 @@ import {inherits} from '../../index.js';
 import {stableSort} from '../../array.js';
 import {CLASS_UNSELECTABLE} from '../../css.js';
 import {createCanvasContext2D} from '../../dom.js';
-import _ol_events_ from '../../events.js';
+import {listen} from '../../events.js';
 import _ol_has_ from '../../has.js';
 import Layer from '../../layer/Layer.js';
 import RenderEvent from '../../render/Event.js';
@@ -92,10 +92,8 @@ const WebGLMapRenderer = function(container, map) {
    */
   this.context_ = new _ol_webgl_Context_(this.canvas_, this.gl_);
 
-  _ol_events_.listen(this.canvas_, ContextEventType.LOST,
-    this.handleWebGLContextLost, this);
-  _ol_events_.listen(this.canvas_, ContextEventType.RESTORED,
-    this.handleWebGLContextRestored, this);
+  listen(this.canvas_, ContextEventType.LOST, this.handleWebGLContextLost, this);
+  listen(this.canvas_, ContextEventType.RESTORED, this.handleWebGLContextRestored, this);
 
   /**
    * @private

@@ -5,7 +5,7 @@ import {getUid, inherits} from '../index.js';
 import Collection from '../Collection.js';
 import CollectionEventType from '../CollectionEventType.js';
 import _ol_coordinate_ from '../coordinate.js';
-import _ol_events_ from '../events.js';
+import {listen, unlistenByKey} from '../events.js';
 import EventType from '../events/EventType.js';
 import {boundingExtent, createEmpty} from '../extent.js';
 import {TRUE, FALSE} from '../functions.js';
@@ -172,7 +172,7 @@ Snap.prototype.addFeature = function(feature, opt_listen) {
   }
 
   if (listen) {
-    this.featureChangeListenerKeys_[feature_uid] = _ol_events_.listen(
+    this.featureChangeListenerKeys_[feature_uid] = listen(
       feature,
       EventType.CHANGE,
       this.handleFeatureChange_, this);
@@ -285,7 +285,7 @@ Snap.prototype.removeFeature = function(feature, opt_unlisten) {
   }
 
   if (unlisten) {
-    _ol_events_.unlistenByKey(this.featureChangeListenerKeys_[feature_uid]);
+    unlistenByKey(this.featureChangeListenerKeys_[feature_uid]);
     delete this.featureChangeListenerKeys_[feature_uid];
   }
 };
@@ -300,7 +300,7 @@ Snap.prototype.setMap = function(map) {
   const features = this.getFeatures_();
 
   if (currentMap) {
-    keys.forEach(_ol_events_.unlistenByKey);
+    keys.forEach(unlistenByKey);
     keys.length = 0;
     features.forEach(this.forEachFeatureRemove_.bind(this));
   }
@@ -309,17 +309,13 @@ Snap.prototype.setMap = function(map) {
   if (map) {
     if (this.features_) {
       keys.push(
-        _ol_events_.listen(this.features_, CollectionEventType.ADD,
-          this.handleFeatureAdd_, this),
-        _ol_events_.listen(this.features_, CollectionEventType.REMOVE,
-          this.handleFeatureRemove_, this)
+        listen(this.features_, CollectionEventType.ADD, this.handleFeatureAdd_, this),
+        listen(this.features_, CollectionEventType.REMOVE, this.handleFeatureRemove_, this)
       );
     } else if (this.source_) {
       keys.push(
-        _ol_events_.listen(this.source_, VectorEventType.ADDFEATURE,
-          this.handleFeatureAdd_, this),
-        _ol_events_.listen(this.source_, VectorEventType.REMOVEFEATURE,
-          this.handleFeatureRemove_, this)
+        listen(this.source_, VectorEventType.ADDFEATURE, this.handleFeatureAdd_, this),
+        listen(this.source_, VectorEventType.REMOVEFEATURE, this.handleFeatureRemove_, this)
       );
     }
     features.forEach(this.forEachFeatureAdd_.bind(this));

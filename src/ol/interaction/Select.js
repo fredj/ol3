@@ -4,7 +4,7 @@
 import {getUid, inherits} from '../index.js';
 import CollectionEventType from '../CollectionEventType.js';
 import {extend, includes} from '../array.js';
-import _ol_events_ from '../events.js';
+import {listen} from '../events.js';
 import Event from '../events/Event.js';
 import _ol_events_condition_ from '../events/condition.js';
 import {TRUE} from '../functions.js';
@@ -135,10 +135,8 @@ const Select = function(opt_options) {
   this.featureLayerAssociation_ = {};
 
   const features = this.featureOverlay_.getSource().getFeaturesCollection();
-  _ol_events_.listen(features, CollectionEventType.ADD,
-    this.addFeature_, this);
-  _ol_events_.listen(features, CollectionEventType.REMOVE,
-    this.removeFeature_, this);
+  listen(features, CollectionEventType.ADD, this.addFeature_, this);
+  listen(features, CollectionEventType.REMOVE, this.removeFeature_, this);
 
 };
 

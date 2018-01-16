@@ -8,7 +8,7 @@ import CollectionEventType from '../CollectionEventType.js';
 import ObjectEventType from '../ObjectEventType.js';
 import {extend} from '../array.js';
 import {assert} from '../asserts.js';
-import _ol_events_ from '../events.js';
+import {listen, unlistenByKey} from '../events.js';
 import Event from '../events/Event.js';
 import EventType from '../events/EventType.js';
 import {containsExtent, equals} from '../extent.js';
@@ -203,10 +203,8 @@ VectorSource.prototype.addFeatureInternal = function(feature) {
  */
 VectorSource.prototype.setupChangeEvents_ = function(featureKey, feature) {
   this.featureChangeKeys_[featureKey] = [
-    _ol_events_.listen(feature, EventType.CHANGE,
-      this.handleFeatureChange_, this),
-    _ol_events_.listen(feature, ObjectEventType.PROPERTYCHANGE,
-      this.handleFeatureChange_, this)
+    listen(feature, EventType.CHANGE, this.handleFeatureChange_, this),
+    listen(feature, ObjectEventType.PROPERTYCHANGE, this.handleFeatureChange_, this)
   ];
 };
 
@@ -298,38 +296,34 @@ VectorSource.prototype.addFeaturesInternal = function(features) {
  */
 VectorSource.prototype.bindFeaturesCollection_ = function(collection) {
   let modifyingCollection = false;
-  _ol_events_.listen(this, VectorEventType.ADDFEATURE,
-    function(evt) {
-      if (!modifyingCollection) {
-        modifyingCollection = true;
-        collection.push(evt.feature);
-        modifyingCollection = false;
-      }
-    });
-  _ol_events_.listen(this, VectorEventType.REMOVEFEATURE,
-    function(evt) {
-      if (!modifyingCollection) {
-        modifyingCollection = true;
-        collection.remove(evt.feature);
-        modifyingCollection = false;
-      }
-    });
-  _ol_events_.listen(collection, CollectionEventType.ADD,
-    function(evt) {
-      if (!modifyingCollection) {
-        modifyingCollection = true;
-        this.addFeature(/** @type {ol.Feature} */ (evt.element));
-        modifyingCollection = false;
-      }
-    }, this);
-  _ol_events_.listen(collection, CollectionEventType.REMOVE,
-    function(evt) {
-      if (!modifyingCollection) {
-        modifyingCollection = true;
-        this.removeFeature(/** @type {ol.Feature} */ (evt.element));
-        modifyingCollection = false;
-      }
-    }, this);
+  listen(this, VectorEventType.ADDFEATURE, function(evt) {
+    if (!modifyingCollection) {
+      modifyingCollection = true;
+      collection.push(evt.feature);
+      modifyingCollection = false;
+    }
+  });
+  listen(this, VectorEventType.REMOVEFEATURE, function(evt) {
+    if (!modifyingCollection) {
+      modifyingCollection = true;
+      collection.remove(evt.feature);
+      modifyingCollection = false;
+    }
+  });
+  listen(collection, CollectionEventType.ADD, function(evt) {
+    if (!modifyingCollection) {
+      modifyingCollection = true;
+      this.addFeature(/** @type {ol.Feature} */ (evt.element));
+      modifyingCollection = false;
+    }
+  }, this);
+  listen(collection, CollectionEventType.REMOVE, function(evt) {
+    if (!modifyingCollection) {
+      modifyingCollection = true;
+      this.removeFeature(/** @type {ol.Feature} */ (evt.element));
+      modifyingCollection = false;
+    }
+  }, this);
   this.featuresCollection_ = collection;
 };
 
@@ -343,7 +337,7 @@ VectorSource.prototype.clear = function(opt_fast) {
   if (opt_fast) {
     for (const featureId in this.featureChangeKeys_) {
       const keys = this.featureChangeKeys_[featureId];
-      keys.forEach(_ol_events_.unlistenByKey);
+      keys.forEach(unlistenByKey);
     }
     if (!this.featuresCollection_) {
       this.featureChangeKeys_ = {};
@@ -802,7 +796,7 @@ VectorSource.prototype.removeFeature = function(feature) {
  */
 VectorSource.prototype.removeFeatureInternal = function(feature) {
   const featureKey = getUid(feature).toString();
-  this.featureChangeKeys_[featureKey].forEach(_ol_events_.unlistenByKey);
+  this.featureChangeKeys_[featureKey].forEach(unlistenByKey);
   delete this.featureChangeKeys_[featureKey];
   const id = feature.getId();
   if (id !== undefined) {

@@ -5,7 +5,7 @@
 
 import {inherits} from '../index.js';
 import {TRUE} from '../functions.js';
-import _ol_events_ from '../events.js';
+import {listen, unlistenByKey} from '../events.js';
 import Event from '../events/Event.js';
 import EventType from '../events/EventType.js';
 import Interaction from '../interaction/Interaction.js';
@@ -77,8 +77,7 @@ DragAndDrop.handleDrop_ = function(event) {
   for (i = 0, ii = files.length; i < ii; ++i) {
     file = files.item(i);
     const reader = new FileReader();
-    reader.addEventListener(EventType.LOAD,
-      this.handleResult_.bind(this, file));
+    reader.addEventListener(EventType.LOAD, this.handleResult_.bind(this, file));
     reader.readAsText(file);
   }
 };
@@ -159,14 +158,10 @@ DragAndDrop.prototype.registerListeners_ = function() {
   if (map) {
     const dropArea = this.target ? this.target : map.getViewport();
     this.dropListenKeys_ = [
-      _ol_events_.listen(dropArea, EventType.DROP,
-        DragAndDrop.handleDrop_, this),
-      _ol_events_.listen(dropArea, EventType.DRAGENTER,
-        DragAndDrop.handleStop_, this),
-      _ol_events_.listen(dropArea, EventType.DRAGOVER,
-        DragAndDrop.handleStop_, this),
-      _ol_events_.listen(dropArea, EventType.DROP,
-        DragAndDrop.handleStop_, this)
+      listen(dropArea, EventType.DROP, DragAndDrop.handleDrop_, this),
+      listen(dropArea, EventType.DRAGENTER, DragAndDrop.handleStop_, this),
+      listen(dropArea, EventType.DRAGOVER, DragAndDrop.handleStop_, this),
+      listen(dropArea, EventType.DROP, DragAndDrop.handleStop_, this)
     ];
   }
 };
@@ -218,7 +213,7 @@ DragAndDrop.prototype.tryReadFeatures_ = function(format, text, options) {
  */
 DragAndDrop.prototype.unregisterListeners_ = function() {
   if (this.dropListenKeys_) {
-    this.dropListenKeys_.forEach(_ol_events_.unlistenByKey);
+    this.dropListenKeys_.forEach(unlistenByKey);
     this.dropListenKeys_ = null;
   }
 };

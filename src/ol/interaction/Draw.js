@@ -6,7 +6,7 @@ import Feature from '../Feature.js';
 import MapBrowserEventType from '../MapBrowserEventType.js';
 import BaseObject from '../Object.js';
 import _ol_coordinate_ from '../coordinate.js';
-import _ol_events_ from '../events.js';
+import {listen} from '../events.js';
 import Event from '../events/Event.js';
 import _ol_events_condition_ from '../events/condition.js';
 import {boundingExtent, getBottomLeft, getBottomRight, getTopLeft, getTopRight} from '../extent.js';
@@ -284,7 +284,7 @@ const Draw = function(options) {
       options.freehandCondition : _ol_events_condition_.shiftKeyOnly;
   }
 
-  _ol_events_.listen(this,
+  listen(this,
     BaseObject.getChangeEventType(InteractionProperty.ACTIVE),
     this.updateState_, this);
 
