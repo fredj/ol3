@@ -11,6 +11,18 @@ import TileImage from '../source/TileImage.js';
 import _ol_tilecoord_ from '../tilecoord.js';
 import {createXYZ, extentFromProjection} from '../tilegrid.js';
 
+
+/**
+ * The attribution containing a link to the Microsoft® Bing™ Maps Platform APIs’
+ * Terms Of Use.
+ * @type {string}
+ * @api
+ */
+export const TOS_ATTRIBUTION = '<a class="ol-attribution-bing-tos" ' +
+      'href="https://www.microsoft.com/maps/product/terms.html">' +
+      'Terms of Use</a>';
+
+
 /**
  * @classdesc
  * Layer source for Bing Maps tile data.
@@ -76,18 +88,6 @@ const BingMaps = function(options) {
 };
 
 inherits(BingMaps, TileImage);
-
-
-/**
- * The attribution containing a link to the Microsoft® Bing™ Maps Platform APIs’
- * Terms Of Use.
- * @const
- * @type {string}
- * @api
- */
-BingMaps.TOS_ATTRIBUTION = '<a class="ol-attribution-bing-tos" ' +
-      'href="https://www.microsoft.com/maps/product/terms.html">' +
-      'Terms of Use</a>';
 
 
 /**
@@ -199,7 +199,7 @@ BingMaps.prototype.handleImageryMetadataResponse = function(response) {
         }
       });
 
-      attributions.push(BingMaps.TOS_ATTRIBUTION);
+      attributions.push(TOS_ATTRIBUTION);
       return attributions;
     });
   }
