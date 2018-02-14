@@ -44,6 +44,20 @@ export function clear(object) {
 
 
 /**
+ * Create a new object or make the provided one empty.
+ * @param {Object=} opt_object Object.
+ * @return {Object} Object.
+ */
+export function createOrUpdateEmpty(opt_object) {
+  if (opt_object) {
+    clear(opt_object);
+    return opt_object;
+  } else {
+    return {};
+  }
+}
+
+/**
  * Get an array of property values from an object.
  * @param {Object<K,V>} object The object from which to get the values.
  * @return {!Array<V>} The property values.

@@ -24,6 +24,7 @@ import {createEmpty, clone, createOrUpdateEmpty, equals, getForViewAndSize, isEm
 import {TRUE} from './functions.js';
 import {DEVICE_PIXEL_RATIO, TOUCH} from './has.js';
 import LayerGroup from './layer/Group.js';
+import {createOrUpdateEmpty as createOrUpdateEmptyObject} from './obj.js';
 import {getMapRendererPlugins} from './plugins.js';
 import RendererType from './renderer/Type.js';
 import {hasArea} from './size.js';
@@ -1196,17 +1197,20 @@ PluggableMap.prototype.renderFrame_ = function(time) {
 
   const size = this.getSize();
   const view = this.getView();
+  // FIXME(fredj): createOrUpdateEmpty(this.frameState_ ? this.frameState_.extent : undefined)
   const extent = createEmpty();
   const previousFrameState = this.frameState_;
   /** @type {?olx.FrameState} */
   let frameState = null;
   if (size !== undefined && hasArea(size) && view && view.isDef()) {
     const viewHints = view.getHints(this.frameState_ ? this.frameState_.viewHints : undefined);
+    // FIXME(fredj): pass old layerStatesArray to the function
     const layerStatesArray = this.getLayerGroup().getLayerStatesArray();
-    const layerStates = {};
+    const layerStates = createOrUpdateEmptyObject(this.frameState_ ? this.frameState_.layerStates : undefined);
     for (let i = 0, ii = layerStatesArray.length; i < ii; ++i) {
       layerStates[getUid(layerStatesArray[i].layer)] = layerStatesArray[i];
     }
+    // FIXME(fredj): reuse old viewState
     viewState = view.getState();
     let focus = this.focus_;
     if (!focus) {
@@ -1225,15 +1229,16 @@ PluggableMap.prototype.renderFrame_ = function(time) {
       layerStatesArray: layerStatesArray,
       pixelRatio: this.pixelRatio_,
       pixelToCoordinateTransform: this.pixelToCoordinateTransform_,
+      // FIXME: reuse postRenderFunctions
       postRenderFunctions: [],
       size: size,
       skippedFeatureUids: this.skippedFeatureUids_,
       tileQueue: this.tileQueue_,
       time: time,
-      usedTiles: {},
+      usedTiles: createOrUpdateEmptyObject(this.frameState_ ? this.frameState_.usedTiles : undefined),
       viewState: viewState,
       viewHints: viewHints,
-      wantedTiles: {}
+      wantedTiles: createOrUpdateEmptyObject(this.frameState_ ? this.frameState_.wantedTiles : undefined)
     });
   }
 

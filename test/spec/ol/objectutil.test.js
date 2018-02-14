@@ -1,4 +1,4 @@
-import {assign, clear, isEmpty, getValues} from '../../../src/ol/obj.js';
+import {assign, clear, createOrUpdateEmpty, isEmpty, getValues} from '../../../src/ol/obj.js';
 
 
 describe('ol.obj.assign()', function() {
@@ -50,6 +50,26 @@ describe('ol.obj.clear()', function() {
     expect(isEmpty(clear({foo: 'bar', num: 42}))).to.be(true);
     expect(isEmpty(clear({}))).to.be(true);
     expect(isEmpty(clear(null))).to.be(true);
+  });
+
+});
+
+describe('ol.obj.createOrUpdateEmpty()', function() {
+
+  it('returns a new object', function() {
+    let obj;
+    const res = createOrUpdateEmpty(obj);
+    expect(res).to.eql({});
+    expect(res).not.to.be(obj);
+  });
+
+  it('clears the provided object', function() {
+    let obj = {
+      foo: 'bar'
+    };
+    const res = createOrUpdateEmpty(obj);
+    expect(res).to.eql({});
+    expect(res).to.be(obj);
   });
 
 });
