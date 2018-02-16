@@ -77,21 +77,20 @@ export function linearFindNearest(arr, target, direction) {
   } else if (target <= arr[n - 1]) {
     return n - 1;
   } else {
-    let i;
     if (direction > 0) {
-      for (i = 1; i < n; ++i) {
+      for (let i = 1; i < n; ++i) {
         if (arr[i] < target) {
           return i - 1;
         }
       }
     } else if (direction < 0) {
-      for (i = 1; i < n; ++i) {
+      for (let i = 1; i < n; ++i) {
         if (arr[i] <= target) {
           return i;
         }
       }
     } else {
-      for (i = 1; i < n; ++i) {
+      for (let i = 1; i < n; ++i) {
         if (arr[i] == target) {
           return i;
         } else if (arr[i] < target) {
@@ -131,10 +130,9 @@ export function reverseSubArray(arr, begin, end) {
  * @template VALUE
  */
 export function extend(arr, data) {
-  let i;
   const extension = Array.isArray(data) ? data : [data];
   const length = extension.length;
-  for (i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     arr[arr.length] = extension[i];
   }
 }
@@ -202,14 +200,13 @@ export function equals(arr1, arr2) {
 export function stableSort(arr, compareFnc) {
   const length = arr.length;
   const tmp = Array(arr.length);
-  let i;
-  for (i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     tmp[i] = {index: i, value: arr[i]};
   }
   tmp.sort(function(a, b) {
     return compareFnc(a.value, b.value) || a.index - b.index;
   });
-  for (i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     arr[i] = tmp[i].value;
   }
 }

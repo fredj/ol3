@@ -105,8 +105,7 @@ IGC.prototype.readFeatureFromText = function(text, opt_options) {
   let month = 0;
   let day = 1;
   let lastDateTime = -1;
-  let i, ii;
-  for (i = 0, ii = lines.length; i < ii; ++i) {
+  for (let i = 0, ii = lines.length; i < ii; ++i) {
     const line = lines[i];
     let m;
     if (line.charAt(0) == 'B') {

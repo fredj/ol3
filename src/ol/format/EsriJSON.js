@@ -129,8 +129,7 @@ function convertRings(rings, layout) {
   const flatRing = [];
   const outerRings = [];
   const holes = [];
-  let i, ii;
-  for (i = 0, ii = rings.length; i < ii; ++i) {
+  for (let i = 0, ii = rings.length; i < ii; ++i) {
     flatRing.length = 0;
     deflateCoordinates(flatRing, 0, rings[i], layout.length);
     // is this ring an outer ring? is it clockwise?
@@ -146,7 +145,7 @@ function convertRings(rings, layout) {
     const hole = holes.shift();
     let matched = false;
     // loop over all outer rings and see if they contain our hole.
-    for (i = outerRings.length - 1; i >= 0; i--) {
+    for (let i = outerRings.length - 1; i >= 0; i--) {
       const outerRing = outerRings[i][0];
       const containsHole = containsExtent(
         new LinearRing(outerRing).getExtent(),
@@ -464,11 +463,9 @@ EsriJSON.prototype.readFeaturesFromObject = function(
     /** @type {Array.<ol.Feature>} */
     const features = [];
     const esriJSONFeatures = esriJSONFeatureCollection.features;
-    let i, ii;
     options.idField = object.objectIdFieldName;
-    for (i = 0, ii = esriJSONFeatures.length; i < ii; ++i) {
-      features.push(this.readFeatureFromObject(esriJSONFeatures[i],
-        options));
+    for (let i = 0, ii = esriJSONFeatures.length; i < ii; ++i) {
+      features.push(this.readFeatureFromObject(esriJSONFeatures[i], options));
     }
     return features;
   } else {
@@ -634,8 +631,7 @@ EsriJSON.prototype.writeFeatures;
 EsriJSON.prototype.writeFeaturesObject = function(features, opt_options) {
   opt_options = this.adaptOptions(opt_options);
   const objects = [];
-  let i, ii;
-  for (i = 0, ii = features.length; i < ii; ++i) {
+  for (let i = 0, ii = features.length; i < ii; ++i) {
     objects.push(this.writeFeatureObject(features[i], opt_options));
   }
   return /** @type {EsriJSONFeatureCollection} */ ({

@@ -67,16 +67,14 @@ inherits(Polyline, TextFeature);
  */
 export function encodeDeltas(numbers, stride, opt_factor) {
   const factor = opt_factor ? opt_factor : 1e5;
-  let d;
 
   const lastNumbers = new Array(stride);
-  for (d = 0; d < stride; ++d) {
+  for (let d = 0; d < stride; ++d) {
     lastNumbers[d] = 0;
   }
 
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii;) {
-    for (d = 0; d < stride; ++d, ++i) {
+  for (let i = 0, ii = numbers.length; i < ii;) {
+    for (let d = 0; d < stride; ++d, ++i) {
       const num = numbers[i];
       const delta = num - lastNumbers[d];
       lastNumbers[d] = num;
@@ -102,19 +100,17 @@ export function encodeDeltas(numbers, stride, opt_factor) {
  */
 export function decodeDeltas(encoded, stride, opt_factor) {
   const factor = opt_factor ? opt_factor : 1e5;
-  let d;
 
   /** @type {Array.<number>} */
   const lastNumbers = new Array(stride);
-  for (d = 0; d < stride; ++d) {
+  for (let d = 0; d < stride; ++d) {
     lastNumbers[d] = 0;
   }
 
   const numbers = decodeFloats(encoded, factor);
 
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii;) {
-    for (d = 0; d < stride; ++d, ++i) {
+  for (let i = 0, ii = numbers.length; i < ii;) {
+    for (let d = 0; d < stride; ++d, ++i) {
       lastNumbers[d] += numbers[i];
 
       numbers[i] = lastNumbers[d];
@@ -139,8 +135,7 @@ export function decodeDeltas(encoded, stride, opt_factor) {
  */
 export function encodeFloats(numbers, opt_factor) {
   const factor = opt_factor ? opt_factor : 1e5;
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii; ++i) {
+  for (let i = 0, ii = numbers.length; i < ii; ++i) {
     numbers[i] = Math.round(numbers[i] * factor);
   }
 
@@ -160,8 +155,7 @@ export function encodeFloats(numbers, opt_factor) {
 export function decodeFloats(encoded, opt_factor) {
   const factor = opt_factor ? opt_factor : 1e5;
   const numbers = decodeSignedIntegers(encoded);
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii; ++i) {
+  for (let i = 0, ii = numbers.length; i < ii; ++i) {
     numbers[i] /= factor;
   }
   return numbers;
@@ -177,8 +171,7 @@ export function decodeFloats(encoded, opt_factor) {
  * @return {string} The encoded string.
  */
 export function encodeSignedIntegers(numbers) {
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii; ++i) {
+  for (let i = 0, ii = numbers.length; i < ii; ++i) {
     const num = numbers[i];
     numbers[i] = (num < 0) ? ~(num << 1) : (num << 1);
   }
@@ -194,8 +187,7 @@ export function encodeSignedIntegers(numbers) {
  */
 export function decodeSignedIntegers(encoded) {
   const numbers = decodeUnsignedIntegers(encoded);
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii; ++i) {
+  for (let i = 0, ii = numbers.length; i < ii; ++i) {
     const num = numbers[i];
     numbers[i] = (num & 1) ? ~(num >> 1) : (num >> 1);
   }
@@ -211,8 +203,7 @@ export function decodeSignedIntegers(encoded) {
  */
 export function encodeUnsignedIntegers(numbers) {
   let encoded = '';
-  let i, ii;
-  for (i = 0, ii = numbers.length; i < ii; ++i) {
+  for (let i = 0, ii = numbers.length; i < ii; ++i) {
     encoded += encodeUnsignedInteger(numbers[i]);
   }
   return encoded;
@@ -229,8 +220,7 @@ export function decodeUnsignedIntegers(encoded) {
   const numbers = [];
   let current = 0;
   let shift = 0;
-  let i, ii;
-  for (i = 0, ii = encoded.length; i < ii; ++i) {
+  for (let i = 0, ii = encoded.length; i < ii; ++i) {
     const b = encoded.charCodeAt(i) - 63;
     current |= (b & 0x1f) << shift;
     if (b < 0x20) {

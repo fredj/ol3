@@ -139,14 +139,13 @@ const circleArrayCache = {
  * @param {number} y Y coordinate.
  */
 function fillCircleArrayRowToMiddle(array, x, y) {
-  let i;
   const radius = Math.floor(array.length / 2);
   if (x >= radius) {
-    for (i = radius; i < x; i++) {
+    for (let i = radius; i < x; i++) {
       array[i][y] = true;
     }
   } else if (x < radius) {
-    for (i = x + 1; i < radius; i++) {
+    for (let i = x + 1; i < radius; i++) {
       array[i][y] = true;
     }
   }

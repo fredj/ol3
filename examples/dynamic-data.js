@@ -58,8 +58,7 @@ map.on('postcompose', function(event) {
   const frameState = event.frameState;
   const theta = 2 * Math.PI * frameState.time / omegaTheta;
   const coordinates = [];
-  let i;
-  for (i = 0; i < n; ++i) {
+  for (let i = 0; i < n; ++i) {
     const t = theta + 2 * Math.PI * i / n;
     const x = (R + r) * Math.cos(t) + p * Math.cos((R + r) * t / r);
     const y = (R + r) * Math.sin(t) + p * Math.sin((R + r) * t / r);

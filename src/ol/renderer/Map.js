@@ -135,8 +135,7 @@ MapRenderer.prototype.forEachFeatureAtCoordinate = function(coordinate, frameSta
 
   const layerStates = frameState.layerStatesArray;
   const numLayers = layerStates.length;
-  let i;
-  for (i = numLayers - 1; i >= 0; --i) {
+  for (let i = numLayers - 1; i >= 0; --i) {
     const layerState = layerStates[i];
     const layer = layerState.layer;
     if (visibleAtResolution(layerState, viewResolution) && layerFilter.call(thisArg2, layer)) {

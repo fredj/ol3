@@ -86,8 +86,7 @@ WebGLReplayGroup.prototype.addDeclutter = function(style, group) {};
  */
 WebGLReplayGroup.prototype.getDeleteResourcesFunction = function(context) {
   const functions = [];
-  let zKey;
-  for (zKey in this.replaysByZIndex_) {
+  for (const zKey in this.replaysByZIndex_) {
     const replays = this.replaysByZIndex_[zKey];
     for (const replayKey in replays) {
       functions.push(
@@ -109,8 +108,7 @@ WebGLReplayGroup.prototype.getDeleteResourcesFunction = function(context) {
  * @param {ol.webgl.Context} context Context.
  */
 WebGLReplayGroup.prototype.finish = function(context) {
-  let zKey;
-  for (zKey in this.replaysByZIndex_) {
+  for (const zKey in this.replaysByZIndex_) {
     const replays = this.replaysByZIndex_[zKey];
     for (const replayKey in replays) {
       replays[replayKey].finish(context);
@@ -239,8 +237,7 @@ WebGLReplayGroup.prototype.replayHitDetection_ = function(context,
  * @param {ol.Size} size Size.
  * @param {number} pixelRatio Pixel ratio.
  * @param {number} opacity Global opacity.
- * @param {Object.<string, boolean>} skippedFeaturesHash Ids of features
- *  to skip.
+ * @param {Object.<string, boolean>} skippedFeaturesHash Ids of features to skip.
  * @param {function((ol.Feature|ol.render.Feature)): T|undefined} callback Feature callback.
  * @return {T|undefined} Callback result.
  * @template T
@@ -250,9 +247,7 @@ WebGLReplayGroup.prototype.forEachFeatureAtCoordinate = function(
   opacity, skippedFeaturesHash,
   callback) {
   const gl = context.getGL();
-  gl.bindFramebuffer(
-    gl.FRAMEBUFFER, context.getHitDetectionFramebuffer());
-
+  gl.bindFramebuffer(gl.FRAMEBUFFER, context.getHitDetectionFramebuffer());
 
   /**
    * @type {ol.Extent}

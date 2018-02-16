@@ -242,8 +242,7 @@ function handleEvent(mapBrowserEvent) {
         layerFilter: this.layerFilter_,
         hitTolerance: this.hitTolerance_
       });
-    let i;
-    for (i = features.getLength() - 1; i >= 0; --i) {
+    for (let i = features.getLength() - 1; i >= 0; --i) {
       const feature = features.item(i);
       const index = selected.indexOf(feature);
       if (index > -1) {
@@ -281,8 +280,7 @@ function handleEvent(mapBrowserEvent) {
         layerFilter: this.layerFilter_,
         hitTolerance: this.hitTolerance_
       });
-    let j;
-    for (j = deselected.length - 1; j >= 0; --j) {
+    for (let j = deselected.length - 1; j >= 0; --j) {
       features.remove(deselected[j]);
     }
     features.extend(selected);

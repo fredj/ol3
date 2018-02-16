@@ -186,8 +186,7 @@ WebGLImmediateRenderer.prototype.drawFeature = function(feature, style) {
  */
 WebGLImmediateRenderer.prototype.drawGeometryCollection = function(geometry, data) {
   const geometries = geometry.getGeometriesArray();
-  let i, ii;
-  for (i = 0, ii = geometries.length; i < ii; ++i) {
+  for (let i = 0, ii = geometries.length; i < ii; ++i) {
     this.drawGeometry(geometries[i]);
   }
 };

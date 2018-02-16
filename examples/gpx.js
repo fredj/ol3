@@ -70,8 +70,7 @@ const displayFeatureInfo = function(pixel) {
   });
   if (features.length > 0) {
     const info = [];
-    let i, ii;
-    for (i = 0, ii = features.length; i < ii; ++i) {
+    for (let i = 0, ii = features.length; i < ii; ++i) {
       info.push(features[i].get('desc'));
     }
     document.getElementById('info').innerHTML = info.join(', ') || '(unknown)';

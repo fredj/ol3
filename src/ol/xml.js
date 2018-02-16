@@ -55,8 +55,7 @@ export function getAllTextContent_(node, normalizeWhitespace, accumulator) {
       accumulator.push(node.nodeValue);
     }
   } else {
-    let n;
-    for (n = node.firstChild; n; n = n.nextSibling) {
+    for (let n = node.firstChild; n; n = n.nextSibling) {
       getAllTextContent_(n, normalizeWhitespace, accumulator);
     }
   }
@@ -389,8 +388,7 @@ export function makeStructureNS(namespaceURIs, structure, opt_structureNS) {
    * @type {Object.<string, *>}
    */
   const structureNS = opt_structureNS !== undefined ? opt_structureNS : {};
-  let i, ii;
-  for (i = 0, ii = namespaceURIs.length; i < ii; ++i) {
+  for (let i = 0, ii = namespaceURIs.length; i < ii; ++i) {
     structureNS[namespaceURIs[i]] = structure;
   }
   return structureNS;
@@ -406,8 +404,7 @@ export function makeStructureNS(namespaceURIs, structure, opt_structureNS) {
  * @param {*=} opt_this The object to use as `this`.
  */
 export function parseNode(parsersNS, node, objectStack, opt_this) {
-  let n;
-  for (n = node.firstElementChild; n; n = n.nextElementSibling) {
+  for (let n = node.firstElementChild; n; n = n.nextElementSibling) {
     const parsers = parsersNS[n.namespaceURI];
     if (parsers !== undefined) {
       const parser = parsers[n.localName];
@@ -460,14 +457,12 @@ export function pushParseAndPop(
  *     serializers.
  * @template T
  */
-export function serialize(
-  serializersNS, nodeFactory, values, objectStack, opt_keys, opt_this) {
+export function serialize(serializersNS, nodeFactory, values, objectStack, opt_keys, opt_this) {
   const length = (opt_keys !== undefined ? opt_keys : values).length;
-  let value, node;
   for (let i = 0; i < length; ++i) {
-    value = values[i];
+    const value = values[i];
     if (value !== undefined) {
-      node = nodeFactory.call(opt_this, value, objectStack,
+      const node = nodeFactory.call(opt_this, value, objectStack,
         opt_keys !== undefined ? opt_keys[i] : undefined);
       if (node !== undefined) {
         serializersNS[node.namespaceURI][node.localName]

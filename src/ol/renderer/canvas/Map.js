@@ -174,11 +174,10 @@ CanvasMapRenderer.prototype.renderFrame = function(frameState) {
   }
 
   const viewResolution = frameState.viewState.resolution;
-  let i, ii, layer, layerRenderer, layerState;
-  for (i = 0, ii = layerStatesArray.length; i < ii; ++i) {
-    layerState = layerStatesArray[i];
-    layer = layerState.layer;
-    layerRenderer = /** @type {ol.renderer.canvas.Layer} */ (this.getLayerRenderer(layer));
+  for (let i = 0, ii = layerStatesArray.length; i < ii; ++i) {
+    const layerState = layerStatesArray[i];
+    const layer = layerState.layer;
+    const layerRenderer = /** @type {ol.renderer.canvas.Layer} */ (this.getLayerRenderer(layer));
     if (!visibleAtResolution(layerState, viewResolution) ||
         layerState.sourceState != SourceState.READY) {
       continue;
@@ -216,17 +215,14 @@ CanvasMapRenderer.prototype.forEachLayerAtPixel = function(pixel, frameState, ca
   const layerStates = frameState.layerStatesArray;
   const numLayers = layerStates.length;
 
-  const coordinate = applyTransform(
-    frameState.pixelToCoordinateTransform, pixel.slice());
+  const coordinate = applyTransform(frameState.pixelToCoordinateTransform, pixel.slice());
 
-  let i;
-  for (i = numLayers - 1; i >= 0; --i) {
+  for (let i = numLayers - 1; i >= 0; --i) {
     const layerState = layerStates[i];
     const layer = layerState.layer;
     if (visibleAtResolution(layerState, viewResolution) && layerFilter.call(thisArg2, layer)) {
       const layerRenderer = /** @type {ol.renderer.canvas.Layer} */ (this.getLayerRenderer(layer));
-      result = layerRenderer.forEachLayerAtCoordinate(
-        coordinate, frameState, callback, thisArg);
+      result = layerRenderer.forEachLayerAtCoordinate(coordinate, frameState, callback, thisArg);
       if (result) {
         return result;
       }

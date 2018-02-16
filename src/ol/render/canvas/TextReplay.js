@@ -146,9 +146,8 @@ inherits(CanvasTextReplay, CanvasReplay);
 CanvasTextReplay.measureTextWidths = function(font, lines, widths) {
   const numLines = lines.length;
   let width = 0;
-  let currentWidth, i;
-  for (i = 0; i < numLines; ++i) {
-    currentWidth = measureTextWidth(font, lines[i]);
+  for (let i = 0; i < numLines; ++i) {
+    const currentWidth = measureTextWidth(font, lines[i]);
     width = Math.max(width, currentWidth);
     widths.push(currentWidth);
   }
@@ -327,14 +326,13 @@ CanvasTextReplay.prototype.getImage = function(text, textKey, fillKey, strokeKey
     context.textAlign = 'center';
     const leftRight = (0.5 - align);
     const x = align * label.width / scale + leftRight * strokeWidth;
-    let i;
     if (strokeKey) {
-      for (i = 0; i < numLines; ++i) {
+      for (let i = 0; i < numLines; ++i) {
         context.strokeText(lines[i], x + leftRight * widths[i], 0.5 * (strokeWidth + lineHeight) + i * lineHeight);
       }
     }
     if (fillKey) {
-      for (i = 0; i < numLines; ++i) {
+      for (let i = 0; i < numLines; ++i) {
         context.fillText(lines[i], x + leftRight * widths[i], 0.5 * (strokeWidth + lineHeight) + i * lineHeight);
       }
     }

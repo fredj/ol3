@@ -13,8 +13,7 @@ const styles = [
   'ordnanceSurvey'
 ];
 const layers = [];
-let i, ii;
-for (i = 0, ii = styles.length; i < ii; ++i) {
+for (let i = 0, ii = styles.length; i < ii; ++i) {
   layers.push(new TileLayer({
     visible: false,
     preload: Infinity,

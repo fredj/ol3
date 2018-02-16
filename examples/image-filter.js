@@ -60,8 +60,8 @@ const kernels = {
 function normalize(kernel) {
   const len = kernel.length;
   const normal = new Array(len);
-  let i, sum = 0;
-  for (i = 0; i < len; ++i) {
+  let sum = 0;
+  for (let i = 0; i < len; ++i) {
     sum += kernel[i];
   }
   if (sum <= 0) {
@@ -70,7 +70,7 @@ function normalize(kernel) {
   } else {
     normal.normalized = true;
   }
-  for (i = 0; i < len; ++i) {
+  for (let i = 0; i < len; ++i) {
     normal[i] = kernel[i] / sum;
   }
   return normal;
@@ -123,10 +123,8 @@ function convolve(context, kernel) {
       for (let kernelY = 0; kernelY < size; ++kernelY) {
         for (let kernelX = 0; kernelX < size; ++kernelX) {
           const weight = kernel[kernelY * size + kernelX];
-          const neighborY = Math.min(
-            height - 1, Math.max(0, pixelY + kernelY - half));
-          const neighborX = Math.min(
-            width - 1, Math.max(0, pixelX + kernelX - half));
+          const neighborY = Math.min(height - 1, Math.max(0, pixelY + kernelY - half));
+          const neighborX = Math.min(width - 1, Math.max(0, pixelX + kernelX - half));
           const inputIndex = (neighborY * width + neighborX) * 4;
           r += inputData[inputIndex] * weight;
           g += inputData[inputIndex + 1] * weight;

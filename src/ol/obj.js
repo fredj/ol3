@@ -64,9 +64,8 @@ export function getValues(object) {
  * @return {boolean} The object is empty.
  */
 export function isEmpty(object) {
-  let property;
-  for (property in object) {
+  for (const property in object) {
     return false;
   }
-  return !property;
+  return true;
 }

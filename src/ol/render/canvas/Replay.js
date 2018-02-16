@@ -340,7 +340,8 @@ CanvasReplay.prototype.appendFlatCoordinates = function(flatCoordinates, offset,
   const nextCoord = [NaN, NaN];
   let skipped = true;
 
-  let i, lastRel, nextRel;
+  let lastRel, nextRel;
+  let i;
   for (i = offset + stride; i < end; i += stride) {
     nextCoord[0] = flatCoordinates[i];
     nextCoord[1] = flatCoordinates[i + 1];
