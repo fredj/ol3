@@ -371,26 +371,6 @@ VectorSource.prototype.clear = function(opt_fast) {
 
 
 /**
- * Iterate through all features on the source, calling the provided callback
- * with each one.  If the callback returns any "truthy" value, iteration will
- * stop and the function will return the same value.
- *
- * @param {function(ol.Feature): T} callback Called with each feature
- *     on the source.  Return a truthy value to stop iteration.
- * @return {T|undefined} The return value from the last call to the callback.
- * @template T
- * @api
- */
-VectorSource.prototype.forEachFeature = function(callback) {
-  if (this.featuresRtree_) {
-    return this.featuresRtree_.forEach(callback);
-  } else if (this.featuresCollection_) {
-    return this.featuresCollection_.forEach(callback);
-  }
-};
-
-
-/**
  * Iterate through all features whose geometries contain the provided
  * coordinate, calling the callback with each feature.  If the callback returns
  * a "truthy" value, iteration will stop and the function will return the same

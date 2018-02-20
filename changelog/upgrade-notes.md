@@ -2,7 +2,27 @@
 
 ### Next release
 
-#### Removal of ol.FeatureStyleFunction
+#### Removal of `forEachFeature` function from `ol.source.Vector`
+
+The `forEachFeature` function from `ol.source.Vector` has been removed.  If you were using it, use the `getFeatures` function instead.
+Unlike `forEachFeature`, `getFeatures` handles features without geometry.
+
+Before:
+```js
+source.forEachFeature(function(feature) {
+  // ...
+});
+```
+
+After:
+```js
+source.getFeatures().forEach(function(feature) {
+  // ...
+});
+```
+
+
+#### Removal of `ol.FeatureStyleFunction`
 
 The signature of the vector style function passed to the feature has changed. The function now always takes the `feature` and the `resolution` as aguments, the `feature` is no longer bound to `this`.
 

@@ -191,7 +191,7 @@ const featureOverlay = new VectorLayer({
 document.getElementById('time').addEventListener('input', function() {
   const value = parseInt(this.value, 10) / 100;
   const m = time.start + (time.duration * value);
-  vectorSource.forEachFeature(function(feature) {
+  vectorSource.getFeatures().forEach(function(feature) {
     const geometry = /** @type {ol.geom.LineString} */ (feature.getGeometry());
     const coordinate = geometry.getCoordinateAtM(m, true);
     let highlight = feature.get('highlight');
