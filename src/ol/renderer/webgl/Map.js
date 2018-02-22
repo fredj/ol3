@@ -3,7 +3,7 @@
  */
 
 import {inherits} from '../../index.js';
-import {stableSort} from '../../array.js';
+import {isSorted, stableSort} from '../../array.js';
 import {CLASS_UNSELECTABLE} from '../../css.js';
 import {createCanvasContext2D} from '../../dom.js';
 import {listen} from '../../events.js';
@@ -447,7 +447,9 @@ WebGLMapRenderer.prototype.renderFrame = function(frameState) {
   /** @type {Array.<module:ol/layer/Layer~State>} */
   const layerStatesToDraw = [];
   const layerStatesArray = frameState.layerStatesArray;
-  stableSort(layerStatesArray, sortByZIndex);
+  if (!isSorted(layerStatesArray, sortByZIndex)) {
+    stableSort(layerStatesArray, sortByZIndex);
+  }
 
   const viewResolution = frameState.viewState.resolution;
   let i, ii, layerRenderer, layerState;

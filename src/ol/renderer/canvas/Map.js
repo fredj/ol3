@@ -5,7 +5,7 @@
 
 import {create as createTransform, apply as applyTransform, compose as composeTransform} from '../../transform.js';
 import {inherits} from '../../index.js';
-import {stableSort} from '../../array.js';
+import {isSorted, stableSort} from '../../array.js';
 import {CLASS_UNSELECTABLE} from '../../css.js';
 import {createCanvasContext2D} from '../../dom.js';
 import {visibleAtResolution} from '../../layer/Layer.js';
@@ -166,7 +166,9 @@ CanvasMapRenderer.prototype.renderFrame = function(frameState) {
   this.dispatchComposeEvent_(RenderEventType.PRECOMPOSE, frameState);
 
   const layerStatesArray = frameState.layerStatesArray;
-  stableSort(layerStatesArray, sortByZIndex);
+  if (!isSorted(layerStatesArray, sortByZIndex)) {
+    stableSort(layerStatesArray, sortByZIndex);
+  }
 
   if (rotation) {
     context.save();
