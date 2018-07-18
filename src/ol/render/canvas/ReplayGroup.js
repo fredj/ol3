@@ -34,16 +34,15 @@ const BATCH_CONSTRUCTORS = {
 
 
 class CanvasReplayGroup extends ReplayGroup {
+
   /**
    * @param {number} tolerance Tolerance.
    * @param {module:ol/extent~Extent} maxExtent Max extent.
    * @param {number} resolution Resolution.
    * @param {number} pixelRatio Pixel ratio.
    * @param {boolean} overlaps The replay group can have overlapping geometries.
-   * @param {?} declutterTree Declutter tree
-   * for declutter processing in postrender.
+   * @param {?} declutterTree Declutter tree for declutter processing in postrender.
    * @param {number=} opt_renderBuffer Optional rendering buffer.
-   * @struct
    */
   constructor(
     tolerance,

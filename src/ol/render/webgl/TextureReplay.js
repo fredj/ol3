@@ -10,11 +10,14 @@ import WebGLReplay from '../webgl/Replay.js';
 import {CLAMP_TO_EDGE, FLOAT, TEXTURE_2D} from '../../webgl.js';
 import {createTexture} from '../../webgl/Context.js';
 
+/**
+ * @abstract
+ */
 class WebGLTextureReplay extends WebGLReplay {
+
   /**
    * @param {number} tolerance Tolerance.
    * @param {module:ol/extent~Extent} maxExtent Max extent.
-   * @struct
    */
   constructor(tolerance, maxExtent) {
     super(tolerance, maxExtent);

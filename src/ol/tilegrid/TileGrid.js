@@ -46,14 +46,14 @@ const tmpTileCoord = [0, 0, 0];
 
 /**
  * @classdesc
- * Base class for setting the grid pattern for sources accessing tiled-image
- * servers.
+ * Base class for setting the grid pattern for sources accessing tiled-image servers.
+ *
+ * @api
  */
 class TileGrid {
 
   /**
    * @param {module:ol/tilegrid/TileGrid~Options} options Tile grid options.
-   * @api
    */
   constructor(options) {
 

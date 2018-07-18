@@ -21,17 +21,17 @@ import {createCanvasContext2D} from '../dom.js';
  * @property {HTMLCanvasElement} image
  */
 
+/**
+ * This class facilitates the creation of image atlases.
+ *
+ * Images added to an atlas will be rendered onto a single
+ * atlas canvas. The distribution of images on the canvas is
+ * managed with the bin packing algorithm described in:
+ * http://www.blackpawn.com/texts/lightmaps/
+ */
 class Atlas {
 
   /**
-   * This class facilitates the creation of image atlases.
-   *
-   * Images added to an atlas will be rendered onto a single
-   * atlas canvas. The distribution of images on the canvas is
-   * managed with the bin packing algorithm described in:
-   * http://www.blackpawn.com/texts/lightmaps/
-   *
-   * @struct
    * @param {number} size The size in pixels of the sprite image.
    * @param {number} space The space in pixels between images.
    *    Because texture coordinates are float values, the edges of

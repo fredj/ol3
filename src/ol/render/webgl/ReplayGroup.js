@@ -33,11 +33,11 @@ const BATCH_CONSTRUCTORS = {
 
 
 class WebGLReplayGroup extends ReplayGroup {
+
   /**
    * @param {number} tolerance Tolerance.
    * @param {module:ol/extent~Extent} maxExtent Max extent.
    * @param {number=} opt_renderBuffer Render buffer.
-   * @struct
    */
   constructor(tolerance, maxExtent, opt_renderBuffer) {
     super();

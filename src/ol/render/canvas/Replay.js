@@ -42,6 +42,7 @@ const tmpTransform = createTransform();
 
 
 class CanvasReplay extends VectorContext {
+
   /**
    * @param {number} tolerance Tolerance.
    * @param {module:ol/extent~Extent} maxExtent Maximum extent.
@@ -49,7 +50,6 @@ class CanvasReplay extends VectorContext {
    * @param {number} pixelRatio Pixel ratio.
    * @param {boolean} overlaps The replay can have overlapping geometries.
    * @param {?} declutterTree Declutter tree.
-   * @struct
    */
   constructor(tolerance, maxExtent, resolution, pixelRatio, overlaps, declutterTree) {
     super();

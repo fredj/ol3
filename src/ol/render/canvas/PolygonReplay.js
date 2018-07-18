@@ -11,6 +11,7 @@ import CanvasReplay from '../canvas/Replay.js';
 
 
 class CanvasPolygonReplay extends CanvasReplay {
+
   /**
    * @param {number} tolerance Tolerance.
    * @param {module:ol/extent~Extent} maxExtent Maximum extent.
@@ -18,7 +19,6 @@ class CanvasPolygonReplay extends CanvasReplay {
    * @param {number} pixelRatio Pixel ratio.
    * @param {boolean} overlaps The replay can have overlapping geometries.
    * @param {?} declutterTree Declutter tree.
-   * @struct
    */
   constructor(tolerance, maxExtent, resolution, pixelRatio, overlaps, declutterTree) {
     super(tolerance, maxExtent, resolution, pixelRatio, overlaps, declutterTree);

@@ -9,6 +9,7 @@ import VectorContext from '../VectorContext.js';
 import WebGLReplayGroup from '../webgl/ReplayGroup.js';
 
 class WebGLImmediateRenderer extends VectorContext {
+
   /**
    * @param {module:ol/webgl/Context} context Context.
    * @param {module:ol/coordinate~Coordinate} center Center.
@@ -17,7 +18,6 @@ class WebGLImmediateRenderer extends VectorContext {
    * @param {module:ol/size~Size} size Size.
    * @param {module:ol/extent~Extent} extent Extent.
    * @param {number} pixelRatio Pixel ratio.
-   * @struct
    */
   constructor(context, center, resolution, rotation, size, extent, pixelRatio) {
     super();
