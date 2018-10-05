@@ -10,6 +10,14 @@ import {create as createTransform, compose as composeTransform} from '../transfo
 
 
 /**
+ * @param {!Object} object Object that is potentially a Geometry.
+ * @return {boolean} object is a Geometry.
+ */
+export function isGeometry(object) {
+  return typeof object.getSimplifiedGeometry === 'function';
+}
+
+/**
  * @type {import("../transform.js").Transform}
  */
 const tmpTransform = createTransform();
