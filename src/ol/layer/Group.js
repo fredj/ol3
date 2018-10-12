@@ -2,7 +2,7 @@
  * @module ol/layer/Group
  */
 import {getUid} from '../util.js';
-import Collection from '../Collection.js';
+import Collection, {isCollection} from '../Collection.js';
 import CollectionEventType from '../CollectionEventType.js';
 import {getChangeEventType} from '../Object.js';
 import ObjectEventType from '../ObjectEventType.js';
@@ -84,8 +84,7 @@ class LayerGroup extends BaseLayer {
       if (Array.isArray(layers)) {
         layers = new Collection(layers.slice(), {unique: true});
       } else {
-        assert(typeof /** @type {?} */ (layers).getArray === 'function',
-          43); // Expected `layers` to be an array or a `Collection`
+        assert(isCollection(layers), 43); // Expected `layers` to be an array or a `Collection`
       }
     } else {
       layers = new Collection(undefined, {unique: true});

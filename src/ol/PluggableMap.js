@@ -2,7 +2,7 @@
  * @module ol/PluggableMap
  */
 import {getUid} from './util.js';
-import Collection from './Collection.js';
+import Collection, {isCollection} from './Collection.js';
 import CollectionEventType from './CollectionEventType.js';
 import MapBrowserEvent from './MapBrowserEvent.js';
 import MapBrowserEventHandler from './MapBrowserEventHandler.js';
@@ -1382,8 +1382,7 @@ function createOptionsInternal(options) {
     if (Array.isArray(options.controls)) {
       controls = new Collection(options.controls.slice());
     } else {
-      assert(typeof /** @type {?} */ (options.controls).getArray === 'function',
-        47); // Expected `controls` to be an array or an `import("./Collection.js").Collection`
+      assert(isCollection(options.controls), 47); // Expected `controls` to be an array or a `Collection`
       controls = /** @type {Collection} */ (options.controls);
     }
   }
@@ -1393,8 +1392,7 @@ function createOptionsInternal(options) {
     if (Array.isArray(options.interactions)) {
       interactions = new Collection(options.interactions.slice());
     } else {
-      assert(typeof /** @type {?} */ (options.interactions).getArray === 'function',
-        48); // Expected `interactions` to be an array or an `import("./Collection.js").Collection`
+      assert(isCollection(options.interactions), 48); // Expected `interactions` to be an array or a `Collection`
       interactions = /** @type {Collection} */ (options.interactions);
     }
   }
@@ -1404,8 +1402,7 @@ function createOptionsInternal(options) {
     if (Array.isArray(options.overlays)) {
       overlays = new Collection(options.overlays.slice());
     } else {
-      assert(typeof /** @type {?} */ (options.overlays).getArray === 'function',
-        49); // Expected `overlays` to be an array or an `import("./Collection.js").Collection`
+      assert(isCollection(options.overlays), 49); // Expected `overlays` to be an array or a `Collection`
       overlays = options.overlays;
     }
   } else {

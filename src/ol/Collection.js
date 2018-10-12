@@ -43,6 +43,15 @@ export class CollectionEvent extends Event {
 
 
 /**
+ * @param {!Object} object Object that is potentially a Collection.
+ * @return {boolean} object is a Collection.
+ */
+export function isCollection(object) {
+  return typeof object.getArray === 'function';
+}
+
+
+/**
  * @typedef {Object} Options
  * @property {boolean} [unique=false] Disallow the same item from being added to
  * the collection twice.
