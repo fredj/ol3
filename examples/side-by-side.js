@@ -1,15 +1,13 @@
 import Map from '../src/ol/Map.js';
-import WebGLMap from '../src/ol/WebGLMap.js';
 import View from '../src/ol/View.js';
 import TileLayer from '../src/ol/layer/Tile.js';
-import WebGLTileLayer from '../src/ol/layer/WebGLTile.js';
 import OSM from '../src/ol/source/OSM.js';
 
-const layer = new TileLayer({
+const layer1 = new TileLayer({
   source: new OSM()
 });
 
-const webGLLayer = new WebGLTileLayer({
+const layer2 = new TileLayer({
   source: new OSM()
 });
 
@@ -19,13 +17,13 @@ const view = new View({
 });
 
 const map1 = new Map({
-  target: 'canvasMap',
-  layers: [layer],
+  target: 'layer1',
+  layers: [layer1],
   view: view
 });
 
-const map2 = new WebGLMap({
-  target: 'webglMap',
-  layers: [webGLLayer],
+const map2 = new Map({
+  target: 'layer2',
+  layers: [layer2],
   view: view
 });
