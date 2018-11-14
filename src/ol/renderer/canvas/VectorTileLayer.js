@@ -13,7 +13,7 @@ import VectorTileRenderType from '../../layer/VectorTileRenderType.js';
 import {equivalent as equivalentProjection} from '../../proj.js';
 import Units from '../../proj/Units.js';
 import ReplayType from '../../render/ReplayType.js';
-import {labelCache, rotateAtOffset} from '../../render/canvas.js';
+import {labelCache} from '../../render/canvas.js';
 import CanvasReplayGroup, {replayDeclutter} from '../../render/canvas/ReplayGroup.js';
 import {ORDER} from '../../render/replay.js';
 import CanvasTileLayerRenderer from './TileLayer.js';
@@ -77,6 +77,8 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     style.display = 'flex';
     style.alignItems = 'center';
     style.justifyContent = 'center';
+    style.width = '100%';
+    style.height = '100%';
 
     container.appendChild(baseCanvas);
     container.appendChild(overlayCanvas);
@@ -417,7 +419,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
           continue;
         }
         if (!transform) {
-          transform = this.getTransform(frameState, worldOffset);
+          transform = this.getRenderTransform(frameState, width, height, worldOffset);
         }
         const currentZ = sourceTile.tileCoord[0];
         const currentClip = replayGroup.getClipCoords(transform);
