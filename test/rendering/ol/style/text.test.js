@@ -150,12 +150,6 @@ describe('ol.rendering.style.Text', function() {
       map.getView().fit(vectorSource.getExtent());
     }
 
-    it('tests the canvas renderer without rotation', function(done) {
-      createMap('canvas');
-      createFeatures();
-      expectResemble(map, 'rendering/ol/style/expected/text-canvas.png', IMAGE_TOLERANCE, done);
-    });
-
     it('tests the canvas renderer with rotation', function(done) {
       createMap('canvas');
       createFeatures();
