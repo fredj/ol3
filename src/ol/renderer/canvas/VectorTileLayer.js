@@ -57,9 +57,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
    * @param {import("../../layer/VectorTile.js").default} layer VectorTile layer.
    */
   constructor(layer) {
-
-    const renderMode = layer.getRenderMode();
-    super(layer, renderMode === VectorTileRenderType.VECTOR);
+    super(layer);
 
     /**
      * Declutter tree.
@@ -85,9 +83,8 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
      */
     this.tmpTransform_ = createTransform();
 
-    // Use lower resolution for pure vector rendering. Closest resolution otherwise.
-    this.zDirection = renderMode === VectorTileRenderType.VECTOR ? 1 : 0;
-
+    // Use closest resolution.
+    this.zDirection = 0;
 
     listen(labelCache, EventType.CLEAR, this.handleFontsChanged_, this);
 
