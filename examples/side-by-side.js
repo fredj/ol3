@@ -3,12 +3,14 @@ import View from '../src/ol/View.js';
 import TileLayer from '../src/ol/layer/Tile.js';
 import OSM from '../src/ol/source/OSM.js';
 
+const source = new OSM();
+
 const layer1 = new TileLayer({
-  source: new OSM()
+  source: source
 });
 
 const layer2 = new TileLayer({
-  source: new OSM()
+  source: source
 });
 
 const view = new View({
@@ -17,13 +19,13 @@ const view = new View({
 });
 
 const map1 = new Map({
-  target: 'layer1',
+  target: 'map1',
   layers: [layer1],
   view: view
 });
 
 const map2 = new Map({
-  target: 'layer2',
+  target: 'map2',
   layers: [layer2],
   view: view
 });
