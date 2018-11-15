@@ -688,8 +688,8 @@ class CanvasReplay extends VectorContext {
             backgroundFill = backgroundStroke = false;
           }
 
-          if (!rotateWithView) {
-            rotation -= viewRotation;
+          if (rotateWithView) {
+            rotation += viewRotation;
           }
           for (; d < dd; d += 2) {
             this.replayImage_(context,
