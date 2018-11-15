@@ -12,6 +12,7 @@ import {labelCache} from '../../render/canvas.js';
 import CanvasReplayGroup from '../../render/canvas/ReplayGroup.js';
 import CanvasLayerRenderer from './Layer.js';
 import {defaultOrder as defaultRenderOrder, getTolerance as getRenderTolerance, getSquaredTolerance as getSquaredRenderTolerance, renderFeature} from '../vector.js';
+import {toString as transformToString} from '../../transform.js';
 
 /**
  * @classdesc
@@ -87,23 +88,42 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
   }
 
   /**
-   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
-   * @param {import("../../layer/Layer.js").State} layerState Layer state.
+   * @inheritDoc
    */
-  render(frameState, layerState) {
-    const replayGroup = this.replayGroup_;
+  renderFrame(frameState, layerState) {
     const context = this.context;
     const canvas = context.canvas;
 
+    const replayGroup = this.replayGroup_;
     if (!replayGroup || replayGroup.isEmpty()) {
       if (canvas.width > 0) {
         canvas.width = 0;
       }
-      return;
+      return canvas;
     }
 
-    const extent = frameState.extent;
     const pixelRatio = frameState.pixelRatio;
+
+    // a scale transform (we could add a createScale function in ol/transform)
+    const pixelTransform = [1 / pixelRatio, 0, 0, 1 / pixelRatio, 0, 0];
+
+    // resize and clear
+    const width = Math.round(frameState.size[0] * pixelRatio);
+    const height = Math.round(frameState.size[1] * pixelRatio);
+    if (canvas.width != width || canvas.height != height) {
+      canvas.width = width;
+      canvas.height = height;
+      const canvasTransform = transformToString(pixelTransform);
+      if (canvas.style.transform !== canvasTransform) {
+        canvas.style.transform = canvasTransform;
+      }
+    } else {
+      context.clearRect(0, 0, width, height);
+    }
+
+    this.preRender(context, frameState, pixelTransform);
+
+    const extent = frameState.extent;
     const viewState = frameState.viewState;
     const projection = viewState.projection;
     const rotation = viewState.rotation;
@@ -121,22 +141,11 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
       this.declutterTree_.clear();
     }
 
-    // resize and clear
-    const width = Math.round(frameState.size[0] * pixelRatio);
-    const height = Math.round(frameState.size[1] * pixelRatio);
-    if (canvas.width != width || canvas.height != height) {
-      canvas.width = width;
-      canvas.height = height;
-      canvas.style.width = (width / pixelRatio) + 'px';
-      canvas.style.height = (height / pixelRatio) + 'px';
-    } else {
-      context.clearRect(0, 0, width, height);
-    }
 
     const viewHints = frameState.viewHints;
     const snapToPixel = !(viewHints[ViewHint.ANIMATING] || viewHints[ViewHint.INTERACTING]);
 
-    let transform = this.getRenderTransform(frameState, width, height, 0);
+    const transform = this.getRenderTransform(frameState, width, height, 0);
     const skippedFeatureUids = layerState.managed ? frameState.skippedFeatureUids : {};
     replayGroup.replay(context, transform, rotation, skippedFeatureUids, snapToPixel);
 
@@ -148,7 +157,7 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
       while (startX < projectionExtent[0]) {
         --world;
         offsetX = worldWidth * world;
-        transform = this.getRenderTransform(frameState, width, height, offsetX);
+        const transform = this.getRenderTransform(frameState, width, height, offsetX);
         replayGroup.replay(context, transform, rotation, skippedFeatureUids, snapToPixel);
         startX += worldWidth;
       }
@@ -157,31 +166,21 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
       while (startX > projectionExtent[2]) {
         ++world;
         offsetX = worldWidth * world;
-        transform = this.getRenderTransform(frameState, width, height, offsetX);
+        const transform = this.getRenderTransform(frameState, width, height, offsetX);
         replayGroup.replay(context, transform, rotation, skippedFeatureUids, snapToPixel);
         startX -= worldWidth;
       }
     }
 
     if (this.getLayer().hasListener(RenderEventType.RENDER)) {
-      this.dispatchRenderEvent(context, frameState, transform);
+      this.dispatchRenderEvent(context, frameState, pixelTransform);
     }
 
     if (clipped) {
       context.restore();
     }
-  }
 
-  /**
-   * @inheritDoc
-   */
-  renderFrame(frameState, layerState) {
-    const context = this.context;
-    this.preRender(context, frameState);
-    this.render(frameState, layerState);
-    this.postRender(context, frameState);
-
-    const canvas = context.canvas;
+    this.postRender(context, frameState, pixelTransform);
 
     const opacity = layerState.opacity;
     if (opacity !== canvas.style.opacity) {
@@ -301,7 +300,9 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
     const replayGroup = new CanvasReplayGroup(
       getRenderTolerance(resolution, pixelRatio), extent, resolution,
       pixelRatio, vectorSource.getOverlaps(), this.declutterTree_, vectorLayer.getRenderBuffer());
+
     vectorSource.loadFeatures(extent, resolution, projection);
+
     /**
      * @param {import("../../Feature.js").default} feature Feature.
      * @this {CanvasVectorLayerRenderer}
