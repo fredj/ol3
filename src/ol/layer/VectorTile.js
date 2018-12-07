@@ -162,14 +162,16 @@ class VectorTileLayer extends BaseVectorLayer {
   setUseInterimTilesOnError(useInterimTilesOnError) {
     this.set(TileProperty.USE_INTERIM_TILES_ON_ERROR, useInterimTilesOnError);
   }
+
+  /**
+   * Return the associated {@link module:ol/source/VectorTile vectortilesource} of the layer.
+   * @return {import("../source/VectorTile.js").default} Source.
+   * @api
+   */
+  getSource() {
+    return /** @type {import("../source/VectorTile.js").default} */ (super.getSource());
+  }
 }
 
 
-/**
- * Return the associated {@link module:ol/source/VectorTile vectortilesource} of the layer.
- * @function
- * @return {import("../source/VectorTile.js").default} Source.
- * @api
- */
-VectorTileLayer.prototype.getSource;
 export default VectorTileLayer;

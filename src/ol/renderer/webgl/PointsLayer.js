@@ -14,14 +14,14 @@ const VERTEX_SHADER = `
   attribute float a_rotateWithView;
   attribute vec2 a_offsets;
   attribute float a_opacity;
-  
+
   uniform mat4 u_projectionMatrix;
   uniform mat4 u_offsetScaleMatrix;
   uniform mat4 u_offsetRotateMatrix;
-  
+
   varying vec2 v_texCoord;
   varying float v_opacity;
-  
+
   void main(void) {
     mat4 offsetMatrix = u_offsetScaleMatrix;
     if (a_rotateWithView == 1.0) {
@@ -35,10 +35,10 @@ const VERTEX_SHADER = `
 
 const FRAGMENT_SHADER = `
   precision mediump float;
-  
+
   varying vec2 v_texCoord;
   varying float v_opacity;
-  
+
   void main(void) {
     gl_FragColor.rgb = vec3(1.0, 1.0, 1.0);
     float alpha = v_opacity;
@@ -215,8 +215,8 @@ class WebGLPointsLayerRenderer extends LayerRenderer {
    * @inheritDoc
    */
   prepareFrame(frameState) {
-    const vectorLayer = /** @type {import("../../layer/Vector.js").default} */ (this.getLayer());
-    const vectorSource = /** @type {import("../../source/Vector.js").default} */ (vectorLayer.getSource());
+    const vectorLayer = this.getLayer();
+    const vectorSource = vectorLayer.getSource();
 
     this.helper_.prepareDraw(frameState);
 
@@ -279,6 +279,13 @@ class WebGLPointsLayerRenderer extends LayerRenderer {
    */
   getShaderCompileErrors() {
     return this.helper_.getShaderCompileErrors();
+  }
+
+  /**
+   * @return {import("../../layer/Vector.js").default} Layer.
+   */
+  getLayer() {
+    return /** @type {import("../../layer/Vector.js").default} */(super.getLayer());
   }
 }
 

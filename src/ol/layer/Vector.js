@@ -35,6 +35,16 @@ class VectorLayer extends BaseVectorLayer {
   createRenderer() {
     return new CanvasVectorLayerRenderer(this);
   }
+
+  /**
+   * Return the associated {@link module:ol/source/Vector vectorsource} of the layer.
+   * @return {import("../source/Vector.js").default} Source.
+   * @api
+   */
+  getSource() {
+    return /** @type {import("../source/Vector.js").default} */ (super.getSource());
+  }
+
 }
 
 

@@ -239,7 +239,7 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
    */
   prepareFrame(frameState, layerState) {
     const vectorLayer = /** @type {import("../../layer/Vector.js").default} */ (this.getLayer());
-    const vectorSource = /** @type {import("../../source/Vector.js").default} */ (vectorLayer.getSource());
+    const vectorSource = vectorLayer.getSource();
 
     const animating = frameState.viewHints[ViewHint.ANIMATING];
     const interacting = frameState.viewHints[ViewHint.INTERACTING];

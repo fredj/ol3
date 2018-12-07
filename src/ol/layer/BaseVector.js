@@ -219,13 +219,4 @@ class BaseVectorLayer extends Layer {
 }
 
 
-/**
- * Return the associated {@link module:ol/source/Vector vectorsource} of the layer.
- * @function
- * @return {import("../source/Vector.js").default} Source.
- * @api
- */
-BaseVectorLayer.prototype.getSource;
-
-
 export default BaseVectorLayer;

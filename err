@@ -1,0 +1,355 @@
+src/ol/format/GPX.js(55,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(67,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(78,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/GPX.js(231,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(249,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(260,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(278,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(288,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(299,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/GPX.js(334,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/GPX.js(345,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/GPX.js(355,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/GPX.js(372,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/GPX.js(382,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/GPX.js(392,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/GPX.js(416,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/GPX.js(426,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/GPX.js(438,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(94,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(131,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(149,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(159,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(170,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(180,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(474,42): error TS2345: Argument of type '{ [x: string]: T; }' is not assignable to parameter of type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(849,33): error TS2345: Argument of type '{ [x: string]: Feature | Feature[]; }' is not assignable to parameter of type '{ [x: string]: V; }'.
+  Index signatures are incompatible.
+    Type 'Feature | Feature[]' is not assignable to type 'V'.
+      Type 'Feature' is not assignable to type 'V'.
+src/ol/format/KML.js(1100,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1121,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1237,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1272,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1308,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1348,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1392,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1417,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1453,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1485,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1506,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1560,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1653,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1691,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1785,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1813,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1840,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1899,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1932,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(1971,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(2001,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(2027,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/KML.js(2133,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2190,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2253,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2266,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2316,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2326,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2386,31): error TS2345: Argument of type '{}' is not assignable to parameter of type '{ [x: string]: V; }'.
+  Index signature is missing in type '{}'.
+src/ol/format/KML.js(2396,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2406,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2432,31): error TS2345: Argument of type '{}' is not assignable to parameter of type '{ [x: string]: V; }'.
+  Index signature is missing in type '{}'.
+src/ol/format/KML.js(2442,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2452,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2472,31): error TS2345: Argument of type '{ 'color': string | number[] | CanvasGradient | CanvasPattern; 'width': number; }' is not assignable to parameter of type '{ [x: string]: V; }'.
+  Property ''color'' is incompatible with index signature.
+    Type 'string | number[] | CanvasGradient | CanvasPattern' is not assignable to type 'V'.
+      Type 'string' is not assignable to type 'V'.
+src/ol/format/KML.js(2546,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2598,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2622,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2645,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2731,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2741,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2777,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2828,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2869,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: string[]; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type 'string[]'.
+src/ol/format/KML.js(2879,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any, arg2: any[]) => void; }'.
+src/ol/format/KML.js(2914,31): error TS2345: Argument of type '{}' is not assignable to parameter of type '{ [x: string]: V; }'.
+  Index signature is missing in type '{}'.
+src/ol/format/OSMXML.js(29,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OSMXML.js(40,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OSMXML.js(111,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(21,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(61,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(76,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(86,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(96,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(107,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(117,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(128,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(138,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(148,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(159,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(169,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(182,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/OWS.js(198,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(25,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(36,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(89,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(109,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(124,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(135,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(150,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(160,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(187,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(199,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(212,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(224,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(235,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(245,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(256,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(271,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSCapabilities.js(282,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMSGetFeatureInfo.js(128,15): error TS2345: Argument of type '{ [x: string]: T; }' is not assignable to parameter of type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+src/ol/format/WMTSCapabilities.js(37,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(92,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(103,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(122,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(135,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(145,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(155,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(169,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(182,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(193,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/format/WMTSCapabilities.js(207,7): error TS2322: Type '{ [x: string]: T; }' is not assignable to type '{ [x: string]: { [x: string]: (arg0: Element, arg1: any[]) => void; }; }'.
+  Index signatures are incompatible.
+    Type 'T' is not assignable to type '{ [x: string]: (arg0: Element, arg1: any[]) => void; }'.
+src/ol/interaction/MouseWheelZoom.js(194,27): error TS2339: Property 'wheelDeltaY' does not exist on type 'WheelEvent'.
+src/ol/layer/VectorImage.js(32,24): error TS2339: Property 'imageRatio' does not exist on type 'Options'.
+src/ol/layer/VectorImage.js(39,32): error TS2339: Property 'imageRatio' does not exist on type 'Options'.
+src/ol/layer/VectorImage.js(39,67): error TS2339: Property 'imageRatio' does not exist on type 'Options'.

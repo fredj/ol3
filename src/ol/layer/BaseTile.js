@@ -99,16 +99,15 @@ class BaseTileLayer extends Layer {
   setUseInterimTilesOnError(useInterimTilesOnError) {
     this.set(TileProperty.USE_INTERIM_TILES_ON_ERROR, useInterimTilesOnError);
   }
+
+  /**
+   * Return the associated {@link module:ol/source/Tile tilesource} of the layer.
+   * @return {import("../source/Tile.js").default} Source.
+   * @api
+   */
+  getSource() {
+    return /** @type {import("../source/Tile.js").default} */ (super.getSource());
+  }
 }
-
-
-/**
- * Return the associated {@link module:ol/source/Tile tilesource} of the layer.
- * @function
- * @return {import("../source/Tile.js").default} Source.
- * @api
- */
-BaseTileLayer.prototype.getSource;
-
 
 export default BaseTileLayer;

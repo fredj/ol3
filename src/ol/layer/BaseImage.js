@@ -47,14 +47,16 @@ class BaseImageLayer extends Layer {
     super(options);
   }
 
+  /**
+   * Return the associated {@link module:ol/source/Image source} of the image layer.
+   * @return {import("../source/Image.js").default} Source.
+   * @api
+   */
+  getSource() {
+    return /** @type {import("../source/Image.js").default} */ (super.getSource());
+  }
+
 }
 
 
-/**
- * Return the associated {@link module:ol/source/Image source} of the image layer.
- * @function
- * @return {import("../source/Image.js").default} Source.
- * @api
- */
-BaseImageLayer.prototype.getSource;
 export default BaseImageLayer;
