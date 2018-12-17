@@ -135,14 +135,12 @@ class Polyline extends TextFeature {
  *
  * @param {Array<number>} numbers A list of n-dimensional points.
  * @param {number} stride The number of dimension of the points in the list.
- * @param {number=} opt_factor The factor by which the numbers will be
+ * @param {number=} [factor=1e5] The factor by which the numbers will be
  *     multiplied. The remaining decimal places will get rounded away.
- *     Default is `1e5`.
  * @return {string} The encoded string.
  * @api
  */
-export function encodeDeltas(numbers, stride, opt_factor) {
-  const factor = opt_factor ? opt_factor : 1e5;
+export function encodeDeltas(numbers, stride, factor = 1e5) {
   let d;
 
   const lastNumbers = new Array(stride);
@@ -170,13 +168,11 @@ export function encodeDeltas(numbers, stride, opt_factor) {
  * @param {string} encoded An encoded string.
  * @param {number} stride The number of dimension of the points in the
  *     encoded string.
- * @param {number=} opt_factor The factor by which the resulting numbers will
- *     be divided. Default is `1e5`.
+ * @param {number=} [factor=1e5] The factor by which the resulting numbers will be divided.
  * @return {Array<number>} A list of n-dimensional points.
  * @api
  */
-export function decodeDeltas(encoded, stride, opt_factor) {
-  const factor = opt_factor ? opt_factor : 1e5;
+export function decodeDeltas(encoded, stride, factor = 1e5) {
   let d;
 
   /** @type {Array<number>} */
@@ -205,14 +201,12 @@ export function decodeDeltas(encoded, stride, opt_factor) {
  * Attention: This function will modify the passed array!
  *
  * @param {Array<number>} numbers A list of floating point numbers.
- * @param {number=} opt_factor The factor by which the numbers will be
+ * @param {number=} [factor=1e5] The factor by which the numbers will be
  *     multiplied. The remaining decimal places will get rounded away.
- *     Default is `1e5`.
  * @return {string} The encoded string.
  * @api
  */
-export function encodeFloats(numbers, opt_factor) {
-  const factor = opt_factor ? opt_factor : 1e5;
+export function encodeFloats(numbers, factor = 1e5) {
   for (let i = 0, ii = numbers.length; i < ii; ++i) {
     numbers[i] = Math.round(numbers[i] * factor);
   }
@@ -225,13 +219,11 @@ export function encodeFloats(numbers, opt_factor) {
  * Decode a list of floating point numbers from an encoded string
  *
  * @param {string} encoded An encoded string.
- * @param {number=} opt_factor The factor by which the result will be divided.
- *     Default is `1e5`.
+ * @param {number=} [factor=1e5] The factor by which the result will be divided.
  * @return {Array<number>} A list of floating point numbers.
  * @api
  */
-export function decodeFloats(encoded, opt_factor) {
-  const factor = opt_factor ? opt_factor : 1e5;
+export function decodeFloats(encoded, factor = 1e5) {
   const numbers = decodeSignedIntegers(encoded);
   for (let i = 0, ii = numbers.length; i < ii; ++i) {
     numbers[i] /= factor;

@@ -121,32 +121,30 @@ class MultiLineString extends SimpleGeometry {
    * Returns the coordinate at `m` using linear interpolation, or `null` if no
    * such coordinate exists.
    *
-   * `opt_extrapolate` controls extrapolation beyond the range of Ms in the
-   * MultiLineString. If `opt_extrapolate` is `true` then Ms less than the first
+   * `extrapolate` controls extrapolation beyond the range of Ms in the
+   * MultiLineString. If `extrapolate` is `true` then Ms less than the first
    * M will return the first coordinate and Ms greater than the last M will
    * return the last coordinate.
    *
-   * `opt_interpolate` controls interpolation between consecutive LineStrings
-   * within the MultiLineString. If `opt_interpolate` is `true` the coordinates
+   * `interpolate` controls interpolation between consecutive LineStrings
+   * within the MultiLineString. If `interpolate` is `true` the coordinates
    * will be linearly interpolated between the last coordinate of one LineString
-   * and the first coordinate of the next LineString.  If `opt_interpolate` is
+   * and the first coordinate of the next LineString.  If `interpolate` is
    * `false` then the function will return `null` for Ms falling between
    * LineStrings.
    *
    * @param {number} m M.
-   * @param {boolean=} opt_extrapolate Extrapolate. Default is `false`.
-   * @param {boolean=} opt_interpolate Interpolate. Default is `false`.
+   * @param {boolean=} [extrapolate=false] Extrapolate.
+   * @param {boolean=} [interpolate=false] Interpolate.
    * @return {import("../coordinate.js").Coordinate} Coordinate.
    * @api
    */
-  getCoordinateAtM(m, opt_extrapolate, opt_interpolate) {
+  getCoordinateAtM(m, extrapolate = false, interpolate = false) {
     if ((this.layout != GeometryLayout.XYM &&
          this.layout != GeometryLayout.XYZM) ||
         this.flatCoordinates.length === 0) {
       return null;
     }
-    const extrapolate = opt_extrapolate !== undefined ? opt_extrapolate : false;
-    const interpolate = opt_interpolate !== undefined ? opt_interpolate : false;
     return lineStringsCoordinateAtM(this.flatCoordinates, 0,
       this.ends_, this.stride, m, extrapolate, interpolate);
   }

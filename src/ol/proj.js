@@ -351,29 +351,25 @@ export function addCoordinateTransforms(source, destination, forward, inverse) {
  * Transforms a coordinate from longitude/latitude to a different projection.
  * @param {import("./coordinate.js").Coordinate} coordinate Coordinate as longitude and latitude, i.e.
  *     an array with longitude as 1st and latitude as 2nd element.
- * @param {ProjectionLike=} opt_projection Target projection. The
- *     default is Web Mercator, i.e. 'EPSG:3857'.
+ * @param {ProjectionLike=} [projection='EPSG:3857'] Target projection. The default is Web Mercator, i.e. 'EPSG:3857'.
  * @return {import("./coordinate.js").Coordinate} Coordinate projected to the target projection.
  * @api
  */
-export function fromLonLat(coordinate, opt_projection) {
-  return transform(coordinate, 'EPSG:4326',
-    opt_projection !== undefined ? opt_projection : 'EPSG:3857');
+export function fromLonLat(coordinate, projection = 'EPSG:3857') {
+  return transform(coordinate, 'EPSG:4326', projection);
 }
 
 
 /**
  * Transforms a coordinate to longitude/latitude.
  * @param {import("./coordinate.js").Coordinate} coordinate Projected coordinate.
- * @param {ProjectionLike=} opt_projection Projection of the coordinate.
- *     The default is Web Mercator, i.e. 'EPSG:3857'.
+ * @param {ProjectionLike=} [projection='EPSG:3857'] Projection of the coordinate. The default is Web Mercator, i.e. 'EPSG:3857'.
  * @return {import("./coordinate.js").Coordinate} Coordinate as longitude and latitude, i.e. an array
  *     with longitude as 1st and latitude as 2nd element.
  * @api
  */
-export function toLonLat(coordinate, opt_projection) {
-  const lonLat = transform(coordinate,
-    opt_projection !== undefined ? opt_projection : 'EPSG:3857', 'EPSG:4326');
+export function toLonLat(coordinate, projection = 'EPSG:3857') {
+  const lonLat = transform(coordinate, projection, 'EPSG:4326');
   const lon = lonLat[0];
   if (lon < -180 || lon > 180) {
     lonLat[0] = modulo(lon + 180, 360) - 180;

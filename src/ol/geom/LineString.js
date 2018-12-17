@@ -124,22 +124,21 @@ class LineString extends SimpleGeometry {
    * Returns the coordinate at `m` using linear interpolation, or `null` if no
    * such coordinate exists.
    *
-   * `opt_extrapolate` controls extrapolation beyond the range of Ms in the
-   * MultiLineString. If `opt_extrapolate` is `true` then Ms less than the first
+   * `extrapolate` controls extrapolation beyond the range of Ms in the
+   * MultiLineString. If `extrapolate` is `true` then Ms less than the first
    * M will return the first coordinate and Ms greater than the last M will
    * return the last coordinate.
    *
    * @param {number} m M.
-   * @param {boolean=} opt_extrapolate Extrapolate. Default is `false`.
+   * @param {boolean=} [extrapolate=false] Extrapolate.
    * @return {import("../coordinate.js").Coordinate} Coordinate.
    * @api
    */
-  getCoordinateAtM(m, opt_extrapolate) {
+  getCoordinateAtM(m, extrapolate = false) {
     if (this.layout != GeometryLayout.XYM &&
         this.layout != GeometryLayout.XYZM) {
       return null;
     }
-    const extrapolate = opt_extrapolate !== undefined ? opt_extrapolate : false;
     return lineStringCoordinateAtM(this.flatCoordinates, 0,
       this.flatCoordinates.length, this.stride, m, extrapolate);
   }

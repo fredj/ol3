@@ -661,26 +661,23 @@ class View extends BaseObject {
   /**
    * Get the constrained resolution of this view.
    * @param {number|undefined} resolution Resolution.
-   * @param {number=} opt_delta Delta. Default is `0`.
-   * @param {number=} opt_direction Direction. Default is `0`.
+   * @param {number=} [delta=0] Delta.
+   * @param {number=} [direction=0] Direction.
    * @return {number|undefined} Constrained resolution.
    * @api
    */
-  constrainResolution(resolution, opt_delta, opt_direction) {
-    const delta = opt_delta || 0;
-    const direction = opt_direction || 0;
+  constrainResolution(resolution, delta = 0, direction = 0) {
     return this.constraints_.resolution(resolution, delta, direction);
   }
 
   /**
    * Get the constrained rotation of this view.
    * @param {number|undefined} rotation Rotation.
-   * @param {number=} opt_delta Delta. Default is `0`.
+   * @param {number=} [delta=0] Delta.
    * @return {number|undefined} Constrained rotation.
    * @api
    */
-  constrainRotation(rotation, opt_delta) {
-    const delta = opt_delta || 0;
+  constrainRotation(rotation, delta = 0) {
     return this.constraints_.rotation(rotation, delta);
   }
 
@@ -840,11 +837,10 @@ class View extends BaseObject {
   /**
    * Return a function that returns a value between 0 and 1 for a
    * resolution. Exponential scaling is assumed.
-   * @param {number=} opt_power Power.
+   * @param {number=} [power=2] Power.
    * @return {function(number): number} Resolution for value function.
    */
-  getResolutionForValueFunction(opt_power) {
-    const power = opt_power || 2;
+  getResolutionForValueFunction(power = 2) {
     const maxResolution = this.maxResolution_;
     const minResolution = this.minResolution_;
     const max = Math.log(maxResolution / minResolution) / Math.log(power);
@@ -872,11 +868,10 @@ class View extends BaseObject {
   /**
    * Return a function that returns a resolution for a value between
    * 0 and 1. Exponential scaling is assumed.
-   * @param {number=} opt_power Power.
+   * @param {number=} [power=2] Power.
    * @return {function(number): number} Value for resolution function.
    */
-  getValueForResolutionFunction(opt_power) {
-    const power = opt_power || 2;
+  getValueForResolutionFunction(power = 2) {
     const maxResolution = this.maxResolution_;
     const minResolution = this.minResolution_;
     const max = Math.log(maxResolution / minResolution) / Math.log(power);

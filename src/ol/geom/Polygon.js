@@ -338,15 +338,13 @@ export default Polygon;
  * @param {import("../coordinate.js").Coordinate} center Center (`[lon, lat]` in degrees).
  * @param {number} radius The great-circle distance from the center to
  *     the polygon vertices.
- * @param {number=} opt_n Optional number of vertices for the resulting
- *     polygon. Default is `32`.
+ * @param {number=} [n=32] Optional number of vertices for the resulting polygon.
  * @param {number=} opt_sphereRadius Optional radius for the sphere (defaults to
  *     the Earth's mean radius using the WGS84 ellipsoid).
  * @return {Polygon} The "circular" polygon.
  * @api
  */
-export function circular(center, radius, opt_n, opt_sphereRadius) {
-  const n = opt_n ? opt_n : 32;
+export function circular(center, radius, n = 32, opt_sphereRadius) {
   /** @type {Array<number>} */
   const flatCoordinates = [];
   for (let i = 0; i < n; ++i) {
@@ -377,14 +375,13 @@ export function fromExtent(extent) {
 /**
  * Create a regular polygon from a circle.
  * @param {import("./Circle.js").default} circle Circle geometry.
- * @param {number=} opt_sides Number of sides of the polygon. Default is 32.
+ * @param {number=} [sides=32] Number of sides of the polygon.
  * @param {number=} opt_angle Start angle for the first vertex of the polygon in
  *     radians. Default is 0.
  * @return {Polygon} Polygon geometry.
  * @api
  */
-export function fromCircle(circle, opt_sides, opt_angle) {
-  const sides = opt_sides ? opt_sides : 32;
+export function fromCircle(circle, sides = 32, opt_angle) {
   const stride = circle.getStride();
   const layout = circle.getLayout();
   const center = circle.getCenter();
@@ -409,14 +406,12 @@ export function fromCircle(circle, opt_sides, opt_angle) {
  * @param {Polygon} polygon Polygon geometry.
  * @param {import("../coordinate.js").Coordinate} center Center of the regular polygon.
  * @param {number} radius Radius of the regular polygon.
- * @param {number=} opt_angle Start angle for the first vertex of the polygon in
- *     radians. Default is 0.
+ * @param {number=} [startAngle=0] Start angle for the first vertex of the polygon in radians.
  */
-export function makeRegular(polygon, center, radius, opt_angle) {
+export function makeRegular(polygon, center, radius, startAngle = 0) {
   const flatCoordinates = polygon.getFlatCoordinates();
   const stride = polygon.getStride();
   const sides = flatCoordinates.length / stride - 1;
-  const startAngle = opt_angle ? opt_angle : 0;
   for (let i = 0; i <= sides; ++i) {
     const offset = i * stride;
     const angle = startAngle + (modulo(i, sides) * 2 * Math.PI / sides);
