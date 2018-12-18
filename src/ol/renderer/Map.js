@@ -10,6 +10,7 @@ import {TRUE} from '../functions.js';
 import {visibleAtResolution} from '../layer/Layer.js';
 import {shared as iconImageCache} from '../style/IconImageCache.js';
 import {compose as composeTransform, makeInverse} from '../transform.js';
+import {backgroundTaskRunner} from '../tasks.js';
 
 /**
  * @abstract
@@ -40,6 +41,22 @@ class MapRenderer extends Disposable {
      */
     this.layerRendererListeners_ = {};
 
+
+    /**
+     * @private
+     * @type {Function}
+     */
+    this.expireIconCache = backgroundTaskRunner(function() {
+      iconImageCache.expire();
+    });
+
+    /**
+     * @private
+     * @type {Function}
+     */
+    this.removeUnusedLayerRenderers = backgroundTaskRunner(function(frameState) {
+      this.removeUnusedLayerRenderers_(frameState);
+    }.bind(this));
   }
 
   /**
@@ -250,11 +267,10 @@ class MapRenderer extends Disposable {
   }
 
   /**
-   * @param {import("../PluggableMap.js").default} map Map.
    * @param {import("../PluggableMap.js").FrameState} frameState Frame state.
    * @private
    */
-  removeUnusedLayerRenderers_(map, frameState) {
+  removeUnusedLayerRenderers_(frameState) {
     for (const layerKey in this.layerRenderers_) {
       if (!frameState || !(layerKey in frameState.layerStates)) {
         this.removeLayerRendererByKey_(layerKey).dispose();
@@ -276,7 +292,7 @@ class MapRenderer extends Disposable {
    * @protected
    */
   scheduleExpireIconCache(frameState) {
-    frameState.postRenderFunctions.push(/** @type {import("../PluggableMap.js").PostRenderFunction} */ (expireIconCache));
+    this.expireIconCache();
   }
 
   /**
@@ -284,26 +300,9 @@ class MapRenderer extends Disposable {
    * @protected
    */
   scheduleRemoveUnusedLayerRenderers(frameState) {
-    for (const layerKey in this.layerRenderers_) {
-      if (!(layerKey in frameState.layerStates)) {
-        frameState.postRenderFunctions.push(
-          /** @type {import("../PluggableMap.js").PostRenderFunction} */ (this.removeUnusedLayerRenderers_.bind(this))
-        );
-        return;
-      }
-    }
+    this.removeUnusedLayerRenderers(frameState);
   }
 }
-
-
-/**
- * @param {import("../PluggableMap.js").default} map Map.
- * @param {import("../PluggableMap.js").FrameState} frameState Frame state.
- */
-function expireIconCache(map, frameState) {
-  iconImageCache.expire();
-}
-
 
 /**
  * @param {import("../layer/Layer.js").State} state1 First layer state.
