@@ -1,4 +1,4 @@
-import {clamp, lerp, cosh, roundUpToPowerOfTwo, solveLinearSystem, toDegrees, toRadians, modulo} from '../../../src/ol/math.js';
+import {clamp, lerp, cosh, roundUpToPowerOfTwo, solveLinearSystem, toDegrees, toRadians, modulo, equalsEpsilon} from '../../../src/ol/math.js';
 
 
 describe('ol.math.clamp', function() {
@@ -47,6 +47,15 @@ describe('ol.math.cosh', function() {
     expect(cosh(Infinity)).to.eql(Infinity);
   });
 
+});
+
+describe('ol.math.equalsEpsilon', function() {
+  it('returns the expected value', function() {
+    expect(equalsEpsilon(0.1 + 0.2, 0.3)).to.be(true);
+    expect(equalsEpsilon(0.1 + 0.2, 0.3, 0)).to.be(false);
+    expect(equalsEpsilon(1 / 3, 0.333, 0.001)).to.be(true);
+    expect(equalsEpsilon(0.15, NaN)).to.be(false);
+  });
 });
 
 describe('ol.math.roundUpToPowerOfTwo', function() {

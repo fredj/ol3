@@ -5,6 +5,7 @@ import {getUid} from '../../util.js';
 import TileRange from '../../TileRange.js';
 import TileState from '../../TileState.js';
 import {createEmpty, getIntersection, getTopLeft} from '../../extent.js';
+import {equalsEpsilon} from '../../math.js';
 import CanvasLayerRenderer from './Layer.js';
 import {apply as applyTransform, compose as composeTransform, makeInverse, toString as transformToString} from '../../transform.js';
 
@@ -303,7 +304,7 @@ class CanvasTileLayerRenderer extends CanvasLayerRenderer {
     }
 
     const opacity = layerState.opacity;
-    if (opacity != canvas.style.opacity) {
+    if (!equalsEpsilon(opacity, parseFloat(canvas.style.opacity))) {
       canvas.style.opacity = opacity;
     }
 

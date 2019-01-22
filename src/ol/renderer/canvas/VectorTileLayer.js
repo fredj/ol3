@@ -10,6 +10,7 @@ import EventType from '../../events/EventType.js';
 import rbush from 'rbush';
 import {buffer, containsCoordinate, equals, getIntersection, getTopLeft, intersects} from '../../extent.js';
 import VectorTileRenderType from '../../layer/VectorTileRenderType.js';
+import {equalsEpsilon} from '../../math.js';
 import {equivalent as equivalentProjection} from '../../proj.js';
 import Units from '../../proj/Units.js';
 import ReplayType from '../../render/canvas/BuilderType.js';
@@ -508,7 +509,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     }
 
     const opacity = layerState.opacity;
-    if (opacity != canvas.style.opacity) {
+    if (!equalsEpsilon(opacity, parseFloat(canvas.style.opacity))) {
       canvas.style.opacity = opacity;
     }
 

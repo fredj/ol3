@@ -3,6 +3,14 @@
  */
 import {assert} from './asserts.js';
 
+
+/**
+ * @const
+ * @type {number}
+ */
+export const EPSILON = Number.EPSILON || 2.220446049250313e-16;
+
+
 /**
  * Takes a number and clamps it to within the provided bounds.
  * @param {number} value The input number.
@@ -41,6 +49,18 @@ export const cosh = (function() {
   }
   return cosh;
 }());
+
+
+/***
+ * @param {number} left Left.
+ * @param {number} right Right.
+ * @param {number=} opt_epsilon The maximum inclusive delta between left and right for the relative tolerance test.
+ * @return {boolean} true if the values are equal within the epsilon, false otherwise.
+ */
+export function equalsEpsilon(left, right, opt_epsilon) {
+  const epsilon = opt_epsilon !== undefined ? opt_epsilon : EPSILON;
+  return Math.abs(left - right) < epsilon;
+}
 
 
 /**

@@ -2,6 +2,7 @@
  * @module ol/render/webgl
  */
 
+import {EPSILON} from '../math.js';
 
 /**
  * @const
@@ -77,12 +78,6 @@ export const DEFAULT_TEXTBASELINE = 0.5;
  * @type {number}
  */
 export const DEFAULT_LINEWIDTH = 1;
-
-/**
- * @const
- * @type {number}
- */
-export const EPSILON = Number.EPSILON || 2.220446049250313e-16;
 
 /**
  * Calculates the orientation of a triangle based on the determinant method.

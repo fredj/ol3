@@ -7,6 +7,7 @@ import {listen, unlisten} from '../../events.js';
 import EventType from '../../events/EventType.js';
 import rbush from 'rbush';
 import {buffer, createEmpty, containsExtent, getWidth} from '../../extent.js';
+import {equalsEpsilon} from '../../math.js';
 import {labelCache} from '../../render/canvas.js';
 import CanvasBuilderGroup from '../../render/canvas/BuilderGroup.js';
 import InstructionsGroupExecutor from '../../render/canvas/ExecutorGroup.js';
@@ -180,7 +181,7 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
     this.postRender(context, frameState);
 
     const opacity = layerState.opacity;
-    if (opacity != canvas.style.opacity) {
+    if (!equalsEpsilon(opacity, parseFloat(canvas.style.opacity))) {
       canvas.style.opacity = opacity;
     }
 

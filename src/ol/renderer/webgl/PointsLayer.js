@@ -2,6 +2,7 @@
  * @module ol/renderer/webgl/PointsLayer
  */
 import LayerRenderer from '../Layer';
+import {equalsEpsilon} from '../../math.js';
 import WebGLArrayBuffer from '../../webgl/Buffer';
 import {DYNAMIC_DRAW, ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER, FLOAT} from '../../webgl';
 import WebGLHelper, {DefaultAttrib} from '../../webgl/Helper';
@@ -252,7 +253,7 @@ class WebGLPointsLayerRenderer extends LayerRenderer {
     const canvas = this.helper_.getCanvas();
 
     const opacity = layerState.opacity;
-    if (opacity != canvas.style.opacity) {
+    if (!equalsEpsilon(opacity, parseFloat(canvas.style.opacity))) {
       canvas.style.opacity = opacity;
     }
 

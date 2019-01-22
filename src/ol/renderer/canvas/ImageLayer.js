@@ -5,6 +5,7 @@ import {ENABLE_RASTER_REPROJECTION} from '../../reproj/common.js';
 import ViewHint from '../../ViewHint.js';
 import {containsExtent, intersects} from '../../extent.js';
 import {getIntersection, isEmpty} from '../../extent.js';
+import {equalsEpsilon} from '../../math.js';
 import CanvasLayerRenderer from './Layer.js';
 import {compose as composeTransform, makeInverse, toString as transformToString} from '../../transform.js';
 
@@ -149,7 +150,7 @@ class CanvasImageLayerRenderer extends CanvasLayerRenderer {
     }
 
     const opacity = layerState.opacity;
-    if (opacity != canvas.style.opacity) {
+    if (!equalsEpsilon(opacity, parseFloat(canvas.style.opacity))) {
       canvas.style.opacity = opacity;
     }
 
