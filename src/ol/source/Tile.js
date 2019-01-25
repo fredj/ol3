@@ -77,7 +77,7 @@ class TileSource extends Source {
       }
       const width = screen ? (screen.availWidth || screen.width) : 1920;
       const height = screen ? (screen.availHeight || screen.height) : 1080;
-      cacheSize = 2 * Math.ceil(width / tileSize[0]) * Math.ceil(height / tileSize[1]);
+      cacheSize = 4 * Math.ceil(width / tileSize[0]) * Math.ceil(height / tileSize[1]);
     }
 
     /**
