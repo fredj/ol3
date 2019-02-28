@@ -1637,23 +1637,35 @@ describe('ol.format.KML', function() {
           expect(f.get('bar')).to.be(undefined);
         });
 
-        it('can read ExtendedData with displayName instead of name', function() {
+        it('can read ExtendedData with displayName', function() {
           const text =
               '<kml xmlns="http://earth.google.com/kml/2.2">' +
               '  <Placemark xmlns="http://earth.google.com/kml/2.2">' +
               '    <ExtendedData>' +
-              '      <Data>' +
+              '      <Data name="bar">' +
               '        <displayName>foo</displayName>' +
-              '        <value>bar</value>' +
+              '        <value>bar value</value>' +
+              '      </Data>' +
+              '      <Data name="baz">' +
+              '        <value>baz value</value>' +
               '      </Data>' +
               '    </ExtendedData>' +
               '  </Placemark>' +
               '</kml>';
           const fs = format.readFeatures(text);
-          expect(fs).to.have.length(1);
-          const f = fs[0];
-          expect(f).to.be.an(Feature);
-          expect(f.get('foo')).to.be('bar');
+          expect(fs).to.have.length(2);
+          const bar = fs[0];
+          expect(bar).to.be.an(Feature);
+          expect(bar.get('baz')).to.be({
+            displayName: 'foo',
+            value: 'bar value'
+          });
+          const baz = fs[1];
+          expect(baz).to.be.an(Feature);
+          expect(baz.get('baz')).to.be({
+            displayName: 'baz',
+            value: 'baz value'
+          });
         });
 
         it('can read SchemaData', function() {
