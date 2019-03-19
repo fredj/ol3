@@ -1,7 +1,7 @@
 import Map from '../src/ol/Map.js';
 import View from '../src/ol/View.js';
 import Polygon from '../src/ol/geom/Polygon.js';
-import Draw, {createRegularPolygon, createBox} from '../src/ol/interaction/Draw.js';
+import Draw, {createRegularPolygon, createBox, createSnapToAngle} from '../src/ol/interaction/Draw.js';
 import {Tile as TileLayer, Vector as VectorLayer} from '../src/ol/layer.js';
 import {OSM, Vector as VectorSource} from '../src/ol/source.js';
 
@@ -37,6 +37,9 @@ function addInteraction() {
     } else if (value === 'Box') {
       value = 'Circle';
       geometryFunction = createBox();
+    } else if (value === 'SnapLine') {
+      value = 'LineString';
+      geometryFunction = createSnapToAngle(Math.PI / 8);
     } else if (value === 'Star') {
       value = 'Circle';
       geometryFunction = function(coordinates, geometry) {

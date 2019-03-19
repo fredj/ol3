@@ -1024,6 +1024,43 @@ export function createBox() {
 
 
 /**
+ * Create a `geometryFunction` that will create a line string with segments
+ * snapped to a multiple of angle `n`.
+ * Use this with the draw interaction and `type: 'LineString'`.
+ * @param {number} angle Angle in radian.
+ * @return {GeometryFunction} Function that draws a box-shaped polygon.
+ * @api
+ */
+export function createSnapToAngle(angle) {
+  return (
+    /**
+     * @param {LineCoordType} coordinates Coordinates.
+     * @param {LineString=} opt_geometry Geometry.
+     * @return {LineString} Geometry.
+     */
+    function(coordinates, opt_geometry) {
+      const from = coordinates[coordinates.length - 2];
+      const to = coordinates[coordinates.length - 1];
+      const dx = from[0] - to[0];
+      const dy = from[1] - to[1];
+      const length = Math.sqrt(dx * dx + dy * dy);
+      const rotation = Math.floor(Math.atan2(dy, dx) / angle + 0.5) * angle;
+
+      to[0] = from[0] - (length * Math.cos(rotation));
+      to[1] = from[1] - (length * Math.sin(rotation));
+
+      let geometry = opt_geometry;
+      if (!geometry) {
+        geometry = new LineString(coordinates);
+      } else {
+        geometry.setCoordinates(coordinates);
+      }
+      return new LineString(coordinates);
+    });
+}
+
+
+/**
  * Get the drawing mode.  The mode for mult-part geometries is the same as for
  * their single-part cousins.
  * @param {GeometryType} type Geometry type.
