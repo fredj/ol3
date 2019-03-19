@@ -31,6 +31,12 @@ describe('ol.style.Stroke', function() {
       expect(original.getWidth()).to.eql(clone.getWidth());
     });
 
+    it('uses the fallback value', function() {
+      const style = new Stroke();
+      expect(style.getLineCap()).to.eql(undefined);
+      expect(style.getLineCap('butt')).to.eql('butt');
+    });
+
     it('the clone does not reference the same objects as the original', function() {
       const original = new Stroke({
         color: [1, 2, 3, 0.4],

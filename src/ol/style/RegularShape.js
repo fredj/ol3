@@ -326,10 +326,7 @@ class RegularShape extends ImageStyle {
       if (lineJoin === undefined) {
         lineJoin = defaultLineJoin;
       }
-      lineCap = this.stroke_.getLineCap();
-      if (lineCap === undefined) {
-        lineCap = defaultLineCap;
-      }
+      lineCap = this.stroke_.getLineCap(defaultLineCap);
       miterLimit = this.stroke_.getMiterLimit();
       if (miterLimit === undefined) {
         miterLimit = defaultMiterLimit;

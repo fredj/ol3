@@ -107,11 +107,12 @@ class Stroke {
 
   /**
    * Get the line cap type for the stroke.
+   * @param {string=} fallback Fallback value.
    * @return {string|undefined} Line cap.
    * @api
    */
-  getLineCap() {
-    return this.lineCap_;
+  getLineCap(fallback) {
+    return this.lineCap_ || fallback;
   }
 
   /**

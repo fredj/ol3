@@ -315,9 +315,7 @@ class CanvasBuilder extends VectorContext {
       const strokeStyleColor = strokeStyle.getColor();
       state.strokeStyle = asColorLike(strokeStyleColor ?
         strokeStyleColor : defaultStrokeStyle);
-      const strokeStyleLineCap = strokeStyle.getLineCap();
-      state.lineCap = strokeStyleLineCap !== undefined ?
-        strokeStyleLineCap : defaultLineCap;
+      state.lineCap = strokeStyle.getLineCap(defaultLineCap);
       const strokeStyleLineDash = strokeStyle.getLineDash();
       state.lineDash = strokeStyleLineDash ?
         strokeStyleLineDash.slice() : defaultLineDash;

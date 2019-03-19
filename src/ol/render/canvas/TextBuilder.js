@@ -410,7 +410,7 @@ class CanvasTextBuilder extends CanvasBuilder {
         const lineDashOffset = textStrokeStyle.getLineDashOffset();
         const lineWidth = textStrokeStyle.getWidth();
         const miterLimit = textStrokeStyle.getMiterLimit();
-        strokeState.lineCap = textStrokeStyle.getLineCap() || defaultLineCap;
+        strokeState.lineCap = textStrokeStyle.getLineCap(defaultLineCap);
         strokeState.lineDash = lineDash ? lineDash.slice() : defaultLineDash;
         strokeState.lineDashOffset =
             lineDashOffset === undefined ? defaultLineDashOffset : lineDashOffset;

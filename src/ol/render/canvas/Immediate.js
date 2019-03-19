@@ -794,15 +794,13 @@ class CanvasImmediateRenderer extends VectorContext {
       this.strokeState_ = null;
     } else {
       const strokeStyleColor = strokeStyle.getColor();
-      const strokeStyleLineCap = strokeStyle.getLineCap();
       const strokeStyleLineDash = strokeStyle.getLineDash();
       const strokeStyleLineDashOffset = strokeStyle.getLineDashOffset();
       const strokeStyleLineJoin = strokeStyle.getLineJoin();
       const strokeStyleWidth = strokeStyle.getWidth();
       const strokeStyleMiterLimit = strokeStyle.getMiterLimit();
       this.strokeState_ = {
-        lineCap: strokeStyleLineCap !== undefined ?
-          strokeStyleLineCap : defaultLineCap,
+        lineCap: strokeStyle.getLineCap(defaultLineCap),
         lineDash: strokeStyleLineDash ?
           strokeStyleLineDash : defaultLineDash,
         lineDashOffset: strokeStyleLineDashOffset ?
@@ -875,15 +873,13 @@ class CanvasImmediateRenderer extends VectorContext {
         this.textStrokeState_ = null;
       } else {
         const textStrokeStyleColor = textStrokeStyle.getColor();
-        const textStrokeStyleLineCap = textStrokeStyle.getLineCap();
         const textStrokeStyleLineDash = textStrokeStyle.getLineDash();
         const textStrokeStyleLineDashOffset = textStrokeStyle.getLineDashOffset();
         const textStrokeStyleLineJoin = textStrokeStyle.getLineJoin();
         const textStrokeStyleWidth = textStrokeStyle.getWidth();
         const textStrokeStyleMiterLimit = textStrokeStyle.getMiterLimit();
         this.textStrokeState_ = {
-          lineCap: textStrokeStyleLineCap !== undefined ?
-            textStrokeStyleLineCap : defaultLineCap,
+          lineCap: textStrokeStyle.getLineCap(defaultLineCap),
           lineDash: textStrokeStyleLineDash ?
             textStrokeStyleLineDash : defaultLineDash,
           lineDashOffset: textStrokeStyleLineDashOffset ?
