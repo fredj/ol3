@@ -2,7 +2,7 @@
  * @module ol/renderer/webgl/PointsLayer
  */
 import WebGLArrayBuffer from '../../webgl/Buffer';
-import {DYNAMIC_DRAW, ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER, FLOAT} from '../../webgl';
+import {DYNAMIC_DRAW, ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER, FLOAT, EXTENSIONS as WEBGL_EXTENSIONS} from '../../webgl';
 import {DefaultAttrib, DefaultUniform} from '../../webgl/Helper';
 import GeometryType from '../../geom/GeometryType';
 import WebGLLayerRenderer, {
@@ -19,6 +19,7 @@ import {
   apply as applyTransform
 } from '../../transform';
 import {create as createWebGLWorker} from '../../worker/webgl';
+import {includes} from '../../array';
 
 const VERTEX_SHADER = `
   precision mediump float;
@@ -418,7 +419,8 @@ class WebGLPointsLayerRenderer extends WebGLLayerRenderer {
     /** @type import('./Layer').WebGLWorkerGenerateBuffersMessage */
     const message = {
       type: WebGLWorkerMessageType.GENERATE_BUFFERS,
-      renderInstructions: this.renderInstructions_.buffer
+      renderInstructions: this.renderInstructions_.buffer,
+      useShortIndices: !includes(WEBGL_EXTENSIONS, 'OES_element_index_uint')
     };
     // additional properties will be sent back as-is by the worker
     message['projectionTransform'] = projectionTransform;
