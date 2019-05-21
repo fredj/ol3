@@ -227,7 +227,7 @@ class WebGLPointsLayerRenderer extends WebGLLayerRenderer {
     };
     this.coordCallback_ = options.coordCallback || function(feature, index) {
       const geom = /** @type {import("../../geom/Point").default} */ (feature.getGeometry());
-      return geom.getCoordinates()[index];
+      return geom.getFlatCoordinates()[index];
     };
     this.opacityCallback_ = options.opacityCallback || function() {
       return 1;
