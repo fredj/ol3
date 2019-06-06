@@ -3,6 +3,7 @@ import View from '../src/ol/View.js';
 import TileLayer from '../src/ol/layer/Tile.js';
 import TileJSON from '../src/ol/source/TileJSON.js';
 
+const key = 'pk.eyJ1IjoidHNjaGF1YiIsImEiOiJjaW5zYW5lNHkxMTNmdWttM3JyOHZtMmNtIn0.CDIBD8H-G2Gf-cPkIuWtRg';
 
 /**
  * Renders a progress bar.
@@ -78,7 +79,7 @@ Progress.prototype.hide = function() {
 const progress = new Progress(document.getElementById('progress'));
 
 const source = new TileJSON({
-  url: 'https://api.tiles.mapbox.com/v3/mapbox.world-bright.json?secure',
+  url: 'https://api.tiles.mapbox.com/v4/mapbox.world-bright.json?access_token=' + key,
   crossOrigin: 'anonymous'
 });
 

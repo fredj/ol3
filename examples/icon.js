@@ -8,6 +8,7 @@ import TileJSON from '../src/ol/source/TileJSON.js';
 import VectorSource from '../src/ol/source/Vector.js';
 import {Icon, Style} from '../src/ol/style.js';
 
+const key = 'pk.eyJ1IjoidHNjaGF1YiIsImEiOiJjaW5zYW5lNHkxMTNmdWttM3JyOHZtMmNtIn0.CDIBD8H-G2Gf-cPkIuWtRg';
 
 const iconFeature = new Feature({
   geometry: new Point([0, 0]),
@@ -37,7 +38,7 @@ const vectorLayer = new VectorLayer({
 
 const rasterLayer = new TileLayer({
   source: new TileJSON({
-    url: 'https://api.tiles.mapbox.com/v3/mapbox.geography-class.json?secure',
+    url: 'https://api.tiles.mapbox.com/v4/mapbox.geography-class?access_token=' + key,
     crossOrigin: ''
   })
 });
