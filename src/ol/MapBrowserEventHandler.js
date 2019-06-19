@@ -1,7 +1,6 @@
 /**
  * @module ol/MapBrowserEventHandler
  */
-import {DEVICE_PIXEL_RATIO} from './has.js';
 import MapBrowserEventType from './MapBrowserEventType.js';
 import MapBrowserPointerEvent from './MapBrowserPointerEvent.js';
 import {listen, unlistenByKey} from './events.js';
@@ -49,7 +48,7 @@ class MapBrowserEventHandler extends EventTarget {
      * @private
      */
     this.moveTolerance_ = moveTolerance ?
-      moveTolerance * DEVICE_PIXEL_RATIO : DEVICE_PIXEL_RATIO;
+      moveTolerance * window.devicePixelRatio : window.devicePixelRatio;
 
     /**
      * The most recent "down" type event (or null if none have occurred).

@@ -22,7 +22,6 @@ import {listen, unlistenByKey, unlisten} from './events.js';
 import EventType from './events/EventType.js';
 import {createEmpty, clone, createOrUpdateEmpty, equals, getForViewAndSize, isEmpty} from './extent.js';
 import {TRUE} from './functions.js';
-import {DEVICE_PIXEL_RATIO} from './has.js';
 import LayerGroup from './layer/Group.js';
 import {hasArea} from './size.js';
 import {DROP} from './structs/PriorityQueue.js';
@@ -160,7 +159,7 @@ class PluggableMap extends BaseObject {
      * @type {number}
      */
     this.pixelRatio_ = options.pixelRatio !== undefined ?
-      options.pixelRatio : DEVICE_PIXEL_RATIO;
+      options.pixelRatio : window.devicePixelRatio;
 
     /**
      * @private

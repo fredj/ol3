@@ -2,7 +2,7 @@ import Map from '../../../../src/ol/Map.js';
 import MapBrowserEvent from '../../../../src/ol/MapBrowserEvent.js';
 import View from '../../../../src/ol/View.js';
 import Event from '../../../../src/ol/events/Event.js';
-import {DEVICE_PIXEL_RATIO, FIREFOX, SAFARI} from '../../../../src/ol/has.js';
+import {FIREFOX, SAFARI} from '../../../../src/ol/has.js';
 import MouseWheelZoom, {Mode} from '../../../../src/ol/interaction/MouseWheelZoom.js';
 
 
@@ -72,7 +72,7 @@ describe('ol.interaction.MouseWheelZoom', function() {
         const event = new MapBrowserEvent('wheel', map, {
           type: 'wheel',
           deltaMode: WheelEvent.DOM_DELTA_PIXEL,
-          deltaY: DEVICE_PIXEL_RATIO,
+          deltaY: window.devicePixelRatio,
           target: map.getViewport(),
           preventDefault: Event.prototype.preventDefault
         });

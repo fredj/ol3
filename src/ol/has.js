@@ -29,14 +29,4 @@ export const WEBKIT = ua.indexOf('webkit') !== -1 && ua.indexOf('edge') == -1;
  */
 export const MAC = ua.indexOf('macintosh') !== -1;
 
-
-/**
- * The ratio between physical pixels and device-independent pixels
- * (dips) on the device (`window.devicePixelRatio`).
- * @const
- * @type {number}
- * @api
- */
-export const DEVICE_PIXEL_RATIO = window.devicePixelRatio || 1;
-
 export {HAS as WEBGL} from './webgl.js';

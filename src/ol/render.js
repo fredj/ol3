@@ -1,7 +1,6 @@
 /**
  * @module ol/render
  */
-import {DEVICE_PIXEL_RATIO} from './has.js';
 import {
   apply as applyTransform,
   create as createTransform,
@@ -70,7 +69,7 @@ import CanvasImmediateRenderer from './render/canvas/Immediate.js';
 export function toContext(context, opt_options) {
   const canvas = context.canvas;
   const options = opt_options ? opt_options : {};
-  const pixelRatio = options.pixelRatio || DEVICE_PIXEL_RATIO;
+  const pixelRatio = options.pixelRatio || window.devicePixelRatio;
   const size = options.size;
   if (size) {
     canvas.width = size[0] * pixelRatio;

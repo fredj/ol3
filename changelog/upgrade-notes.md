@@ -4,6 +4,13 @@
 
 #### Backwards incompatible changes
 
+#### Removal of `DEVICE_PIXEL_RATIO` constant from `ol/has`
+
+If you were previously using this constant, you can use `window.devicePixelRatio` instead.
+
+The `devicePixelRatio` constant is not available on IE 10 and below but a polyfill can be used.
+See https://polyfill.io/v3/
+
 #### Removal of `TOUCH` constant from `ol/has`
 
 If you were previously using this constant, you can check if `'ontouchstart'` is defined in `window` instead.
