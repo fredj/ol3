@@ -154,15 +154,15 @@ void main(void) {
 
 /**
  * Base type for values fed to operators; can be a number literal or the output of another operator
- * @typedef {Array<*>|number} OperatorValue
+ * @typedef {Array<number|string>|number|string} OperatorValue
  */
 
 /**
  * Parses the provided expressions and produces a GLSL-compatible assignment string, such as:
- * `['add', ['*', ['get', 'size'], 0.001], 12] => '(a_size * (0.001)) + (12.0)'
+ * `['add', ['*', '$size', 0.001], 12] => '(a_size * (0.001)) + (12.0)'
  *
  * The following operators can be used:
- * * `['get', 'attributeName']` fetches a feature attribute (it will be prefixed by `a_` in the shader)
+ * * `['$attributeName']` fetches a feature attribute (it will be prefixed by `a_` in the shader)
  * * `['*', value1, value1]` multiplies value1 by value2
  * * `['+', value1, value1]` adds value1 and value2
  * * `['clamp', value1, value2, value3]` clamps value1 between values2 and value3
@@ -190,11 +190,6 @@ export function parse(value, attributes, attributePrefix) {
   }
   if (Array.isArray(v)) {
     switch (v[0]) {
-      case 'get':
-        if (attributes.indexOf(v[1]) === -1) {
-          attributes.push(v[1]);
-        }
-        return attributePrefix + v[1];
       case '*': return `(${p(v[1])} * ${p(v[2])})`;
       case '+': return `(${p(v[1])} + ${p(v[2])})`;
       case 'clamp': return `clamp(${p(v[1])}, ${p(v[2])}, ${p(v[3])})`;
@@ -203,6 +198,12 @@ export function parse(value, attributes, attributePrefix) {
     }
   } else if (typeof value === 'number') {
     return formatNumber(value);
+  } else if (typeof value === 'string' && value.indexOf('$') === 0) {
+    const prop = value.substr(1);
+    if (attributes.indexOf(prop) === -1) {
+      attributes.push(prop);
+    }
+    return attributePrefix + prop;
   } else {
     throw new Error('Invalid value type in expression: ' + JSON.stringify(value));
   }

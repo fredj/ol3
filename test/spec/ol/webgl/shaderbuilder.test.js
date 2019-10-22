@@ -223,16 +223,16 @@ void main(void) {
 
     it('parses expressions & literal values', function() {
       expect(parseFn(1)).to.eql('1.0');
-      expect(parseFn(['get', 'myAttr'])).to.eql('a_myAttr');
-      expect(parseFn(['+', ['*', ['get', 'size'], 0.001], 12])).to.eql('((a_size * 0.001) + 12.0)');
-      expect(parseFn(['clamp', ['get', 'attr2'], ['get', 'attr3'], 20])).to.eql('clamp(a_attr2, a_attr3, 20.0)');
-      expect(parseFn(['stretch', ['get', 'size'], 10, 100, 4, 8])).to.eql('(clamp(a_size, 10.0, 100.0) * ((8.0 - 4.0) / (100.0 - 10.0)) + 4.0)');
+      expect(parseFn('$myAttr')).to.eql('a_myAttr');
+      expect(parseFn(['+', ['*', '$size', 0.001], 12])).to.eql('((a_size * 0.001) + 12.0)');
+      expect(parseFn(['clamp', '$attr2', '$attr3', 20])).to.eql('clamp(a_attr2, a_attr3, 20.0)');
+      expect(parseFn(['stretch', '$size', 10, 100, 4, 8])).to.eql('(clamp(a_size, 10.0, 100.0) * ((8.0 - 4.0) / (100.0 - 10.0)) + 4.0)');
       expect(attributes).to.eql(['myAttr', 'size', 'attr2', 'attr3']);
     });
 
     it('does not register an attribute several times', function() {
-      parseFn(['get', 'myAttr']);
-      parseFn(['clamp', ['get', 'attr2'], ['get', 'attr2'], ['get', 'myAttr']]);
+      parseFn('$myAttr');
+      parseFn(['clamp', '$attr2', '$attr2', '$myAttr']);
       expect(attributes).to.eql(['myAttr', 'attr2']);
     });
   });
@@ -262,12 +262,12 @@ void main(void) {
     it('parses a style with expressions', function() {
       const result = parseSymbolStyle({
         symbolType: 'square',
-        size: ['get', 'attr1'],
+        size: '$attr1',
         color: [
-          1.0, 0.0, 0.5, ['get', 'attr2']
+          1.0, 0.0, 0.5, '$attr2'
         ],
         textureCoord: [0.5, 0.5, 0.5, 1],
-        offset: [3, ['get', 'attr3']]
+        offset: [3, '$attr3']
       });
       expect(result.params).to.eql({
         uniforms: [],

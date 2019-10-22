@@ -27,8 +27,8 @@ const predefinedStyles = {
       symbolType: 'triangle',
       size: 18,
       color: [
-        ['stretch', ['get', 'population'], 20000, 300000, 0.1, 1.0],
-        ['stretch', ['get', 'population'], 20000, 300000, 0.6, 0.3],
+        ['stretch', '$population', 20000, 300000, 0.1, 1.0],
+        ['stretch', '$population', 20000, 300000, 0.6, 0.3],
         0.6,
         1.0
       ],
@@ -38,11 +38,11 @@ const predefinedStyles = {
   'circles': {
     symbol: {
       symbolType: 'circle',
-      size: ['stretch', ['get', 'population'], 40000, 2000000, 8, 28],
+      size: ['stretch', '$population', 40000, 2000000, 8, 28],
       color: '#006688',
       rotateWithView: false,
       offset: [0, 0],
-      opacity: ['stretch', ['get', 'population'], 40000, 2000000, 0.6, 0.92]
+      opacity: ['stretch', '$population', 40000, 2000000, 0.6, 0.92]
     }
   }
 };
