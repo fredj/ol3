@@ -63,7 +63,7 @@ class GeoJSON extends JSONFeature {
     super();
 
     /**
-     * @inheritDoc
+     * @type {import("../proj/Projection.js").default}
      */
     this.dataProjection = getProjection(
       options.dataProjection ?
@@ -90,7 +90,9 @@ class GeoJSON extends JSONFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {Object} object Object.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Read options.
+   * @return {import("../Feature.js").default} Feature.
    */
   readFeatureFromObject(object, opt_options) {
     /**
@@ -127,7 +129,9 @@ class GeoJSON extends JSONFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {Object} object Object.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Read options.
+   * @return {Array<import("../Feature.js").default>} Features.
    */
   readFeaturesFromObject(object, opt_options) {
     const geoJSONObject = /** @type {GeoJSONObject} */ (object);
@@ -147,14 +151,17 @@ class GeoJSON extends JSONFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {Object} object Object.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Read options.
+   * @return {import("../geom/Geometry.js").default} Geometry.
    */
   readGeometryFromObject(object, opt_options) {
     return readGeometry(/** @type {GeoJSONGeometry} */ (object), opt_options);
   }
 
   /**
-   * @inheritDoc
+   * @param {Object} object Object.
+   * @return {import("../proj/Projection.js").default} Projection.
    */
   readProjectionFromObject(object) {
     const crs = object['crs'];
@@ -181,7 +188,6 @@ class GeoJSON extends JSONFeature {
    * @param {import("../Feature.js").default} feature Feature.
    * @param {import("./Feature.js").WriteOptions=} opt_options Write options.
    * @return {GeoJSONFeature} Object.
-   * @override
    * @api
    */
   writeFeatureObject(feature, opt_options) {
@@ -218,7 +224,6 @@ class GeoJSON extends JSONFeature {
    * @param {Array<import("../Feature.js").default>} features Features.
    * @param {import("./Feature.js").WriteOptions=} opt_options Write options.
    * @return {GeoJSONFeatureCollection} GeoJSON Object.
-   * @override
    * @api
    */
   writeFeaturesObject(features, opt_options) {
@@ -239,7 +244,6 @@ class GeoJSON extends JSONFeature {
    * @param {import("../geom/Geometry.js").default} geometry Geometry.
    * @param {import("./Feature.js").WriteOptions=} opt_options Write options.
    * @return {GeoJSONGeometry|GeoJSONGeometryCollection} Object.
-   * @override
    * @api
    */
   writeGeometryObject(geometry, opt_options) {

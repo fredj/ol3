@@ -315,7 +315,11 @@ class RasterSource extends ImageSource {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("../extent.js").Extent} extent Extent.
+   * @param {number} resolution Resolution.
+   * @param {number} pixelRatio Pixel ratio.
+   * @param {import("../proj/Projection.js").default} projection Projection.
+   * @return {ImageCanvas} Single image.
    */
   getImage(extent, resolution, pixelRatio, projection) {
     if (!this.allSourcesReady_()) {
@@ -409,7 +413,6 @@ class RasterSource extends ImageSource {
   }
 
   /**
-   * @override
    */
   getImageInternal() {
     return null; // not implemented

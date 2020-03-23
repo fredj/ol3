@@ -155,14 +155,16 @@ class VectorRenderTile extends Tile {
   }
 
   /**
-   * @inheritDoc
+   * Load the image or retry if loading previously failed.
+   * Loading is taken care of by the tile queue, and calling this method is
+   * only needed for preloading or for reloading in case of an error.
    */
   load() {
     this.getSourceTiles();
   }
 
   /**
-   * @inheritDoc
+   * Called by the tile cache when the tile is removed from the cache due to expiry
    */
   release() {
     for (const key in this.context_) {

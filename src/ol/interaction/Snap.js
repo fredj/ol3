@@ -243,7 +243,9 @@ class Snap extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Handles the {@link module:ol/MapBrowserEvent map browser event}.
+   * @param {import("../MapBrowserEvent.js").default} evt Map browser event.
+   * @return {boolean} `false` to stop event propagation.
    */
   handleEvent(evt) {
     const result = this.snapTo(evt.pixel, evt.coordinate, evt.map);
@@ -289,7 +291,9 @@ class Snap extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Handle pointer up events.
+   * @param {import("../MapBrowserPointerEvent.js").default} evt Event.
+   * @return {boolean} If the event was consumed.
    */
   handleUpEvent(evt) {
     const featuresToUpdate = getValues(this.pendingFeatures_);
@@ -331,7 +335,10 @@ class Snap extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Remove the interaction from its current map and attach it to the new map.
+   * Subclasses may set up event handlers to get notified about changes to
+   * the map here.
+   * @param {import("../PluggableMap.js").default} map Map.
    */
   setMap(map) {
     const currentMap = this.getMap();

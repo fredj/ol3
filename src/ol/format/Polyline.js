@@ -47,7 +47,7 @@ class Polyline extends TextFeature {
 
 
     /**
-     * @inheritDoc
+     * @type {import("../proj/Projection.js").default}
      */
     this.dataProjection = getProjection('EPSG:4326');
 
@@ -66,7 +66,9 @@ class Polyline extends TextFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {string} text Text.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Read options.
+   * @return {import("../Feature.js").default} Feature.
    */
   readFeatureFromText(text, opt_options) {
     const geometry = this.readGeometryFromText(text, opt_options);
@@ -74,7 +76,9 @@ class Polyline extends TextFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {string} text Text.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Read options.
+   * @return {Array<import("../Feature.js").default>} Features.
    */
   readFeaturesFromText(text, opt_options) {
     const feature = this.readFeatureFromText(text, opt_options);
@@ -82,7 +86,9 @@ class Polyline extends TextFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {string} text Text.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Read options.
+   * @return {import("../geom/Geometry.js").default} Geometry.
    */
   readGeometryFromText(text, opt_options) {
     const stride = getStrideForLayout(this.geometryLayout_);
@@ -95,7 +101,9 @@ class Polyline extends TextFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("../Feature.js").default} feature Features.
+   * @param {import("./Feature.js").WriteOptions=} opt_options Write options.
+   * @return {string} Text.
    */
   writeFeatureText(feature, opt_options) {
     const geometry = feature.getGeometry();
@@ -108,7 +116,9 @@ class Polyline extends TextFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {Array<import("../Feature.js").default>} features Features.
+   * @param {import("./Feature.js").WriteOptions=} opt_options Write options.
+   * @return {string} Text.
    */
   writeFeaturesText(features, opt_options) {
     return this.writeFeatureText(features[0], opt_options);

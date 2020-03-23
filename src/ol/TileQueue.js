@@ -59,7 +59,9 @@ class TileQueue extends PriorityQueue {
   }
 
   /**
-   * @inheritDoc
+   * Enqueue an element. O(log N).
+   * @param {Array} element Element.
+   * @return {boolean} The element was added to the queue.
    */
   enqueue(element) {
     const added = super.enqueue(element);

@@ -52,7 +52,7 @@ class CanvasVectorImageLayerRenderer extends CanvasImageLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Clean up.
    */
   disposeInternal() {
     this.vectorRenderer_.dispose();
@@ -60,7 +60,10 @@ class CanvasVectorImageLayerRenderer extends CanvasImageLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Asynchronous layer level hit detection.
+   * @param {import("../../pixel.js").Pixel} pixel Pixel.
+   * @return {Promise<Array<import("../../Feature").default>>} Promise that resolves with
+   * an array of features.
    */
   getFeatures(pixel) {
     if (this.vectorRenderer_) {
@@ -76,14 +79,16 @@ class CanvasVectorImageLayerRenderer extends CanvasImageLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Perform action necessary to get the layer rendered after new fonts have loaded
    */
   handleFontsChanged() {
     this.vectorRenderer_.handleFontsChanged();
   }
 
   /**
-   * @inheritDoc
+   * Determine whether render should be called.
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @return {boolean} Layer is ready to be rendered.
    */
   prepareFrame(frameState) {
     const pixelRatio = frameState.pixelRatio;
@@ -145,12 +150,10 @@ class CanvasVectorImageLayerRenderer extends CanvasImageLayerRenderer {
   }
 
   /**
-   * @override
    */
   preRender() {}
 
   /**
-   * @override
    */
   postRender() {}
 

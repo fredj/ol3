@@ -86,7 +86,11 @@ class Static extends ImageSource {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("../extent.js").Extent} extent Extent.
+   * @param {number} resolution Resolution.
+   * @param {number} pixelRatio Pixel ratio.
+   * @param {import("../proj/Projection.js").default} projection Projection.
+   * @return {import("../ImageBase.js").default} Single image.
    */
   getImageInternal(extent, resolution, pixelRatio, projection) {
     if (intersects(extent, this.image_.getExtent())) {
@@ -105,7 +109,8 @@ class Static extends ImageSource {
   }
 
   /**
-   * @inheritDoc
+   * Handle image change events.
+   * @param {import("../events/Event.js").default} evt Event.
    */
   handleImageChange(evt) {
     if (this.image_.getState() == ImageState.LOADED) {

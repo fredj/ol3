@@ -93,7 +93,6 @@ class MultiLineString extends SimpleGeometry {
   /**
    * Make a complete copy of the geometry.
    * @return {!MultiLineString} Clone.
-   * @override
    * @api
    */
   clone() {
@@ -101,7 +100,11 @@ class MultiLineString extends SimpleGeometry {
   }
 
   /**
-   * @inheritDoc
+   * @param {number} x X.
+   * @param {number} y Y.
+   * @param {import("../coordinate.js").Coordinate} closestPoint Closest point.
+   * @param {number} minSquaredDistance Minimum squared distance.
+   * @return {number} Minimum squared distance.
    */
   closestPointXY(x, y, closestPoint, minSquaredDistance) {
     if (minSquaredDistance < closestSquaredDistanceXY(this.getExtent(), x, y)) {
@@ -154,7 +157,6 @@ class MultiLineString extends SimpleGeometry {
   /**
    * Return the coordinates of the multilinestring.
    * @return {Array<Array<import("../coordinate.js").Coordinate>>} Coordinates.
-   * @override
    * @api
    */
   getCoordinates() {
@@ -224,7 +226,8 @@ class MultiLineString extends SimpleGeometry {
   }
 
   /**
-   * @inheritDoc
+   * @param {number} squaredTolerance Squared tolerance.
+   * @return {MultiLineString} Simplified geometry.
    */
   getSimplifiedGeometryInternal(squaredTolerance) {
     const simplifiedFlatCoordinates = [];
@@ -236,7 +239,7 @@ class MultiLineString extends SimpleGeometry {
   }
 
   /**
-   * @inheritDoc
+   * @return {import("./GeometryType.js").default} Geometry type.
    * @api
    */
   getType() {
@@ -244,7 +247,9 @@ class MultiLineString extends SimpleGeometry {
   }
 
   /**
-   * @inheritDoc
+   * Test if the geometry and the passed extent intersect.
+   * @param {import("../extent.js").Extent} extent Extent.
+   * @return {boolean} `true` if the geometry and the extent intersect.
    * @api
    */
   intersectsExtent(extent) {
@@ -256,7 +261,6 @@ class MultiLineString extends SimpleGeometry {
    * Set the coordinates of the multilinestring.
    * @param {!Array<Array<import("../coordinate.js").Coordinate>>} coordinates Coordinates.
    * @param {GeometryLayout=} opt_layout Layout.
-   * @override
    * @api
    */
   setCoordinates(coordinates, opt_layout) {

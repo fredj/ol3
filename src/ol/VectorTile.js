@@ -87,14 +87,16 @@ class VectorTile extends Tile {
   }
 
   /**
-   * @inheritDoc
+   * @return {string} Key.
    */
   getKey() {
     return this.url_;
   }
 
   /**
-   * @inheritDoc
+   * Load the image or retry if loading previously failed.
+   * Loading is taken care of by the tile queue, and calling this method is
+   * only needed for preloading or for reloading in case of an error.
    */
   load() {
     if (this.state == TileState.IDLE) {

@@ -19,7 +19,7 @@ class TextFeature extends FeatureFormat {
   }
 
   /**
-   * @inheritDoc
+   * @return {import("./FormatType.js").default} Format.
    */
   getType() {
     return FormatType.TEXT;

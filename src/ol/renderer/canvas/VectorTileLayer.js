@@ -135,7 +135,11 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * @param {number} z Tile coordinate z.
+   * @param {number} x Tile coordinate x.
+   * @param {number} y Tile coordinate y.
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @return {!import("../../Tile.js").default} Tile.
    */
   getTile(z, x, y, frameState) {
     const pixelRatio = frameState.pixelRatio;
@@ -166,7 +170,8 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   }
 
   /**
-   * @inheritdoc
+   * @param {import("../../Tile.js").default} tile Tile.
+   * @return {boolean} Tile is drawable.
    */
   isDrawableTile(tile) {
     const layer = this.getLayer();
@@ -174,14 +179,18 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Get the image from a tile.
+   * @param {import("../../ImageTile.js").default} tile Tile.
+   * @return {HTMLCanvasElement|HTMLImageElement|HTMLVideoElement} Image.
    */
   getTileImage(tile) {
     return tile.getImage(this.getLayer());
   }
 
   /**
-   * @inheritDoc
+   * Determine whether render should be called.
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @return {boolean} Layer is ready to be rendered.
    */
   prepareFrame(frameState) {
     const layerRevision = this.getLayer().getRevision();
@@ -333,7 +342,10 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Asynchronous layer level hit detection.
+   * @param {import("../../pixel.js").Pixel} pixel Pixel.
+   * @return {Promise<Array<import("../../Feature").default>>} Promise that resolves with
+   * an array of features.
    */
   getFeatures(pixel) {
     return new Promise(function(resolve, reject) {
@@ -395,7 +407,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Perform action necessary to get the layer rendered after new fonts have loaded
    */
   handleFontsChanged() {
     clear(this.renderTileImageQueue_);
@@ -415,7 +427,9 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @param {HTMLElement} target Target that may be used to render content to.
+   * @return {HTMLElement} The rendered element.
    */
   renderFrame(frameState, target) {
     const viewHints = frameState.viewHints;

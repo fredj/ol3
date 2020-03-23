@@ -403,7 +403,10 @@ class Modify extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Activate or deactivate the interaction.
+   * @param {boolean} active Active.
+   * @observable
+   * @api
    */
   setActive(active) {
     if (this.vertexFeature_ && !active) {
@@ -414,7 +417,10 @@ class Modify extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Remove the interaction from its current map and attach it to the new map.
+   * Subclasses may set up event handlers to get notified about changes to
+   * the map here.
+   * @param {import("../PluggableMap.js").default} map Map.
    */
   setMap(map) {
     this.overlay_.setMap(map);
@@ -694,10 +700,11 @@ class Modify extends PointerInteraction {
 
   /**
    * Handles the {@link module:ol/MapBrowserEvent map browser event} and may modify the geometry.
-   * @override
+   * @param {import("../MapBrowserPointerEvent.js").default} mapBrowserEvent Map browser event.
+   * @return {boolean} `false` to stop event propagation.
    */
   handleEvent(mapBrowserEvent) {
-    if (!(/** @type {import("../MapBrowserPointerEvent.js").default} */ (mapBrowserEvent).pointerEvent)) {
+    if (!(mapBrowserEvent.pointerEvent)) {
       return true;
     }
     this.lastPointerEvent_ = mapBrowserEvent;
@@ -724,7 +731,8 @@ class Modify extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Handle pointer drag events.
+   * @param {import("../MapBrowserPointerEvent.js").default} evt Event.
    */
   handleDragEvent(evt) {
     this.ignoreNextSingleClick_ = false;
@@ -801,7 +809,9 @@ class Modify extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Handle pointer down events.
+   * @param {import("../MapBrowserPointerEvent.js").default} evt Event.
+   * @return {boolean} If the event was consumed.
    */
   handleDownEvent(evt) {
     if (!this.condition_(evt)) {
@@ -882,7 +892,9 @@ class Modify extends PointerInteraction {
   }
 
   /**
-   * @inheritDoc
+   * Handle pointer up events.
+   * @param {import("../MapBrowserPointerEvent.js").default} evt Event.
+   * @return {boolean} If the event was consumed.
    */
   handleUpEvent(evt) {
     for (let i = this.dragSegments_.length - 1; i >= 0; --i) {

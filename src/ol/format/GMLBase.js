@@ -470,17 +470,20 @@ class GMLBase extends XMLFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {Element} node Node.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Options.
+   * @return {import("../geom/Geometry.js").default} Geometry.
    */
-  //@ts-ignore
   readGeometryFromNode(node, opt_options) {
     const geometry = this.readGeometryElement(node,
       [this.getReadOptions(node, opt_options ? opt_options : {})]);
-    return geometry ? geometry : null;
+    return geometry ? /** @type {import("../geom/Geometry.js").default} */ (geometry) : null;
   }
 
   /**
-   * @inheritDoc
+   * @param {Element} node Node.
+   * @param {import("./Feature.js").ReadOptions=} opt_options Options.
+   * @return {Array<import("../Feature.js").default>} Features.
    */
   readFeaturesFromNode(node, opt_options) {
     const options = {
@@ -495,7 +498,8 @@ class GMLBase extends XMLFeature {
   }
 
   /**
-   * @inheritDoc
+   * @param {Element} node Node.
+   * @return {import("../proj/Projection.js").default} Projection.
    */
   readProjectionFromNode(node) {
     return getProjection(this.srsName ? this.srsName : node.firstElementChild.getAttribute('srsName'));

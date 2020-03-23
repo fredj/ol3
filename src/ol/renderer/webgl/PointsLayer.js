@@ -372,7 +372,9 @@ class WebGLPointsLayerRenderer extends WebGLLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Determine whether render should be called.
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @return {boolean} Layer is ready to be rendered.
    */
   prepareFrame(frameState) {
     const layer = this.getLayer();
@@ -567,7 +569,7 @@ class WebGLPointsLayerRenderer extends WebGLLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Clean up.
    */
   disposeInternal() {
     this.worker_.terminate();

@@ -106,7 +106,10 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Get a rendering container from an existing target, if compatible.
+   * @param {HTMLElement} target Potential render target.
+   * @param {string} transform CSS Transform.
+   * @param {number} opacity Opacity.
    */
   useContainer(target, transform, opacity) {
     if (opacity < 1) {
@@ -116,7 +119,9 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @param {HTMLElement} target Target that may be used to render content to.
+   * @return {HTMLElement} The rendered element.
    */
   renderFrame(frameState, target) {
 
@@ -227,7 +232,10 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Asynchronous layer level hit detection.
+   * @param {import("../../pixel.js").Pixel} pixel Pixel.
+   * @return {Promise<Array<import("../../Feature").default>>} Promise that resolves with
+   * an array of features.
    */
   getFeatures(pixel) {
     return new Promise(function(resolve, reject) {
@@ -305,7 +313,7 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Perform action necessary to get the layer rendered after new fonts have loaded
    */
   handleFontsChanged() {
     const layer = this.getLayer();
@@ -324,7 +332,9 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
   }
 
   /**
-   * @inheritDoc
+   * Determine whether render should be called.
+   * @param {import("../../PluggableMap.js").FrameState} frameState Frame state.
+   * @return {boolean} Layer is ready to be rendered.
    */
   prepareFrame(frameState) {
     const vectorLayer = this.getLayer();

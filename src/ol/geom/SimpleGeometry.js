@@ -41,7 +41,8 @@ class SimpleGeometry extends Geometry {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("../extent.js").Extent} extent Extent.
+   * @return {import("../extent.js").Extent} extent Extent.
    */
   computeExtent(extent) {
     return createOrUpdateFromFlatCoordinates(this.flatCoordinates,
@@ -91,7 +92,11 @@ class SimpleGeometry extends Geometry {
   }
 
   /**
-   * @inheritDoc
+   * Create a simplified version of this geometry using the Douglas Peucker
+   * algorithm.
+   * See https://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm.
+   * @param {number} squaredTolerance Squared tolerance.
+   * @return {SimpleGeometry} Simplified geometry.
    */
   getSimplifiedGeometry(squaredTolerance) {
     if (this.simplifiedGeometryRevision !== this.getRevision()) {
@@ -223,9 +228,8 @@ class SimpleGeometry extends Geometry {
   /**
    * Scale the geometry (with an optional origin).  This modifies the geometry
    * coordinates in place.
-    * @param {number} sx The scaling factor in the x-direction.
-   * @param {number=} opt_sy The scaling factor in the y-direction (defaults to
-   *     sx).
+   * @param {number} sx The scaling factor in the x-direction.
+   * @param {number=} opt_sy The scaling factor in the y-direction (defaults to sx).
    * @param {import("../coordinate.js").Coordinate=} opt_anchor The scale origin (defaults to the center
    *     of the geometry extent).
    * @api

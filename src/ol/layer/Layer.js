@@ -299,7 +299,7 @@ class Layer extends BaseLayer {
   }
 
   /**
-   * @inheritDoc
+   * Clean up.
    */
   disposeInternal() {
     this.setSource(null);

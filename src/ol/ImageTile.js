@@ -68,7 +68,7 @@ class ImageTile extends Tile {
   }
 
   /**
-   * @inheritDoc
+   * @return {string} Key.
    */
   getKey() {
     return this.src_;
@@ -103,7 +103,9 @@ class ImageTile extends Tile {
   }
 
   /**
-   * @inheritDoc
+   * Load the image or retry if loading previously failed.
+   * Loading is taken care of by the tile queue, and calling this method is
+   * only needed for preloading or for reloading in case of an error.
    * @api
    */
   load() {
